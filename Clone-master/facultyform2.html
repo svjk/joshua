@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+</head>
+<body style="background:transparent url('collage123.jpg')">
+<div class="container-fluid">
+  <div class="row">
+  <div class="col-sm-2" style="background-color:lavender;"></div>
+  <div class="col-sm-3" style="background-color:lavender;"></div>
+  <div class="col-sm-3" style="background-color:lavenderblush;">
+     <p>Already member?<a href="login.php"> Login</a></p>
+     <h3>Faculty Regisration form</h3>
+     <form action="form1.php" method="POST">
+     <div class="form-group">
+        <label for="qualification">Qualification:</label>
+        <label for="graduate">Graduate(required):</label>
+        <input type="text" name="graduate" class="form-control" placeholder="enter ur graduation qualification">
+        
+        <div class="form-group">
+           <label for="post_graduate">Post Graduate:</label>
+           <input type="text" name="post_graduate" class="form-control" placeholder="enter ur qualification">
+        </div>
+        
+        <div class="form-group">
+             <label for="exp">Work Experience:</label></br>
+           <label for="exp1">Name of the organization:</label>
+           <input type="text" name="org_name" class="form-control" placeholder="name of organization">
+       </div>
+       <div class="form-group">
+          <label for="description">Description</label>
+          <input type="textarea" name="description" class="form-control" placeholder="work exprience">
+       </div>
+       <div class="form-group">
+         <label for="expyear">year of experience:</label>
+         <input type="number" name="expyear" class="form-control" placeholder="year of experinces">
+       </div>
+       <div class="form-group">
+          <button style='font-size:24px'><!--<a href="facultyform3.html">!-->submit<i class='fas fa-angle-double-right'></i></a></button>
+      </div>
+   </form>
+  </div>
+  <div class="col-sm-3" style="background-color:lavender;"> </div>
+  <div class="col-sm-1" style="background-color:lavender;"></div>
+</div>
+</div>
+</body>
+</html>

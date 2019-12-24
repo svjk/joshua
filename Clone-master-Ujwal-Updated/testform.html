@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <title> JNANA KENDRA </title>
+      <style>
+      ul.a{
+      	color: maroon;
+      	margin-left:40px;
+      	list-style-type:circle;
+      }
+      </style>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+  </head>
+  <body style="background:transparent url('frontpage.png') no-repeat center center /cover"> 
+  <h2> </br>Contact: 9741264243 </h2>
+  <div class="container">
+
+
+
+  <p> </br ></p>
+  </div>
+         <div class="container-fluid">
+         <div class="row">
+        <div class="col-sm-2"></div>
+          <div class="col-sm-3" style="background-color:white;">
+           <!--<a class="top-menu pull-right" href="home.php"><span class="glyphicon glyphicon-remove-circle"></span></a>!-->
+            <p>Already a member? <a href="login.php">Login</a></p>
+            
+            <h3 class="text-danger">  Student Regisration </h3>
+            <form action="form9.php" method="POST">
+            <div class="form-group">
+               <label for="usr">Name:</label><input type="text" class="form-control" name="name" required placeholder="Enter Name">
+            </div>
+            <div class="form-group">
+               <label for="email">Email address:</label>
+               <input type="email" class="form-control" name="email" required placeholder="Enter Email ID">
+            </div>
+            <div class="form-group">
+               <label for="phone">Phone number:</label>
+               <input type="tel" id="phone" name="phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required placeholder="0000000000">
+            </div>
+        <!--  <div class="form-group">
+               <label for="pass">Login Password:</label>
+               <input type="password" class="form-control" name="pass" required placeholder="enter password">
+            </div>
+            <div class="form-group">
+              <label for="cnfrm_password">Confirm Password:</label>
+              <input type="password" class="form-control" name="cnfrm_password" required placeholder="enter password again">
+            </div>
+            <div class="form-group">
+                <button style='font-size:24px'><a href"student_form1.html">Submit<i class='fas fa-angle-double-right'></i></a></button>
+            </div>
+          </form>
+        </div>-->
+        <div class="form-group">
+         <label for="usr">Details</label>
+         <input type="textarea" class="form-control" name="description" placeholder="Details">
+            </div>
+            <div class="form-group">
+            <button style='font-size:24px'><a href="home.php">Submit<i class='fas fa-angle-double-right'></i></a></button>
+          </div>
+            </div>
+        <div class="col-sm-3" style="background-color:lightblue;">
+        <h1 class="text-primary" >HOME TUTORING</h1>
+         <ul>
+         <h4>Select tutor of your choice</h4>
+          <h4>Counseling by Experts</h4> 
+          <h4>Holistic approach for learning.</h4> 
+          <h4>Improve the efficeincy of student</h4> 
+          <h4>Tutors with specialization</h4> 
+          <h4>Innovative and Practical Teaching methods</h4>    
+          <h4>Result oriented coaching</h4> 
+         </ul>
+         <h3 class="text-danger "> Boards: IB | IGCSE | ICSE | CBSE | STATE | NIOS </h3>
+         <p></br></p>
+        </div>
+        <div class="col-sm-3" style="background-color:white;"> 
+          <a class="top-menu pull-right" href="home.php"><span class="glyphicon glyphicon-remove-circle"></span></a>
+       <!-- <a class="top-menu pull-right" href="home.php"><span class="glyphicon glyphicon-remove-circle"></span></a>!-->
+        <p>Already a member?<a href="login">Login</a></p>
+          <h3 class = "text-danger">  Faculty Regisration </h3>
+          <!-- FACULTY!-->
+          <form action="form10.php"  method="POST">
+          <div class="form-group">
+            <label for="usr">Name:</label><input type="text" class="form-control" name="name" required placeholder="Enter Name">
+          </div>
+          <div class="form-group">
+              <label for="email">Email address:</label>
+              <input type="email" class="form-control" name="email" required placeholder="Enter Email ID">
+          </div>
+          <div class="form-group">
+             <label for="phone">Phone number:</label>
+             <input type="tel" id="phone" name="phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required placeholder="0000000000">
+          </div>
+         <!-- <div class="form-group">
+              <label for="pwd">Login Password:</label>
+              <input type="password" class="form-control" name="pass" required placeholder="enter password">
+          </div>
+          <div class="form-group">
+              <label for="confirm_password">Confirm Password:</label>
+              <input type="password" class="form-control" name="cnfrm_password" required placeholder="enter password again">
+          </div>-->
+          <div class="form-group"> 
+          <label for="description">Details</label>
+          <input type="textarea" name="description" class="form-control" placeholder="Details">
+          </div>
+          <div class="form-group">
+            <button style='font-size:24px'><a href="home.php">Submit<i class='fas fa-angle-double-right'></i></a></button>
+          </div>
+        </form>
+      </div>
+          <div class="col-sm-1" style="background-color:lavender;"></div>
+      </div>
+      </div>
+      <div class="row-sm-2"></div>
+      </div>
+  </div>
+  </div>
+  </body>
+</html>
