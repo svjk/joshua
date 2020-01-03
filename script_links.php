@@ -1,0 +1,15 @@
+<script src="assets/popper/popper.min.js"></script>
+<script src="assets/tether/tether.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/smoothscroll/smooth-scroll.js"></script>
+<script src="assets/dropdown/js/script.min.js"></script>
+<script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>
+<script src="assets/vimeoplayer/jquery.mb.vimeo_player.js"></script>
+<script src="assets/mbr-flip-card/mbr-flip-card.js"></script>
+<script src="assets/bootstrapcarouselswipe/bootstrap-carousel-swipe.js"></script>
+<script src="assets/sociallikes/social-likes.js"></script>
+<script src="assets/mbr-tabs/mbr-tabs.js"></script>
+<script src="assets/ytplayer/jquery.mb.ytplayer.min.js"></script>
+<script src="assets/theme/js/script.js"></script>
+<script src="assets/slidervideo/script.js"></script>
+<script defer src="assets/font/js/all.js"></script>
