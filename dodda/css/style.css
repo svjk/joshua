@@ -561,7 +561,7 @@ h1, h2, h3, h4, h5,
     padding-bottom: 10px !important; }
 
 /* Blocks */
-.intro-section {
+/*.intro-section {
   background-size: cover;
   position: relative; }
   .intro-section, .intro-section .container .row {
@@ -588,7 +588,7 @@ h1, h2, h3, h4, h5,
   .intro-section p {
     color: rgba(255, 255, 255, 0.5);
     font-size: 1.1rem;
-    max-width: 400px; }
+    max-width: 400px; }*/
 
 .custom-breadcrumns {
   padding: 20px 0; }

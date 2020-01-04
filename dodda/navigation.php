@@ -39,22 +39,22 @@
 						<li class="">
 							<a href="index.php" class="nav-link text-left">Home</a>
 						</li>
-						<li class="has-children">
+						<li>
+							<a href="about.php" class="nav-link text-left">About Us</a>
+						</li>
+						<li>
+							<a href="courses.php" class="nav-link text-left">Educational Service</a>
+						</li>
+						<li>
+							<a href="contact.php" class="nav-link text-left">Contact</a>
+						</li>
+						<!-- <li class="has-children">
 							<a href="about.php" class="nav-link text-left">About Us</a>
 							<ul class="dropdown">
 								<li><a href="teachers.php">Our Teachers</a></li>
 								<li><a href="about.php">Our School</a></li>
 							</ul>
-						</li>
-						<li>
-							<a href="admissions.php" class="nav-link text-left">Admissions</a>
-						</li>
-						<li>
-							<a href="courses.php" class="nav-link text-left">Courses</a>
-						</li>
-						<li>
-							<a href="contact.php" class="nav-link text-left">Contact</a>
-						</li>
+						</li> -->
 					</ul>
 				</nav>
 

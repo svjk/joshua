@@ -12,25 +12,23 @@
     <?php include 'navigation.php'; ?>
     
     <div class="hero-slide owl-carousel site-blocks-cover">
-      <div class="intro-section" style="background-image: url('images/hero_1.jpg');">
+      <?php
+      $imagesArray = array('image_6.jpg','hero_1.jpg','bg_1.jpg');
+      foreach ($imagesArray as $bannerImages) {
+        $bannerUrls = "images/".$bannerImages ;
+      ?>
+      <div class="intro-section">
+        <img src="<?php echo $bannerUrls ?>">
+        <div class="overlay"></div>
         <div class="container">
           <div class="row align-items-center">
-            <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
+            <div class="col-lg-12 mx-auto text-center slider-text" data-aos="fade-up">
               <h1>Swami Vivekananda Jnana Kendra</h1>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="intro-section" style="background-image: url('images/hero_1.jpg');">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
-              <h1>Swami Vivekananda Jnana Kendra</h1>
-            </div>
-          </div>
-        </div>
-      </div>
+      <?php }?>
 
     </div>
     
