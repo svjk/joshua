@@ -35,87 +35,126 @@
 
     <div></div>
 
-    <!-- <div class="site-section">
-      <div class="container">
-        <div class="row mb-5 justify-content-center text-center">
-          <div class="col-lg-4 mb-5">
-            <h2 class="section-title-underline mb-5">
-              <span>Why Academics Works</span>
-            </h2>
-          </div>
-        </div>
-        <div class="row">
-          <?php 
-          for ($i=1; $i <=3 ; $i++) { 
-          ?>
-          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-            <div class="feature-1 border">
-              <div class="icon-wrapper bg-primary">
-                <span class="flaticon-mortarboard text-white"></span>
+
+    <div class="site-section" style="background: rgb(172, 255, 82);">
+      <div class="container">        
+        <section class="search-section">
+          <form action="#" method="post" class="basic-search-form">
+            <div class="row">
+              <div class="col-md-12 ">
+                <div class="row">
+                  <div class="search-title text-center">
+                    <h3>For all your coaching needs!</h3>
+                  </div>                  
+                </div>
               </div>
-              <div class="feature-1-content">
-                <h2>Personalize Learning</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit morbi hendrerit elit</p>
-                <p><a href="#" class="btn btn-primary px-4 rounded-0">Learn More</a></p>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-3  p-0">
+                    <select class="form-control " id="">
+                      <option value="">Select</option>
+                      <option>Student one</option>
+                      <option>Faculty one</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3  p-0">
+                    <input type="text" class="form-control " placeholder="Enter Location">
+                  </div>
+                  <div class="col-md-3  p-0">
+                    <select class="form-control " id="">
+                      <option>Select Subject</option>
+                      <option>Subject 1</option>
+                      <option>Subject 2</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3  p-0">
+                    <button type="button" class="btn btn-primary">Search</button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <?php }?>
-
-        </div>
-      </div>
-    </div> -->
-
-
-    <div class="site-section">
-      <div class="container">
-
-
-        <div class="row mb-5 justify-content-center text-center">
-          <div class="col-lg-6 mb-5">
-            <h2 class="section-title-underline mb-3">
-              <span>Popular Courses</span>
-            </h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, id?</p>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-12">
-              <div class="owl-slide-3 owl-carousel">
-                <?php
-                for ($i=1; $i <=6 ; $i++) { 
-                ?>
-                  <div class="course-1-item">
-                    <figure class="thumnail">
-                      <a href="course-single.html"><img src="images/course_1.jpg" alt="Image" class="img-fluid"></a>
-                      <div class="price">$99.00</div>
-                      <div class="category"><h3>Mobile Application</h3></div>  
-                    </figure>
-                    <div class="course-1-content pb-4">
-                      <h2>How To Create Mobile Apps Using Ionic</h2>
-                      <div class="rating text-center mb-3">
-                        <span class="icon-star2 text-warning"></span>
-                        <span class="icon-star2 text-warning"></span>
-                        <span class="icon-star2 text-warning"></span>
-                        <span class="icon-star2 text-warning"></span>
-                        <span class="icon-star2 text-warning"></span>
-                      </div>
-                      <p class="desc mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique accusantium ipsam.</p>
-                      <p><a href="course-single.html" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
-                    </div>
-                  </div>
-                <?php }?>
-      
-              </div>
-      
-          </div>
-        </div>
-
-        
-        
+          </form>
+        </section>
       </div>
     </div>
+    <!-- end basic search -->
+
+    <!-- start adance search -->
+    <div class="site-section" style="background: rgb(172, 255, 82, .5);">
+      <div class="container">        
+        <section>
+          <div class="row">
+            <div class='col-md-6 col-sm-12 col-xs-6'>
+              <div class="" style="">
+                <h1 class="display-2">Get the Best <br> Quality Teachers<br> Near You</h1>
+                <br>
+                <p>
+                  Our rigourous process and review mechanism separate best from the rest. You get only quality tutors at the convenience of your home.
+                </p>
+              </div>
+            </div>
+            <!-- search panel -->
+            <div class='col-md-6 col-sm-12 col-xs-6' id="search-panel">
+              <div class='form-search' style="">
+                <div clas='search-detail' style="">
+                  <div class="form-check" style="">
+                    <input type="checkbox" class="form-check-input" id="home" checked><i class="fas fa-home" style="opacity:0.7"></i>
+                    <label class="form-check-label" for="home" style="">Home Tuition</label>
+                    <input type="checkbox" class="form-check-input" id="online"><i class="fas fa-laptop" style="opacity:0.7"></i>
+                    <label class="form-check-label" for="online" style="">Online</label>
+                    <input type="checkbox" class="form-check-input" id="center"><i class="fab fa-centercode" style="opacity:0.7"></i>
+                    <label class="form-check-label" for="center">Center</label>
+                  </div>
+                  <p id="text-info-search">High speed internet is required for online tuition.</p>
+                  <form class="form-group">
+                    <h4 class="display-4">Category</h4>
+                    <div class="form-group">
+                      <select class="form-controls">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div>
+                    <h4 class="display-4">Subject:</h4>
+                    <div class="form-group">
+                      <select class="form-controls">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div>
+                    <h4 class="display-4">Location</h4>
+                    <div class="form-group">
+                      <select class="form-controls">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                      </select>
+                    </div>
+                    <button type="submit" id="btn"  style="width:100%;margin-left:-2px;"><i class="fas fa-search"></i>&nbsp;&nbsp;Get quality teachers</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- end search panel -->
+          </div>
+        </section>
+      </div>
+    </div>
+    <!-- end advanced search -->
 
     <!-- // 05 - Block -->
   <div class="site-section">

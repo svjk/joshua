@@ -43,10 +43,10 @@
 							<a href="about.php" class="nav-link text-left">About Us</a>
 						</li>
 						<li>
-							<a href="courses.php" class="nav-link text-left">Educational Service</a>
+							<a href="#" class="nav-link text-left">Educational Service</a>
 						</li>
 						<li>
-							<a href="contact.php" class="nav-link text-left">Contact</a>
+							<a href="#" class="nav-link text-left">Contact</a>
 						</li>
 						<!-- <li class="has-children">
 							<a href="about.php" class="nav-link text-left">About Us</a>
