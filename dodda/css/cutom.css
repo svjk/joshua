@@ -254,12 +254,31 @@
     opacity: 0;
     background: #fda638; }
 
+.achivement-section .overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: .3;
+  background: #000;
+  /*background-image: linear-gradient(to right bottom, #04fd5a, #00ecbc, #00d2ff, #00afff, #0083ff, #8e6cf2, #cc4ad3, #f400a4, #ff3074, #ff6e46, #ffa614, #f2d607);*/
+}
+
 .ftco-counter {
   overflow-x: hidden;
   position: relative; }
   @media (max-width: 1199.98px) {
     .ftco-counter {
       background-position: top center !important; } }
+  .ftco-counter .heading-section{
+    color: #fff;
+  }
+  .ftco-counter .heading-section p{
+    color: rgb(255, 255, 255, .9);
+  }
   .ftco-counter .icon span {
     font-size: 50px;
     color: #000000;
@@ -272,12 +291,12 @@
   .ftco-counter .text strong.number {
     font-weight: 500;
     font-size: 50px;
-    color: #1eaaf1;
+    color: #fff;
     display: block; }
   .ftco-counter .text span {
     display: block;
     font-size: 16px;
-    color: rgba(0, 0, 0, 0.8); }
+    color: rgba(255, 255, 255, .9); }
   @media (max-width: 767.98px) {
     .ftco-counter .counter-wrap {
       margin-bottom: 20px; } }
@@ -294,3 +313,25 @@
 @media (max-width: 991.98px) {
   .ftco-consult {
     background-position: top center !important; } }
+
+.searched-title{
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 0px;
+  text-transform: uppercase;
+  font-size: 15px;
+}
+.tutorial-list-section{
+  background: rgb(248, 249, 250);
+  padding: 10px;
+}
+.tutorial-list-section .tuterial-list{
+  background: transparent;
+  padding: 5px;
+  border: 1px solid rgb(0,0,0, .1);
+  border-radius: 15px;
+  margin-bottom: 10px;
+  -webkit-box-shadow: 0px 0px 10px -4px rgba(74,69,74,1);
+-moz-box-shadow: 0px 0px 10px -4px rgba(74,69,74,1);
+box-shadow: 0px 0px 10px -4px rgba(74,69,74,1);
+}

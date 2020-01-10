@@ -3,7 +3,6 @@
 
 <head>
   <?php include 'head_links.php'; ?>
-
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -176,7 +175,7 @@
     <!-- searched results -->
     <div class="site-section">
       <div class="container">
-        <section>
+        <section class="results-section">
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-4">
@@ -185,22 +184,54 @@
                 </div>
               </div>
               <div class="col-md-8"> 
-                <div class="tutorial-list" style="border: 1px solid #000;height: 550px;">
-                  <section class="" >
+                <section class="tutorial-list-section">
+                  <div class="col-md-12">
                     <div class="row">
                       <div class="col-md-12">
-                        <div class="result-title">
-                          <h5>Home Tution</h5>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="">
-                          <h5>List Goes here</h5>
+                        <div class="searched-title">
+                          <h5>
+                            Searched Result Title
+                          </h5>
                         </div>
                       </div>
                     </div>
-                  </section>
-                </div>
+                  </div>
+                  <div class="col-md-12">
+                    <?php
+                    for ($i=1; $i <=3 ; $i++) { 
+                    ?>
+                    <div class="row tuterial-list">
+                      <div class="col-md-2">
+                        <img src="images/person_2.jpg" class="img img-rounded img-fluid" style="border-radius: 50%;">
+                        <p>
+                          <i class="fa fa-map-marker"></i> Addrees
+                        </p>
+                      </div>
+                      <div class="col-md-10">
+                        <p>
+                          <a class="float-left" href="#">
+                            <strong>Maniruzzaman Akash</strong>
+                            <small class="btn btn-sm btn-info">ID Number</small>
+                          </a>
+
+                          <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                          <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                          <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                          <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                          <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                        </p>
+                        <div class="clearfix"></div>
+                        <p>Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <p>
+                          <a class="float-right btn btn-outline-primary ml-2"> <i class="fa fa-reply"></i> More action</a>  
+                          <a class="float-right btn btn-outline-primary ml-2"> <i class="fa fa-reply"></i> Get Tuter</a>
+                          <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i>Like</a>
+                        </p>
+                      </div>
+                    </div>
+                    <?php }?>
+                  </div>
+                </section>
               </div>
             </div>
           </div>
@@ -210,60 +241,59 @@
     <!-- end searched results -->
 
     <!-- achivements section -->
-    <div class="site-section" style="background-image: url(images/bg_4.jpg);" data-stellar-background-ratio="0.5">
+    <div class="site-section achivement-section" style="background-image: url(images/bg_4.jpg);" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
       <div class="container">
         <section class="ftco-section ftco-counter img" id="section-counter">
-          <div class="container">
-            <div class="row justify-content-center mb-5 pb-2">
-              <div class="col-md-8 text-center heading-section heading-section-black ftco-animate">
-                <h2 class="mb-4"><span> Years of</span> Experience</h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-              </div>
-            </div>  
-            <div class="row d-md-flex align-items-center justify-content-center">
-              <div class="col-lg-10">
-                <div class="row d-md-flex align-items-center">
-                  <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-                    <div class="block-18">
-                      <div class="icon"><span class="flaticon-doctor"></span></div>
-                      <div class="text">
-                        <strong class="number" data-number="18">0</strong>
-                        <span>Certified Teachers</span>
-                      </div>
+          <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-8 text-center heading-section heading-section-black ftco-animate">
+              <h2 class="mb-4"><span>5 Years of</span> Experience</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </div>
+          </div>
+          <div class="row d-md-flex align-items-center justify-content-center">
+            <div class="col-lg-10">
+              <div class="row d-md-flex align-items-center">
+                <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                  <div class="block-18">
+                    <div class="icon"><span class="flaticon-doctor"></span></div>
+                    <div class="text">
+                      <strong class="number" data-number="18">0</strong>
+                      <span>Certified Teachers</span>
                     </div>
                   </div>
-                  <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-                    <div class="block-18">
-                      <div class="icon"><span class="flaticon-doctor"></span></div>
-                      <div class="text">
-                        <strong class="number" data-number="351">0</strong>
-                        <span>Successful Kids</span>
-                      </div>
+                </div>
+                <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                  <div class="block-18">
+                    <div class="icon"><span class="flaticon-doctor"></span></div>
+                    <div class="text">
+                      <strong class="number" data-number="351">0</strong>
+                      <span>Successful Kids</span>
                     </div>
                   </div>
-                  <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-                    <div class="block-18">
-                      <div class="icon"><span class="flaticon-doctor"></span></div>
-                      <div class="text">
-                        <strong class="number" data-number="564">0</strong>
-                        <span>Happy Parents</span>
-                      </div>
+                </div>
+                <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                  <div class="block-18">
+                    <div class="icon"><span class="flaticon-doctor"></span></div>
+                    <div class="text">
+                      <strong class="number" data-number="564">0</strong>
+                      <span>Happy Parents</span>
                     </div>
                   </div>
-                  <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-                    <div class="block-18">
-                      <div class="icon"><span class="flaticon-doctor"></span></div>
-                      <div class="text">
-                        <strong class="number" data-number="300">0</strong>
-                        <span>Awards Won</span>
-                      </div>
+                </div>
+                <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                  <div class="block-18">
+                    <div class="icon"><span class="flaticon-doctor"></span></div>
+                    <div class="text">
+                      <strong class="number" data-number="300">0</strong>
+                      <span>Awards Won</span>
                     </div>
                   </div>
                 </div>
