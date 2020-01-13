@@ -1,5 +1,22 @@
 <?php
 include 'db_config.php';
+// ******* Select Class Category ********
+$selectClassCategory = "SELECT * FROM classnames";
+$fetchCategory = mysqli_query($db_connect, $selectClassCategory);
+$classCategoryArray = array();
+while ($row = mysqli_fetch_array($fetchCategory)) {
+	$classCategoryArray[] = $row;
+}
+// ******* End Class Category ************
+// ******* Start Select Subjects List ****
+$selectSubject = "SELECT * FROM subjects";
+$fetchSubjects = mysqli_query($db_connect, $selectSubject);
+$subjectsArray = array();
+while ($row = mysqli_fetch_array($fetchSubjects)) {
+	$subjectsArray[] = $row;
+}
+// *******	End Subjects List *************
+
 if (isset($_POST['advSearchBtn'])) {
 	$loc = $_POST['location'];
 	$qfication = $_POST['qualification'];

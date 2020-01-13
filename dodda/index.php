@@ -1,3 +1,6 @@
+<?php
+  include './db/selects.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -128,28 +131,38 @@
                           <div class="col-md-12">
                             <div class="form-group">
                               <label>Category</label>
-                              <select class="form-control">
+                              <select class="form-control"  name="class_category" id="" onchange="fetchsubject(this.value);">
                                 <option value="">Select Category</option>
-                                <option value="">Category List</option>
+                                <?php
+                                foreach ($classCategoryArray as $classCategory) {
+                                ?>
+                                <option value="<?php echo $classCategory['ID'] ?>">
+                                  <?php echo $classCategory['Classes'] ?>
+                                </option>
+                                <?php }?>
                               </select>
                             </div>
                           </div>
                           <div class="col-md-12">
                             <div class="form-group">
                               <label>Subject</label>
-                              <select class="form-control">
+                              <select class="form-control" name="subject_list" id="subject_list">
                                 <option value="">Select Subject</option>
-                                <option value="">Subject List</option>
+                                <?php
+                                foreach ($subjectsArray as $subjects) {
+                                ?>
+                                <option value="<?php echo $subjects['id'] ?>">
+                                  <?php echo $subjects['Subject'] ?>
+                                </option>
+                                <?php  }?>
                               </select>
                             </div>
                           </div>
                           <div class="col-md-12">
                             <div class="form-group">
                               <label>Location</label>
-                              <select class="form-control">
-                                <option value="">Select Location</option>
-                                <option value="">Location List</option>
-                              </select>
+                              <p><button class="btn btn-primary"><i class="fa fa-map-marker"></i> Get</button> - OR - Type it yourself</p>
+                              <input type="text" class="form-control" name="">
                             </div>
                           </div>
                           <div class="col-md-12">
@@ -352,7 +365,18 @@
 </body>
 
 </html>
-
+<script type="text/javascript">
+  function fetchsubject(val) {
+    $.ajax({
+      type: "POST",
+      url: "./db/fetch.php",
+      data:'ID='+val,
+      success: function(data){
+        $("#subject_list").html(data);
+      }
+    });
+  }
+</script>
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBM_uULzojkkhIew706uqwf8KG75oEVuDQ  &callback=initMap">
 </script><script>function initMap() {
