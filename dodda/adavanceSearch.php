@@ -53,10 +53,10 @@ include './db/selects.php';
 												<select class="form-control" name="subject">
 													<option value="">Select</option>
 													<?php
-													foreach ($subjectArray as $subject) {
+													foreach ($subjectsArray as $subject) {
 													?>
-													<option value="<?php echo $subject['subject_id'] ?>">
-														<?php echo $subject['subject_name'] ?>
+													<option value="<?php echo $subject['ID'] ?>">
+														<?php echo $subject['Subject'] ?>
 													</option>
 													<?php }?>
 												</select>
@@ -125,7 +125,7 @@ include './db/selects.php';
 					<tr>
 						<td><?php echo $searchedTutors['tutor_name'] ?></td>
 						<td><?php echo $searchedTutors['qualification_name'] ?></td>
-						<td><?php echo $searchedTutors['subject_name'] ?></td>
+						<td><?php echo $searchedTutors['Subject'] ?></td>
 						<td><?php echo $searchedTutors['gender_name'] ?></td>
 						<td><?php echo $searchedTutors['experience_name'] ?></td>
 						<td><?php echo $searchedTutors['tutor_location'] ?></td>
@@ -158,7 +158,7 @@ include './db/selects.php';
 			<tr>
 				<td><?php echo $allTutors['tutor_name'] ?></td>
 				<td><?php echo $allTutors['qualification_name'] ?></td>
-				<td><?php echo $allTutors['subject_name'] ?></td>
+				<td><?php echo $allTutors['Subject'] ?></td>
 				<td><?php echo $allTutors['gender_name'] ?></td>
 				<td><?php echo $allTutors['experience_name'] ?></td>
 				<td><?php echo $allTutors['tutor_location'] ?></td>

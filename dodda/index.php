@@ -38,6 +38,120 @@
     <div></div>
 
 
+    
+
+    <!-- start medium search -->
+    <div class="site-section medium-search">
+      <div class="container">        
+        <section class="">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6" style="">
+                <div class="medium-search-title">
+                  <h3>
+                    Get the Best <br> Quality Teachers<br> Near You
+                  </h3>
+                  <p>
+                    Our rigourous process and review mechanism separate best from the rest. You get only quality tutors at the convenience of your home.
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="search-panel">
+                  <form action="adavanceSearch.php" method="POST" class="">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <?php
+                        $i = 0;
+                        foreach ($teachingModeArray as $teachingMode) {
+                          $i++;
+                        ?>
+                        <div class="col-md-3">
+                          <div class="form-group form-check">                             
+                            <label class="form-check-label checkbox-labels" for="">
+                              <input type="checkbox" name="teach_mode" class="form-check-input" id="" <?php if ($i==1) {echo "checked";}?>> <i class="fas fa-home"></i> <?php echo $teachingMode['teaching_mode_name'] ?>
+                            </label>
+                          </div>
+                        </div>
+                        <?php }?>
+                        <!-- <div class="col-md-4">
+                          <div class="form-group form-check">
+                            <label class="form-check-label checkbox-labels" for="online">
+                              <input type="checkbox" class="form-check-input" id="online"> <i class="fas fa-laptop" style=""></i> Online
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group form-check">                            
+                            <label class="form-check-label checkbox-labels" for="center">
+                              <input type="checkbox" class="form-check-input" id="center"> <i class="fab fa-centercode" style=""></i> Center
+                            </label>
+                          </div>
+                        </div> -->
+                        <div class="col-md-12">
+                          <p class="text-center note-for-online">
+                            <small>High speed internet is required for online tuition.</small>
+                          </p>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label>Category</label>
+                              <select class="form-control"  name="class_category" id="" onchange="fetchSubjects(this.value);">
+                                <option value="">Select Category</option>
+                                <?php
+                                foreach ($classCategoryArray as $classCategory) {
+                                ?>
+                                <option value="<?php echo $classCategory['ID'] ?>">
+                                  <?php echo $classCategory['Classes'] ?>
+                                </option>
+                                <?php }?>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label>Subject</label>
+                              <select class="form-control" name="subject_list" id="subject_list">
+                                <!-- <option value="">Select Subject</option>
+                                <?php
+                                foreach ($subjectsArray as $subjects) {
+                                ?>
+                                <option value="<?php echo $subjects['id'] ?>">
+                                  <?php echo $subjects['Subject'] ?>
+                                </option>
+                                <?php  }?> -->
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label>Location</label>
+                              <p><button class="btn btn-primary"><i class="fa fa-map-marker"></i> Get</button> - OR - Type it yourself</p>
+                              <input type="text" class="form-control" name="location" placeholder="Enter Location">
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="text-center">
+                              <button class="btn btn-primary" name="mediumSearchBtn">
+                                <i class="fas fa-search"></i> Get quality teachers
+                              </button>
+                            </div>
+                          </div>
+                        </div>                        
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <!-- end medium search -->
+
+    <!-- start basic search -->
     <div class="site-section basic-search" style="">
       <div class="container">        
         <section class="search-section">
@@ -79,111 +193,6 @@
       </div>
     </div>
     <!-- end basic search -->
-
-    <!-- start medium search -->
-    <div class="site-section medium-search">
-      <div class="container">        
-        <section class="">
-          <div class="col-md-12">
-            <div class="row">
-              <div class="col-md-6" style="">
-                <div class="medium-search-title">
-                  <h3>
-                    Get the Best <br> Quality Teachers<br> Near You
-                  </h3>
-                  <p>
-                    Our rigourous process and review mechanism separate best from the rest. You get only quality tutors at the convenience of your home.
-                  </p>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="search-panel">
-                  <form action="" method="" class="">
-                    <div class="col-md-12">
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div class="form-group form-check">                             
-                            <label class="form-check-label checkbox-labels" for="home">
-                              <input type="checkbox" class="form-check-input" id="home" checked> <i class="fas fa-home" style=""></i> Home Tuition
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="form-group form-check">
-                            <label class="form-check-label checkbox-labels" for="online">
-                              <input type="checkbox" class="form-check-input" id="online"> <i class="fas fa-laptop" style=""></i> Online
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="form-group form-check">                            
-                            <label class="form-check-label checkbox-labels" for="center">
-                              <input type="checkbox" class="form-check-input" id="center"> <i class="fab fa-centercode" style=""></i> Center
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <p class="text-center note-for-online">
-                            <small>High speed internet is required for online tuition.</small>
-                          </p>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <label>Category</label>
-                              <select class="form-control"  name="class_category" id="" onchange="fetchsubject(this.value);">
-                                <option value="">Select Category</option>
-                                <?php
-                                foreach ($classCategoryArray as $classCategory) {
-                                ?>
-                                <option value="<?php echo $classCategory['ID'] ?>">
-                                  <?php echo $classCategory['Classes'] ?>
-                                </option>
-                                <?php }?>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <label>Subject</label>
-                              <select class="form-control" name="subject_list" id="subject_list">
-                                <option value="">Select Subject</option>
-                                <?php
-                                foreach ($subjectsArray as $subjects) {
-                                ?>
-                                <option value="<?php echo $subjects['id'] ?>">
-                                  <?php echo $subjects['Subject'] ?>
-                                </option>
-                                <?php  }?>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <label>Location</label>
-                              <p><button class="btn btn-primary"><i class="fa fa-map-marker"></i> Get</button> - OR - Type it yourself</p>
-                              <input type="text" class="form-control" name="">
-                            </div>
-                          </div>
-                          <div class="col-md-12">
-                            <div class="text-center">
-                              <button class="btn btn-primary">
-                                <i class="fas fa-search"></i> Get quality teachers
-                              </button>
-                            </div>
-                          </div>
-                        </div>                        
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-    <!-- end medium search -->
 
     <!-- searched results -->
     <div class="site-section">
@@ -366,7 +375,7 @@
 
 </html>
 <script type="text/javascript">
-  function fetchsubject(val) {
+  function fetchSubjects(val) {
     $.ajax({
       type: "POST",
       url: "./db/fetch.php",
