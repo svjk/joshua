@@ -58,7 +58,7 @@
               </div>
               <div class="col-md-6">
                 <div class="search-panel">
-                  <form action="adavanceSearch.php" method="POST" class="">
+                  <form action="" method="POST" class="">
                     <div class="col-md-12">
                       <div class="row">
                         <?php
@@ -155,7 +155,7 @@
     <div class="site-section basic-search" style="">
       <div class="container">        
         <section class="search-section">
-          <form action="#" method="post" class="basic-search-form">
+          <form action="" method="post" class="basic-search-form">
             <div class="row">
               <div class="col-md-12 ">
                 <div class="search-title text-center">
@@ -167,8 +167,8 @@
                   <div class="col-md-3  p-0">
                     <select class="form-control search-slt search-field-1" id="">
                       <option value="">Select</option>
-                      <option>Student one</option>
-                      <option>Faculty one</option>
+                      <option>Student</option>
+                      <option>Faculty</option>
                     </select>
                   </div>
 

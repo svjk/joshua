@@ -24,27 +24,67 @@ while ($row = mysqli_fetch_array($fetchTeachingModes)) {
 	$teachingModeArray[] = $row;
 }
 // *******	End Select Teaching Modes ****
+// *******	Select User Types ********
+$selectUserTypes = "SELECT * FROM usertype";
+$fetchUserTypes = mysqli_query($db_connect, $selectUserTypes);
+$userTypesArray = array();
+while ($row = mysqli_fetch_array($fetchUserTypes)) {
+	$userTypesArray[] = $row;
+}
+// *******	End Select User Types ****
 
-// **********	Start Medium Search Form ********
-if (isset($_POST['mediumSearchBtn'])) {
-	$teachimgModeId = $_POST['teach_mode'];
-	$classCategoryId = $_POST['class_category'];
-	$subjectId = $_POST['subject_list'];
-	$tutorLocation = $_POST['location'];
+// ********** Strat Basic Search *************
+if (isset($_POST['basicSearchBtn'])) {
+	$uType = $_POST['user_type'];
+	$basicSearchLoc = $_POST['location'];
+	$subjectID = $_POST['subject_id'];
 
-	$searchTutors = "
-	SELECT tut.tutor_id, tut.tutor_name, qf.qualification_name, sb.Subject, gr.gender_name, exp.experience_name, tut.tutor_location 
-	FROM tutors AS tut, qualifications AS qf, subjects AS sb, gender AS gr, experience AS exp 
-	WHERE tut.qualification_id=qf.qualification_id AND tut.subject_id=sb.ID AND tut.gender_id=gr.gender_id AND tut.experience_id=exp.experience_id AND tut.teaching_mode_id='$teachimgModeId' AND tut.classnames_id='$classCategoryId' AND tut.subject_id='$subjectId' AND tut.tutor_location='$tutorLocation' " ;
-	$searchedTutors = mysqli_query($db_connect, $searchTutors);
-	if (mysqli_num_rows($searchedTutors)>=1) {
-		$searchedTutorsArray = array();
-		while ($row = mysqli_fetch_array($searchedTutors)) {
-			$searchedTutorsArray[] = $row;
+	if ($uType == 4) {
+		$searchTutor = "
+		SELECT tut.tutor_id, tut.tutor_name AS searchedname, qf.qualification_name, sb.Subject, gr.gender_name, exp.experience_name, tut.tutor_location AS searchedlocation 
+		FROM tutors AS tut, qualifications AS qf, subjects AS sb, gender AS gr, experience AS exp 
+		WHERE tut.qualification_id=qf.qualification_id AND tut.subject_id=sb.ID AND tut.gender_id=gr.gender_id AND tut.experience_id=exp.experience_id AND tut.tutor_location='$basicSearchLoc' AND tut.subject_id='$subjectID' ";
+		$fetchTutor = mysqli_query($db_connect, $searchTutor);
+		$basicSearchedArray = array();
+		while ($row = mysqli_fetch_array($fetchTutor)) {
+			$basicSearchedArray[] = $row;
+		}
+	}
+	else if ($uType == 3) {
+		$searchStudents = "
+		SELECT st.Name AS searchedname, st.ParentName, sb.Subject, gr.gender_name, br.Boards, st.student_location AS searchedlocation 
+		FROM student AS st, subjects AS sb, gender AS gr, boards AS br
+		WHERE st.Subject=sb.ID AND st.gender_id=gr.gender_id AND st.board_id=br.ID AND st.student_location='$basicSearchLoc' AND st.Subject='$subjectID' ";
+		
+		$fetchStudents = mysqli_query($db_connect, $searchStudents);
+		$basicSearchedArray = array();
+		while ($row = mysqli_fetch_array($fetchStudents)) {
+			$basicSearchedArray[] = $row;
 		}
 	}
 }
-// **********	End Medium Search Form **********
+// ********** End Basic Search ***************
+
+// ********** Start Medium Search Form ********
+if (isset($_POST['mediumSearchBtn'])) {
+  $teachimgModeId = $_POST['teach_mode'];
+  $classCategoryId = $_POST['class_category'];
+  $subjectId = $_POST['subject_list'];
+  $tutorLocation = $_POST['location'];
+
+  $searchTutors = "
+  SELECT tut.tutor_id, tut.tutor_name, qf.qualification_name, sb.Subject, gr.gender_name, exp.experience_name, tut.tutor_location 
+  FROM tutors AS tut, qualifications AS qf, subjects AS sb, gender AS gr, experience AS exp 
+  WHERE tut.qualification_id=qf.qualification_id AND tut.subject_id=sb.ID AND tut.gender_id=gr.gender_id AND tut.experience_id=exp.experience_id AND tut.teaching_mode_id='$teachimgModeId' AND tut.classnames_id='$classCategoryId' AND tut.subject_id='$subjectId' AND tut.tutor_location='$tutorLocation' " ;
+  $searchedTutors = mysqli_query($db_connect, $searchTutors);
+  if (mysqli_num_rows($searchedTutors)>=1) {
+    $midiumSearchedArray = array();
+    while ($row = mysqli_fetch_array($searchedTutors)) {
+      $midiumSearchedArray[] = $row;
+    }
+  }
+}
+// ********** End Medium Search Form **********
 
 if (isset($_POST['advSearchBtn'])) {
 	$loc = $_POST['location'];

@@ -14,6 +14,170 @@ include './db/selects.php';
 			<div class="row">
 				<div class="col-md-12">
 					<div class="text-center">
+						<h3>Basic Search</h3>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<form action="" method="POST">
+						<table class="table table-bordered">
+							<tr>
+								<th>Select User Type</th>
+								<th>Enter Location</th>
+								<th>Select Subject</th>
+							</tr>
+							<tr>
+								<td>
+									<select class="form-control" name="user_type">
+										<option value="">Select</option>
+										<?php
+										foreach ($userTypesArray as $userTypes) {
+										?>
+										<option value="<?php echo $userTypes['ID'] ?>">
+											<?php echo $userTypes['UserType'] ?>
+										</option>
+										<?php }?>
+									</select>
+								</td>
+								<td><input type="text" class="form-control" name="location"></td>
+								<td>
+									<select class="form-control" name="subject_id">
+										<option value="">Select</option>
+										<?php
+										foreach ($subjectsArray as $subjects){
+											?>
+											<option value="<?php echo $subjects['ID'] ?>">
+												<?php echo $subjects['Subject'] ?>
+											</option>
+										<?php }?>
+									</select>
+								</td>
+								<td>
+									<button class="btn btn-primary" name="basicSearchBtn">Search</button>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+				<div class="col-md-12">
+					<div class="text-center"><h3>Basic Search Results</h3></div>
+				</div>
+				<div class="col-md-12">
+					<table class="table table-bordered">
+						<tr>
+							<th>Student/Tutor Name</th>
+							<th>Subject</th>
+							<th>Location</th>
+						</tr>
+						<?php
+						foreach ($basicSearchedArray as $basicSearched) {
+						?>
+						<tr>
+							<td><?php echo $basicSearched['searchedname'] ?></td>
+							<td><?php echo $basicSearched['Subject'] ?></td>
+							<td><?php echo $basicSearched['searchedlocation'] ?></td>
+						</tr>
+						<?php }?>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section style="padding: 20px;background: #fff;">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="text-center">
+						<h3>Medium Search</h3>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<form action="" method="POST">
+						<table class="table table-bordered">
+							<tr>
+								<th>Teaching Mode</th>
+								<th>Class Category</th>
+								<th>Subjects</th>
+								<th>Location</th>
+								<th></th>
+							</tr>
+							<tr>
+								<td>
+									<select class="form-control" name="teach_mode">
+										<option value="">Select</option>
+										<?php
+										foreach ($teachingModeArray as $teachingMode){
+											?>
+											<option value="<?php echo $teachingMode['teaching_mode_id'] ?>">
+												<?php echo $teachingMode['teaching_mode_name'] ?>
+											</option>
+										<?php }?>
+									</select>
+								</td>
+								<td>
+									<select class="form-control" name="class_category">
+										<option value="">Select</option>
+										<?php
+										foreach ($classCategoryArray as $classCategory){
+											?>
+											<option value="<?php echo $classCategory['ID'] ?>">
+												<?php echo $classCategory['Classes'] ?>
+											</option>
+										<?php }?>
+									</select>
+								</td>	
+								<td>
+									<select class="form-control" name="subject_list">
+										<option value="">Select</option>
+										<?php
+										foreach ($subjectsArray as $subjects){
+											?>
+											<option value="<?php echo $subjects['ID'] ?>">
+												<?php echo $subjects['Subject'] ?>
+											</option>
+										<?php }?>
+									</select>
+								</td>
+								<td><input type="text" class="form-control" name="location"></td>
+								<td>
+									<button class="btn btn-primary" name="mediumSearchBtn">
+										Get Quality Teacher
+									</button>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+				<div class="col-md-12">
+					<div class="text-center"><h3>Medium Search Results</h3></div>
+				</div>
+				<div class="col-md-12">
+					<table class="table table-bordered">
+						<tr>
+							<th>Teaching Mode</th>
+							<th>Class Category</th>
+							<th>Subjects</th>
+							<th>Location</th>
+						</tr>
+						<?php
+						foreach ($midiumSearchedArray as $midiumSearched) {
+						?>
+						<tr>
+							<td><?php echo $midiumSearched['tutor_name'] ?></td>
+							<td><?php echo $midiumSearched['qualification_name'] ?></td>
+							<td><?php echo $midiumSearched['Subject'] ?></td>
+							<td><?php echo $midiumSearched['tutor_location'] ?></td>
+						</tr>
+						<?php }?>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section style="padding: 20px;background: #fff;">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="text-center">
 						<h3>Search Tutors</h3>
 					</div>
 				</div>
@@ -26,7 +190,7 @@ include './db/selects.php';
 										<tr>
 											<th>Location</th>
 											<th>Qualification</th>
-											<th>Subject</th>									
+											<th>Subject</th>							
 											<th>Gender</th>
 											<th>Exerieance</th>
 											<th></th>
