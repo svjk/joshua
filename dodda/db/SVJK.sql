@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Aug 03, 2019 at 01:09 PM
--- Server version: 5.7.27-0ubuntu0.18.04.1
--- PHP Version: 7.2.19-0ubuntu0.18.04.1
+-- Host: 127.0.0.1
+-- Generation Time: Jan 18, 2020 at 05:03 PM
+-- Server version: 10.4.10-MariaDB
+-- PHP Version: 7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `SVJK`
+-- Database: `svjk`
 --
 
 DELIMITER $$
@@ -35,7 +35,7 @@ insert into users (username) values ('something');
 end$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp1` (IN `name` VARCHAR(255))  BEGIN
-	UPDATE Location SET Location = "smg1";
+  UPDATE Location SET Location = "smg1";
 END$$
 
 DELIMITER ;
@@ -43,20 +43,43 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `BlockDate`
+-- Table structure for table `address_proofs`
 --
 
-CREATE TABLE `BlockDate` (
+CREATE TABLE `address_proofs` (
+  `address_proof_id` int(11) NOT NULL,
+  `address_proof_name` varchar(300) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `area_list`
+--
+
+CREATE TABLE `area_list` (
+  `area_id` int(11) NOT NULL,
+  `area_name` varchar(300) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blockdate`
+--
+
+CREATE TABLE `blockdate` (
   `ID` int(11) NOT NULL,
   `UserID` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `BlockDate`
+-- Dumping data for table `blockdate`
 --
 
-INSERT INTO `BlockDate` (`ID`, `UserID`, `date`) VALUES
+INSERT INTO `blockdate` (`ID`, `UserID`, `date`) VALUES
 (7, 55, '2019-05-03'),
 (8, 55, '2019-05-14'),
 (9, 55, '2019-05-17'),
@@ -119,19 +142,19 @@ INSERT INTO `BlockDate` (`ID`, `UserID`, `date`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Boards`
+-- Table structure for table `boards`
 --
 
-CREATE TABLE `Boards` (
+CREATE TABLE `boards` (
   `ID` int(11) NOT NULL,
   `Boards` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Boards`
+-- Dumping data for table `boards`
 --
 
-INSERT INTO `Boards` (`ID`, `Boards`) VALUES
+INSERT INTO `boards` (`ID`, `Boards`) VALUES
 (1, 'CBSE'),
 (2, 'ICSE'),
 (3, 'IB/CGSE'),
@@ -144,20 +167,20 @@ INSERT INTO `Boards` (`ID`, `Boards`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `BoardsTaught`
+-- Table structure for table `boardstaught`
 --
 
-CREATE TABLE `BoardsTaught` (
+CREATE TABLE `boardstaught` (
   `ID` int(11) NOT NULL,
   `UserID` int(11) DEFAULT NULL,
   `Boards` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `BoardsTaught`
+-- Dumping data for table `boardstaught`
 --
 
-INSERT INTO `BoardsTaught` (`ID`, `UserID`, `Boards`) VALUES
+INSERT INTO `boardstaught` (`ID`, `UserID`, `Boards`) VALUES
 (1, 55, 'IB/IGSE'),
 (2, 55, 'CBSE'),
 (3, 55, 'IB/IGSE'),
@@ -184,10 +207,22 @@ INSERT INTO `BoardsTaught` (`ID`, `UserID`, `Boards`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Classes`
+-- Table structure for table `city_list`
 --
 
-CREATE TABLE `Classes` (
+CREATE TABLE `city_list` (
+  `city_id` int(11) NOT NULL,
+  `city_name` varchar(250) DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `classes`
+--
+
+CREATE TABLE `classes` (
   `ID` int(11) NOT NULL,
   `Subject` int(11) DEFAULT NULL,
   `UserID` int(11) DEFAULT NULL,
@@ -198,14 +233,14 @@ CREATE TABLE `Classes` (
   `ClassEndTime` datetime DEFAULT NULL,
   `Status` int(11) DEFAULT NULL,
   `Date` date NOT NULL,
-  `Display` int(11) NOT NULL DEFAULT '1'
+  `Display` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Classes`
+-- Dumping data for table `classes`
 --
 
-INSERT INTO `Classes` (`ID`, `Subject`, `UserID`, `StudentID`, `TimeSlot`, `Duration`, `ClassStartTime`, `ClassEndTime`, `Status`, `Date`, `Display`) VALUES
+INSERT INTO `classes` (`ID`, `Subject`, `UserID`, `StudentID`, `TimeSlot`, `Duration`, `ClassStartTime`, `ClassEndTime`, `Status`, `Date`, `Display`) VALUES
 (6, 2, 47, 1, 3, '3', '2019-03-25 17:55:21', '2019-03-25 17:58:26', 3, '2019-03-28', 1),
 (7, 2, 47, 2, 3, '0', '2019-03-26 21:27:26', '2019-03-26 21:27:39', 5, '2019-03-30', 1),
 (8, 2, 55, 3, 3, '16', '2019-04-26 22:12:27', '2019-04-28 01:16:44', 3, '2019-03-31', 0),
@@ -314,20 +349,20 @@ INSERT INTO `Classes` (`ID`, `Subject`, `UserID`, `StudentID`, `TimeSlot`, `Dura
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ClassesTaught`
+-- Table structure for table `classestaught`
 --
 
-CREATE TABLE `ClassesTaught` (
+CREATE TABLE `classestaught` (
   `ID` int(11) NOT NULL,
   `UserID` int(11) DEFAULT NULL,
   `ClassNames` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ClassesTaught`
+-- Dumping data for table `classestaught`
 --
 
-INSERT INTO `ClassesTaught` (`ID`, `UserID`, `ClassNames`) VALUES
+INSERT INTO `classestaught` (`ID`, `UserID`, `ClassNames`) VALUES
 (3, 55, 'Class VI to VIII'),
 (4, 55, 'Class I to V'),
 (5, 55, 'Class VI to VIII'),
@@ -350,41 +385,47 @@ INSERT INTO `ClassesTaught` (`ID`, `UserID`, `ClassNames`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ClassNames`
+-- Table structure for table `classnames`
 --
 
-CREATE TABLE `ClassNames` (
+CREATE TABLE `classnames` (
   `ID` int(11) NOT NULL,
   `Classes` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ClassNames`
+-- Dumping data for table `classnames`
 --
 
-INSERT INTO `ClassNames` (`ID`, `Classes`) VALUES
-(1, '1to5'),
-(2, '6to8'),
-(3, '9to10'),
-(4, '11to12');
+INSERT INTO `classnames` (`ID`, `Classes`) VALUES
+(1, 'KG Class'),
+(2, '1-4th Primary'),
+(3, '5-7th Middle Class'),
+(4, '8-10th High School'),
+(5, '11-12th Pre-University College'),
+(6, 'College (Degree)'),
+(7, 'Post Graduate (PG)'),
+(8, 'Entrance Exams (IIT/NEET etc)'),
+(9, 'Programming Languages (C, C++, Java, Python etc)'),
+(10, 'Natural Languages (Kannada, Hindi, English, French)');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ClassStatus`
+-- Table structure for table `classstatus`
 --
 
-CREATE TABLE `ClassStatus` (
+CREATE TABLE `classstatus` (
   `ID` int(11) NOT NULL,
   `Status` varchar(255) DEFAULT NULL,
   `D_Description` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ClassStatus`
+-- Dumping data for table `classstatus`
 --
 
-INSERT INTO `ClassStatus` (`ID`, `Status`, `D_Description`) VALUES
+INSERT INTO `classstatus` (`ID`, `Status`, `D_Description`) VALUES
 (1, 'Approved', 'When parent OTP is done'),
 (2, 'Started', 'Class Started'),
 (3, 'Ended', 'Class ended'),
@@ -395,10 +436,10 @@ INSERT INTO `ClassStatus` (`ID`, `Status`, `D_Description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ClassSubjectsTaught`
+-- Table structure for table `classsubjectstaught`
 --
 
-CREATE TABLE `ClassSubjectsTaught` (
+CREATE TABLE `classsubjectstaught` (
   `ID` int(11) NOT NULL,
   `UserID` int(11) DEFAULT NULL,
   `ClassNames` varchar(255) DEFAULT NULL,
@@ -406,10 +447,10 @@ CREATE TABLE `ClassSubjectsTaught` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ClassSubjectsTaught`
+-- Dumping data for table `classsubjectstaught`
 --
 
-INSERT INTO `ClassSubjectsTaught` (`ID`, `UserID`, `ClassNames`, `Subjects`) VALUES
+INSERT INTO `classsubjectstaught` (`ID`, `UserID`, `ClassNames`, `Subjects`) VALUES
 (27, 55, 'Class I to V', 'Hindi'),
 (28, 55, 'Class I to V', 'EVS/Social Studies'),
 (29, 55, 'Class VI to VIII', 'Science'),
@@ -437,20 +478,20 @@ INSERT INTO `ClassSubjectsTaught` (`ID`, `UserID`, `ClassNames`, `Subjects`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ClassTimeSlots`
+-- Table structure for table `classtimeslots`
 --
 
-CREATE TABLE `ClassTimeSlots` (
+CREATE TABLE `classtimeslots` (
   `ID` int(11) NOT NULL,
   `StartTime` varchar(255) DEFAULT NULL,
   `EndTime` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ClassTimeSlots`
+-- Dumping data for table `classtimeslots`
 --
 
-INSERT INTO `ClassTimeSlots` (`ID`, `StartTime`, `EndTime`) VALUES
+INSERT INTO `classtimeslots` (`ID`, `StartTime`, `EndTime`) VALUES
 (1, '6am', '7am'),
 (2, '7am', '8am'),
 (3, '8am', '9am'),
@@ -470,10 +511,10 @@ INSERT INTO `ClassTimeSlots` (`ID`, `StartTime`, `EndTime`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ClassVideos`
+-- Table structure for table `classvideos`
 --
 
-CREATE TABLE `ClassVideos` (
+CREATE TABLE `classvideos` (
   `ID` int(11) NOT NULL,
   `ClassID` int(11) DEFAULT NULL,
   `StreamUrl` varchar(255) DEFAULT NULL,
@@ -482,10 +523,10 @@ CREATE TABLE `ClassVideos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `ClassVideos`
+-- Dumping data for table `classvideos`
 --
 
-INSERT INTO `ClassVideos` (`ID`, `ClassID`, `StreamUrl`, `VideoUrl`, `VideoID`) VALUES
+INSERT INTO `classvideos` (`ID`, `ClassID`, `StreamUrl`, `VideoUrl`, `VideoID`) VALUES
 (32, 7, 'http://139.59.86.32:8080/live/o27LtUt.m3u8', 'http://139.59.86.32:8080/recorded/o27LtUt.mp4', 'o27LtUt'),
 (33, 12, 'http://139.59.86.32:8080/live/pn3aXFR.m3u8', 'http://139.59.86.32:8080/recorded/pn3aXFR.mp4', 'pn3aXFR'),
 (34, 9, 'http://139.59.86.32:8080/live/kJL0HtD.m3u8', 'http://139.59.86.32:8080/recorded/kJL0HtD.mp4', 'kJL0HtD'),
@@ -573,20 +614,64 @@ INSERT INTO `ClassVideos` (`ID`, `ClassID`, `StreamUrl`, `VideoUrl`, `VideoID`) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `CreditsPerClass`
+-- Table structure for table `class_studying`
 --
 
-CREATE TABLE `CreditsPerClass` (
+CREATE TABLE `class_studying` (
+  `class_studying_id` int(11) NOT NULL,
+  `class_studying_name` varchar(300) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `class_studying`
+--
+
+INSERT INTO `class_studying` (`class_studying_id`, `class_studying_name`) VALUES
+(1, 'LKG'),
+(2, 'UKG'),
+(3, 'Class 1'),
+(4, 'Class 2'),
+(5, 'Class 3'),
+(6, 'Class 4'),
+(7, 'Class 5'),
+(8, 'Class 7'),
+(9, 'Class 8'),
+(10, 'Class 9'),
+(11, 'Class 10'),
+(12, 'Class 11'),
+(13, 'Class 12'),
+(14, 'Degree/Graduation'),
+(15, 'Post Graduation'),
+(16, 'Others');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `country_list`
+--
+
+CREATE TABLE `country_list` (
+  `country_id` int(11) NOT NULL,
+  `country_name` varchar(350) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `creditsperclass`
+--
+
+CREATE TABLE `creditsperclass` (
   `ID` int(11) NOT NULL,
   `Credits` float DEFAULT NULL,
   `ClassID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `CreditsPerClass`
+-- Dumping data for table `creditsperclass`
 --
 
-INSERT INTO `CreditsPerClass` (`ID`, `Credits`, `ClassID`) VALUES
+INSERT INTO `creditsperclass` (`ID`, `Credits`, `ClassID`) VALUES
 (33, 0, 22),
 (34, 0, 22),
 (35, 0, 49),
@@ -658,10 +743,72 @@ INSERT INTO `CreditsPerClass` (`ID`, `Credits`, `ClassID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Location`
+-- Table structure for table `experience`
 --
 
-CREATE TABLE `Location` (
+CREATE TABLE `experience` (
+  `experience_id` int(11) NOT NULL,
+  `experience_name` varchar(300) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `experience`
+--
+
+INSERT INTO `experience` (`experience_id`, `experience_name`) VALUES
+(1, '0'),
+(2, '1 Year'),
+(3, 'Less Than 2 Year'),
+(4, '2 Year');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gender`
+--
+
+CREATE TABLE `gender` (
+  `gender_id` int(11) NOT NULL,
+  `gender_name` varchar(300) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `gender`
+--
+
+INSERT INTO `gender` (`gender_id`, `gender_name`) VALUES
+(1, 'Male'),
+(2, 'Fe-Male');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job_types`
+--
+
+CREATE TABLE `job_types` (
+  `job_type_id` int(11) NOT NULL,
+  `job_type_name` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `languages`
+--
+
+CREATE TABLE `languages` (
+  `languages_id` int(11) NOT NULL,
+  `languages_name` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `location`
+--
+
+CREATE TABLE `location` (
   `ID` int(11) NOT NULL,
   `Longitude` varchar(255) DEFAULT NULL,
   `Latitude` varchar(255) DEFAULT NULL,
@@ -669,29 +816,29 @@ CREATE TABLE `Location` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Location`
+-- Dumping data for table `location`
 --
 
-INSERT INTO `Location` (`ID`, `Longitude`, `Latitude`, `UserID`) VALUES
+INSERT INTO `location` (`ID`, `Longitude`, `Latitude`, `UserID`) VALUES
 (17, '-122.08400000000002', '37.421998333333335', 55);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Qualification`
+-- Table structure for table `qualification`
 --
 
-CREATE TABLE `Qualification` (
+CREATE TABLE `qualification` (
   `ID` int(11) NOT NULL,
   `UserID` int(11) DEFAULT NULL,
   `Qualification` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Qualification`
+-- Dumping data for table `qualification`
 --
 
-INSERT INTO `Qualification` (`ID`, `UserID`, `Qualification`) VALUES
+INSERT INTO `qualification` (`ID`, `UserID`, `Qualification`) VALUES
 (1, 55, 'q1'),
 (2, 55, 'q2'),
 (3, 55, 'q3'),
@@ -708,70 +855,209 @@ INSERT INTO `Qualification` (`ID`, `UserID`, `Qualification`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Student`
+-- Table structure for table `qualifications`
 --
 
-CREATE TABLE `Student` (
+CREATE TABLE `qualifications` (
+  `qualification_id` int(11) NOT NULL,
+  `qualification_name` varchar(300) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `qualifications`
+--
+
+INSERT INTO `qualifications` (`qualification_id`, `qualification_name`) VALUES
+(1, 'SSLC'),
+(2, 'PUC'),
+(3, 'DEGREE'),
+(4, 'PG');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `state_list`
+--
+
+CREATE TABLE `state_list` (
+  `state_id` int(11) NOT NULL,
+  `state_name` int(11) DEFAULT NULL,
+  `country_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student`
+--
+
+CREATE TABLE `student` (
   `ID` int(11) NOT NULL,
   `Name` varchar(255) DEFAULT NULL,
   `ParentName` varchar(255) DEFAULT NULL,
   `StudentMobileNumber` varchar(13) DEFAULT NULL,
   `ParentMobileNumber` varchar(13) DEFAULT NULL,
-  `Subject` int(11) DEFAULT NULL
+  `Subject` int(11) DEFAULT NULL,
+  `gender_id` int(11) DEFAULT NULL,
+  `board_id` int(11) DEFAULT NULL,
+  `student_location` varchar(500) DEFAULT NULL,
+  `email` varchar(500) DEFAULT NULL,
+  `std_lat` decimal(10,6) DEFAULT NULL,
+  `std_lng` decimal(10,6) DEFAULT NULL,
+  `teaching_mode_id` int(11) DEFAULT NULL,
+  `classtimeslots_id` int(11) DEFAULT NULL,
+  `class_studying_id` int(11) DEFAULT NULL,
+  `std_created_date` timestamp NULL DEFAULT current_timestamp(),
+  `std_updated_date` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Student`
+-- Dumping data for table `student`
 --
 
-INSERT INTO `Student` (`ID`, `Name`, `ParentName`, `StudentMobileNumber`, `ParentMobileNumber`, `Subject`) VALUES
-(1, 'Ashwin Kuthrapalli', 'ABC', '1111', '2222', 1),
-(2, 'Ramraj Rao', 'DEF', '9999', '8888', 1),
-(3, 'Ramesh NV', 'KKK', '5555', '6666', 1),
-(4, 'kiran JD', 'kiran JD', '9283472937', '92837492333', 1),
-(5, 'kiran JD', 'kiran JD', '9283472937', '92837492333', 1),
-(6, 'Ramesh', 'Shivram', '9980376476', '9980376476', 2),
-(7, 'that guy', 'Sukshith S', '9880604765', '9880604765', 1),
-(8, 'Kiran Murthy JD', 'Kiran Murthy JD', '9880604765', '9880604765', 6);
+INSERT INTO `student` (`ID`, `Name`, `ParentName`, `StudentMobileNumber`, `ParentMobileNumber`, `Subject`, `gender_id`, `board_id`, `student_location`, `email`, `std_lat`, `std_lng`, `teaching_mode_id`, `classtimeslots_id`, `class_studying_id`, `std_created_date`, `std_updated_date`) VALUES
+(1, 'Ashwin Kuthrapalli', 'ABC', '1111', '2222', 1, 1, 1, 'Jalahalli', NULL, NULL, NULL, NULL, NULL, 0, '2020-01-13 18:26:59', '2020-01-13 18:26:59'),
+(2, 'Ramraj Rao', 'DEF', '9999', '8888', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2020-01-13 18:26:59', '2020-01-13 18:26:59'),
+(3, 'Ramesh NV', 'KKK', '5555', '6666', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2020-01-13 18:26:59', '2020-01-13 18:26:59'),
+(4, 'kiran JD', 'kiran JD', '9283472937', '92837492333', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2020-01-13 18:26:59', '2020-01-13 18:26:59'),
+(5, 'kiran JD', 'kiran JD', '9283472937', '92837492333', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2020-01-13 18:26:59', '2020-01-13 18:26:59'),
+(6, 'Ramesh', 'Shivram', '9980376476', '9980376476', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2020-01-13 18:26:59', '2020-01-13 18:26:59'),
+(7, 'that guy', 'Sukshith S', '9880604765', '9880604765', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2020-01-13 18:26:59', '2020-01-13 18:26:59'),
+(8, 'Kiran Murthy JD', 'Kiran Murthy JD', '9880604765', '9880604765', 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2020-01-13 18:26:59', '2020-01-13 18:26:59');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Subjects`
+-- Table structure for table `subjects`
 --
 
-CREATE TABLE `Subjects` (
+CREATE TABLE `subjects` (
   `ID` int(11) NOT NULL,
-  `Subject` varchar(255) DEFAULT NULL
+  `Subject` varchar(255) DEFAULT NULL,
+  `classnames_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Subjects`
+-- Dumping data for table `subjects`
 --
 
-INSERT INTO `Subjects` (`ID`, `Subject`) VALUES
-(1, 'Science'),
-(2, 'Biology'),
-(3, 'Mathematics'),
-(4, 'English'),
-(5, 'Hindi'),
-(6, 'EVS/Social Studies'),
-(7, 'Social Studies'),
-(8, 'Physics'),
-(9, 'Chemistry'),
-(10, 'Accounts'),
-(11, 'Economics'),
-(12, 'Business Studies'),
-(13, 'Computer Science'),
-(14, 'math');
+INSERT INTO `subjects` (`ID`, `Subject`, `classnames_id`) VALUES
+(1, 'Science', 2),
+(2, 'Biology', 2),
+(3, 'Mathematics', 2),
+(4, 'English', 2),
+(5, 'Hindi', 2),
+(6, 'EVS/Social Studies', 2),
+(7, 'Social Studies', 2),
+(8, 'Physics', 2),
+(9, 'Chemistry', 2),
+(10, 'Accounts', 2),
+(11, 'Economics', 2),
+(12, 'Business Studies', 2),
+(13, 'Computer Science', 2),
+(14, 'math', 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `UserAboutMe`
+-- Table structure for table `teaching_mediums`
 --
 
-CREATE TABLE `UserAboutMe` (
+CREATE TABLE `teaching_mediums` (
+  `teaching_medium_id` int(11) NOT NULL,
+  `teaching_medium_name` varchar(300) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teaching_mode`
+--
+
+CREATE TABLE `teaching_mode` (
+  `teaching_mode_id` int(11) NOT NULL,
+  `teaching_mode_name` varchar(300) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `teaching_mode`
+--
+
+INSERT INTO `teaching_mode` (`teaching_mode_id`, `teaching_mode_name`) VALUES
+(1, 'Private Coaching (Home Tuition)'),
+(2, 'Online Coaching'),
+(3, 'Center Coaching (Institute)'),
+(4, 'Tutor\'s Home');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tutors`
+--
+
+CREATE TABLE `tutors` (
+  `tutor_id` int(11) NOT NULL,
+  `tutor_name` varchar(300) DEFAULT NULL,
+  `tutor_phone` varchar(250) DEFAULT NULL,
+  `tutor_email` varchar(250) DEFAULT NULL,
+  `gender_id` int(11) DEFAULT NULL,
+  `tutor_dob` date DEFAULT NULL,
+  `tutor_age` int(11) DEFAULT NULL,
+  `qualification_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `experience_id` int(11) DEFAULT NULL,
+  `tutor_location` varchar(500) DEFAULT NULL,
+  `tutor_lat` decimal(10,6) DEFAULT NULL,
+  `tutor_lng` decimal(10,6) DEFAULT NULL,
+  `city_id` int(250) DEFAULT NULL,
+  `tutor_desired_city` varchar(250) DEFAULT NULL,
+  `job_type_id` int(11) DEFAULT NULL,
+  `tutor_salary` int(11) DEFAULT NULL,
+  `languages_id` int(11) DEFAULT NULL,
+  `address_proof_id` int(11) DEFAULT NULL,
+  `tutor_designation` int(11) DEFAULT NULL,
+  `classnames_id` int(11) DEFAULT NULL,
+  `boards_id` int(11) DEFAULT NULL,
+  `tutor_svjk_score` int(11) DEFAULT NULL,
+  `tutor_rating` int(11) DEFAULT NULL,
+  `passport_status` int(11) DEFAULT NULL,
+  `teaching_medium_id` int(11) DEFAULT NULL,
+  `tutor_specialization` text DEFAULT NULL,
+  `teaching_certification` varchar(500) DEFAULT NULL,
+  `institution_name` varchar(500) DEFAULT NULL,
+  `criminal_cases_complaints` varchar(250) DEFAULT NULL,
+  `teaching_mode_id` int(11) DEFAULT NULL,
+  `tutor_created_datetime` timestamp NULL DEFAULT current_timestamp(),
+  `tutor_updated_datetime` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tutors`
+--
+
+INSERT INTO `tutors` (`tutor_id`, `tutor_name`, `tutor_phone`, `tutor_email`, `gender_id`, `tutor_dob`, `tutor_age`, `qualification_id`, `subject_id`, `experience_id`, `tutor_location`, `tutor_lat`, `tutor_lng`, `city_id`, `tutor_desired_city`, `job_type_id`, `tutor_salary`, `languages_id`, `address_proof_id`, `tutor_designation`, `classnames_id`, `boards_id`, `tutor_svjk_score`, `tutor_rating`, `passport_status`, `teaching_medium_id`, `tutor_specialization`, `teaching_certification`, `institution_name`, `criminal_cases_complaints`, `teaching_mode_id`, `tutor_created_datetime`, `tutor_updated_datetime`) VALUES
+(1, 'Dodda', '7896543210', 'chawan@gmail.com', 1, '2018-12-13', 23, 4, 2, 4, 'Jalahalli', NULL, NULL, 1, '1', 1, 1, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 1, '2020-01-16 18:02:57', '2020-01-16 18:02:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tutor_performance`
+--
+
+CREATE TABLE `tutor_performance` (
+  `tutor_performance_id` int(11) NOT NULL,
+  `tutor_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `hours_taught` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `useraboutme`
+--
+
+CREATE TABLE `useraboutme` (
   `ID` int(11) NOT NULL,
   `Age` int(11) DEFAULT NULL,
   `Profession` varchar(255) DEFAULT NULL,
@@ -783,19 +1069,19 @@ CREATE TABLE `UserAboutMe` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `UserAboutMe`
+-- Dumping data for table `useraboutme`
 --
 
-INSERT INTO `UserAboutMe` (`ID`, `Age`, `Profession`, `Experience`, `Price`, `Introduction`, `UserID`, `Gender`) VALUES
+INSERT INTO `useraboutme` (`ID`, `Age`, `Profession`, `Experience`, `Price`, `Introduction`, `UserID`, `Gender`) VALUES
 (17, 56, 'schoolTeacher', '', 6000, 'myself, me and all of me', 55, 'male');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Users`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `Users` (
+CREATE TABLE `users` (
   `ID` int(11) NOT NULL,
   `Name` varchar(255) DEFAULT NULL,
   `Mobile` varchar(13) DEFAULT NULL,
@@ -806,64 +1092,70 @@ CREATE TABLE `Users` (
   `uuid` varchar(255) DEFAULT NULL,
   `ZonalHead` int(11) DEFAULT NULL,
   `Credits` int(11) DEFAULT NULL,
-  `CreditRate` float DEFAULT NULL
+  `teaching_mode_id` int(11) DEFAULT NULL,
+  `CreditRate` float DEFAULT NULL,
+  `user_created_date` timestamp NULL DEFAULT current_timestamp(),
+  `user_updated_date` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Users`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `Users` (`ID`, `Name`, `Mobile`, `Email`, `UserType`, `Status`, `Location`, `uuid`, `ZonalHead`, `Credits`, `CreditRate`) VALUES
-(47, 'Sunil Kulkarn', '+916360397206', '', 2, NULL, NULL, 'bpOy69YSXNeGV6ombZosLGQn3hg2', 54, 345, 0),
-(49, 'sukshith sukki', '', 'sukshithzone@gmail.com', 3, NULL, NULL, 'IAS2uDFQbSeZOAedOXMTLtBuD472', 55, 652, 0),
-(50, 'Prabhakara S', '+919731263208', 'null', 3, NULL, NULL, 'hZjuqiSylNh6nJze4ffenns6Tac2', 55, NULL, 0),
-(52, 'Sunil Kulkarni', '', 'sunilkulkarni139@gmail.com', 3, NULL, NULL, 'H2Z0Fi90FDW5iWvLckR3idbBP1M2', 54, 645, 0),
-(54, 'Prabhakar Shetty', '+null', 'prabhakar.gts@gmail.com', 2, NULL, NULL, 'rgyrX9mqODTvDTRZrw5DbuLWsKD3', 0, 652, 4),
-(55, 'Kiran Jd', '+919880604765', 'kiranjd8@gmail.com', 2, NULL, NULL, 'KHgNr9iCSMZ0hFsk7AYsdagAzgD2', 0, 54, 4),
-(56, 'Jagadeesh D', '+919902195645', 'jagadeeshd9@gmail.com', 3, NULL, NULL, 'vFNlB7dPgQgYkvAuqo7YTW1GO622', 54, 645, 0),
-(57, 'Bhat Vivek', '', 'vivekbhat9076@gmail.com', 3, NULL, NULL, 'fzGTWtQHYlbDdNZZ4Ac9QXJ6Zzz1', 54, 645, 0),
-(58, 'kiran', '9987234732', 'k@k.com', NULL, NULL, NULL, 'klasfjlasdsdnfldsa', NULL, NULL, NULL),
-(59, 'Mahantesh Prince', '+null', 'mahanteshath@gmail.com', NULL, NULL, NULL, 'zC2WwyJTx5aMHtH7CVs7Zxrq9E22', NULL, NULL, NULL),
-(60, 'Dhanush Kumar G ', '+917338436405', 'null', NULL, NULL, NULL, 'u6Z1Rj0JjeOlu521vZHLloDIF1C3', NULL, NULL, NULL),
-(61, 'Priyanka gowda', '+917019929104', 'null', NULL, NULL, NULL, 'LEvtvlpJVgUd0FLBF1G5MWymXBW2', NULL, NULL, NULL);
+INSERT INTO `users` (`ID`, `Name`, `Mobile`, `Email`, `UserType`, `Status`, `Location`, `uuid`, `ZonalHead`, `Credits`, `teaching_mode_id`, `CreditRate`, `user_created_date`, `user_updated_date`) VALUES
+(47, 'Sunil Kulkarn', '+916360397206', '', 2, NULL, NULL, 'bpOy69YSXNeGV6ombZosLGQn3hg2', 54, 345, NULL, 0, '2020-01-13 18:37:59', '2020-01-13 18:37:59'),
+(49, 'sukshith sukki', '', 'sukshithzone@gmail.com', 3, NULL, NULL, 'IAS2uDFQbSeZOAedOXMTLtBuD472', 55, 652, NULL, 0, '2020-01-13 18:37:59', '2020-01-13 18:37:59'),
+(50, 'Prabhakara S', '+919731263208', 'null', 3, NULL, NULL, 'hZjuqiSylNh6nJze4ffenns6Tac2', 55, NULL, NULL, 0, '2020-01-13 18:37:59', '2020-01-13 18:37:59'),
+(52, 'Sunil Kulkarni', '', 'sunilkulkarni139@gmail.com', 3, NULL, NULL, 'H2Z0Fi90FDW5iWvLckR3idbBP1M2', 54, 645, NULL, 0, '2020-01-13 18:37:59', '2020-01-13 18:37:59'),
+(54, 'Prabhakar Shetty', '+null', 'prabhakar.gts@gmail.com', 2, NULL, NULL, 'rgyrX9mqODTvDTRZrw5DbuLWsKD3', 0, 652, NULL, 4, '2020-01-13 18:37:59', '2020-01-13 18:37:59'),
+(55, 'Kiran Jd', '+919880604765', 'kiranjd8@gmail.com', 2, NULL, NULL, 'KHgNr9iCSMZ0hFsk7AYsdagAzgD2', 0, 54, NULL, 4, '2020-01-13 18:37:59', '2020-01-13 18:37:59'),
+(56, 'Jagadeesh D', '+919902195645', 'jagadeeshd9@gmail.com', 3, NULL, NULL, 'vFNlB7dPgQgYkvAuqo7YTW1GO622', 54, 645, NULL, 0, '2020-01-13 18:37:59', '2020-01-13 18:37:59'),
+(57, 'Bhat Vivek', '', 'vivekbhat9076@gmail.com', 3, NULL, NULL, 'fzGTWtQHYlbDdNZZ4Ac9QXJ6Zzz1', 54, 645, NULL, 0, '2020-01-13 18:37:59', '2020-01-13 18:37:59'),
+(58, 'kiran', '9987234732', 'k@k.com', NULL, NULL, NULL, 'klasfjlasdsdnfldsa', NULL, NULL, NULL, NULL, '2020-01-13 18:37:59', '2020-01-13 18:37:59'),
+(59, 'Mahantesh Prince', '+null', 'mahanteshath@gmail.com', NULL, NULL, NULL, 'zC2WwyJTx5aMHtH7CVs7Zxrq9E22', NULL, NULL, NULL, NULL, '2020-01-13 18:37:59', '2020-01-13 18:37:59'),
+(60, 'Dhanush Kumar G ', '+917338436405', 'null', NULL, NULL, NULL, 'u6Z1Rj0JjeOlu521vZHLloDIF1C3', NULL, NULL, NULL, NULL, '2020-01-13 18:37:59', '2020-01-13 18:37:59'),
+(61, 'Priyanka gowda', '+917019929104', 'null', NULL, NULL, NULL, 'LEvtvlpJVgUd0FLBF1G5MWymXBW2', NULL, NULL, NULL, NULL, '2020-01-13 18:37:59', '2020-01-13 18:37:59');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `UserType`
+-- Table structure for table `usertype`
 --
 
-CREATE TABLE `UserType` (
+CREATE TABLE `usertype` (
   `ID` int(11) NOT NULL,
   `UserType` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `UserType`
+-- Dumping data for table `usertype`
 --
 
-INSERT INTO `UserType` (`ID`, `UserType`) VALUES
-(1, 'MASTER'),
-(2, 'Zonal head'),
-(3, 'Tutor');
+INSERT INTO `usertype` (`ID`, `UserType`) VALUES
+(1, 'Admin'),
+(2, 'Zonal Head'),
+(3, 'Tutor'),
+(4, 'Student/Parent'),
+(5, 'Institute'),
+(6, 'Super Admin');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Zones`
+-- Table structure for table `zones`
 --
 
-CREATE TABLE `Zones` (
+CREATE TABLE `zones` (
   `ID` int(11) NOT NULL,
   `ZoneName` varchar(255) DEFAULT NULL,
   `ZonalHead` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `Zones`
+-- Dumping data for table `zones`
 --
 
-INSERT INTO `Zones` (`ID`, `ZoneName`, `ZonalHead`) VALUES
+INSERT INTO `zones` (`ID`, `ZoneName`, `ZonalHead`) VALUES
 (1, 'test', 50),
 (2, 'kk', NULL),
 (3, 'test2', 54),
@@ -880,29 +1172,47 @@ INSERT INTO `Zones` (`ID`, `ZoneName`, `ZonalHead`) VALUES
 --
 
 --
--- Indexes for table `BlockDate`
+-- Indexes for table `address_proofs`
 --
-ALTER TABLE `BlockDate`
+ALTER TABLE `address_proofs`
+  ADD PRIMARY KEY (`address_proof_id`);
+
+--
+-- Indexes for table `area_list`
+--
+ALTER TABLE `area_list`
+  ADD PRIMARY KEY (`area_id`);
+
+--
+-- Indexes for table `blockdate`
+--
+ALTER TABLE `blockdate`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indexes for table `Boards`
+-- Indexes for table `boards`
 --
-ALTER TABLE `Boards`
+ALTER TABLE `boards`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `BoardsTaught`
+-- Indexes for table `boardstaught`
 --
-ALTER TABLE `BoardsTaught`
+ALTER TABLE `boardstaught`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indexes for table `Classes`
+-- Indexes for table `city_list`
 --
-ALTER TABLE `Classes`
+ALTER TABLE `city_list`
+  ADD PRIMARY KEY (`city_id`);
+
+--
+-- Indexes for table `classes`
+--
+ALTER TABLE `classes`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `Subject` (`Subject`),
   ADD KEY `UserID` (`UserID`),
@@ -911,106 +1221,178 @@ ALTER TABLE `Classes`
   ADD KEY `Status` (`Status`);
 
 --
--- Indexes for table `ClassesTaught`
+-- Indexes for table `classestaught`
 --
-ALTER TABLE `ClassesTaught`
+ALTER TABLE `classestaught`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserID` (`UserID`),
   ADD KEY `ClassNames` (`ClassNames`);
 
 --
--- Indexes for table `ClassNames`
+-- Indexes for table `classnames`
 --
-ALTER TABLE `ClassNames`
+ALTER TABLE `classnames`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `ClassStatus`
+-- Indexes for table `classstatus`
 --
-ALTER TABLE `ClassStatus`
+ALTER TABLE `classstatus`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `ClassSubjectsTaught`
+-- Indexes for table `classsubjectstaught`
 --
-ALTER TABLE `ClassSubjectsTaught`
+ALTER TABLE `classsubjectstaught`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserID` (`UserID`),
   ADD KEY `ClassNames` (`ClassNames`),
   ADD KEY `Subjects` (`Subjects`);
 
 --
--- Indexes for table `ClassTimeSlots`
+-- Indexes for table `classtimeslots`
 --
-ALTER TABLE `ClassTimeSlots`
+ALTER TABLE `classtimeslots`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `ClassVideos`
+-- Indexes for table `classvideos`
 --
-ALTER TABLE `ClassVideos`
+ALTER TABLE `classvideos`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `ClassID` (`ClassID`);
 
 --
--- Indexes for table `CreditsPerClass`
+-- Indexes for table `class_studying`
 --
-ALTER TABLE `CreditsPerClass`
+ALTER TABLE `class_studying`
+  ADD PRIMARY KEY (`class_studying_id`);
+
+--
+-- Indexes for table `country_list`
+--
+ALTER TABLE `country_list`
+  ADD PRIMARY KEY (`country_id`);
+
+--
+-- Indexes for table `creditsperclass`
+--
+ALTER TABLE `creditsperclass`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `ClassID` (`ClassID`);
 
 --
--- Indexes for table `Location`
+-- Indexes for table `experience`
 --
-ALTER TABLE `Location`
+ALTER TABLE `experience`
+  ADD PRIMARY KEY (`experience_id`);
+
+--
+-- Indexes for table `gender`
+--
+ALTER TABLE `gender`
+  ADD PRIMARY KEY (`gender_id`);
+
+--
+-- Indexes for table `job_types`
+--
+ALTER TABLE `job_types`
+  ADD PRIMARY KEY (`job_type_id`);
+
+--
+-- Indexes for table `languages`
+--
+ALTER TABLE `languages`
+  ADD PRIMARY KEY (`languages_id`);
+
+--
+-- Indexes for table `location`
+--
+ALTER TABLE `location`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indexes for table `Qualification`
+-- Indexes for table `qualification`
 --
-ALTER TABLE `Qualification`
+ALTER TABLE `qualification`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indexes for table `Student`
+-- Indexes for table `qualifications`
 --
-ALTER TABLE `Student`
+ALTER TABLE `qualifications`
+  ADD PRIMARY KEY (`qualification_id`);
+
+--
+-- Indexes for table `state_list`
+--
+ALTER TABLE `state_list`
+  ADD PRIMARY KEY (`state_id`);
+
+--
+-- Indexes for table `student`
+--
+ALTER TABLE `student`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `Subject` (`Subject`);
 
 --
--- Indexes for table `Subjects`
+-- Indexes for table `subjects`
 --
-ALTER TABLE `Subjects`
+ALTER TABLE `subjects`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `UserAboutMe`
+-- Indexes for table `teaching_mediums`
 --
-ALTER TABLE `UserAboutMe`
+ALTER TABLE `teaching_mediums`
+  ADD PRIMARY KEY (`teaching_medium_id`);
+
+--
+-- Indexes for table `teaching_mode`
+--
+ALTER TABLE `teaching_mode`
+  ADD PRIMARY KEY (`teaching_mode_id`);
+
+--
+-- Indexes for table `tutors`
+--
+ALTER TABLE `tutors`
+  ADD PRIMARY KEY (`tutor_id`);
+
+--
+-- Indexes for table `tutor_performance`
+--
+ALTER TABLE `tutor_performance`
+  ADD PRIMARY KEY (`tutor_performance_id`);
+
+--
+-- Indexes for table `useraboutme`
+--
+ALTER TABLE `useraboutme`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `fk_userId` (`UserID`);
 
 --
--- Indexes for table `Users`
+-- Indexes for table `users`
 --
-ALTER TABLE `Users`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserType` (`UserType`),
   ADD KEY `Users_ibfk_2` (`ZonalHead`);
 
 --
--- Indexes for table `UserType`
+-- Indexes for table `usertype`
 --
-ALTER TABLE `UserType`
+ALTER TABLE `usertype`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `Zones`
+-- Indexes for table `zones`
 --
-ALTER TABLE `Zones`
+ALTER TABLE `zones`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `ZonalHead` (`ZonalHead`);
 
@@ -1019,105 +1401,201 @@ ALTER TABLE `Zones`
 --
 
 --
--- AUTO_INCREMENT for table `BlockDate`
+-- AUTO_INCREMENT for table `address_proofs`
 --
-ALTER TABLE `BlockDate`
+ALTER TABLE `address_proofs`
+  MODIFY `address_proof_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `area_list`
+--
+ALTER TABLE `area_list`
+  MODIFY `area_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `blockdate`
+--
+ALTER TABLE `blockdate`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
--- AUTO_INCREMENT for table `Boards`
+-- AUTO_INCREMENT for table `boards`
 --
-ALTER TABLE `Boards`
+ALTER TABLE `boards`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `BoardsTaught`
+-- AUTO_INCREMENT for table `boardstaught`
 --
-ALTER TABLE `BoardsTaught`
+ALTER TABLE `boardstaught`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT for table `Classes`
+-- AUTO_INCREMENT for table `city_list`
 --
-ALTER TABLE `Classes`
+ALTER TABLE `city_list`
+  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `classes`
+--
+ALTER TABLE `classes`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
--- AUTO_INCREMENT for table `ClassesTaught`
+-- AUTO_INCREMENT for table `classestaught`
 --
-ALTER TABLE `ClassesTaught`
+ALTER TABLE `classestaught`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `ClassNames`
+-- AUTO_INCREMENT for table `classnames`
 --
-ALTER TABLE `ClassNames`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `classnames`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `ClassSubjectsTaught`
+-- AUTO_INCREMENT for table `classsubjectstaught`
 --
-ALTER TABLE `ClassSubjectsTaught`
+ALTER TABLE `classsubjectstaught`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
--- AUTO_INCREMENT for table `ClassTimeSlots`
+-- AUTO_INCREMENT for table `classtimeslots`
 --
-ALTER TABLE `ClassTimeSlots`
+ALTER TABLE `classtimeslots`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `ClassVideos`
+-- AUTO_INCREMENT for table `classvideos`
 --
-ALTER TABLE `ClassVideos`
+ALTER TABLE `classvideos`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
--- AUTO_INCREMENT for table `CreditsPerClass`
+-- AUTO_INCREMENT for table `class_studying`
 --
-ALTER TABLE `CreditsPerClass`
+ALTER TABLE `class_studying`
+  MODIFY `class_studying_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `country_list`
+--
+ALTER TABLE `country_list`
+  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `creditsperclass`
+--
+ALTER TABLE `creditsperclass`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
--- AUTO_INCREMENT for table `Location`
+-- AUTO_INCREMENT for table `experience`
 --
-ALTER TABLE `Location`
+ALTER TABLE `experience`
+  MODIFY `experience_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `gender`
+--
+ALTER TABLE `gender`
+  MODIFY `gender_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `job_types`
+--
+ALTER TABLE `job_types`
+  MODIFY `job_type_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `languages`
+--
+ALTER TABLE `languages`
+  MODIFY `languages_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `location`
+--
+ALTER TABLE `location`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `Qualification`
+-- AUTO_INCREMENT for table `qualification`
 --
-ALTER TABLE `Qualification`
+ALTER TABLE `qualification`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `Student`
+-- AUTO_INCREMENT for table `qualifications`
 --
-ALTER TABLE `Student`
+ALTER TABLE `qualifications`
+  MODIFY `qualification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `state_list`
+--
+ALTER TABLE `state_list`
+  MODIFY `state_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `student`
+--
+ALTER TABLE `student`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `Subjects`
+-- AUTO_INCREMENT for table `subjects`
 --
-ALTER TABLE `Subjects`
+ALTER TABLE `subjects`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `UserAboutMe`
+-- AUTO_INCREMENT for table `teaching_mediums`
 --
-ALTER TABLE `UserAboutMe`
+ALTER TABLE `teaching_mediums`
+  MODIFY `teaching_medium_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `teaching_mode`
+--
+ALTER TABLE `teaching_mode`
+  MODIFY `teaching_mode_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tutors`
+--
+ALTER TABLE `tutors`
+  MODIFY `tutor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tutor_performance`
+--
+ALTER TABLE `tutor_performance`
+  MODIFY `tutor_performance_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `useraboutme`
+--
+ALTER TABLE `useraboutme`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `Users`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `Users`
+ALTER TABLE `users`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
--- AUTO_INCREMENT for table `Zones`
+-- AUTO_INCREMENT for table `usertype`
 --
-ALTER TABLE `Zones`
+ALTER TABLE `usertype`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `zones`
+--
+ALTER TABLE `zones`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
@@ -1125,87 +1603,22 @@ ALTER TABLE `Zones`
 --
 
 --
--- Constraints for table `BlockDate`
+-- Constraints for table `blockdate`
 --
-ALTER TABLE `BlockDate`
-  ADD CONSTRAINT `BlockDate_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`);
+ALTER TABLE `blockdate`
+  ADD CONSTRAINT `BlockDate_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`ID`);
 
 --
--- Constraints for table `BoardsTaught`
+-- Constraints for table `boardstaught`
 --
-ALTER TABLE `BoardsTaught`
-  ADD CONSTRAINT `BoardsTaught_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`);
+ALTER TABLE `boardstaught`
+  ADD CONSTRAINT `BoardsTaught_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`ID`);
 
 --
--- Constraints for table `Classes`
+-- Constraints for table `classestaught`
 --
-ALTER TABLE `Classes`
-  ADD CONSTRAINT `Classes_ibfk_1` FOREIGN KEY (`Subject`) REFERENCES `Subjects` (`ID`),
-  ADD CONSTRAINT `Classes_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`),
-  ADD CONSTRAINT `Classes_ibfk_3` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`ID`),
-  ADD CONSTRAINT `Classes_ibfk_4` FOREIGN KEY (`TimeSlot`) REFERENCES `ClassTimeSlots` (`ID`),
-  ADD CONSTRAINT `Classes_ibfk_5` FOREIGN KEY (`Status`) REFERENCES `ClassStatus` (`ID`);
-
---
--- Constraints for table `ClassesTaught`
---
-ALTER TABLE `ClassesTaught`
-  ADD CONSTRAINT `ClassesTaught_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`);
-
---
--- Constraints for table `ClassSubjectsTaught`
---
-ALTER TABLE `ClassSubjectsTaught`
-  ADD CONSTRAINT `ClassSubjectsTaught_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`);
-
---
--- Constraints for table `ClassVideos`
---
-ALTER TABLE `ClassVideos`
-  ADD CONSTRAINT `ClassVideos_ibfk_1` FOREIGN KEY (`ClassID`) REFERENCES `Classes` (`ID`);
-
---
--- Constraints for table `CreditsPerClass`
---
-ALTER TABLE `CreditsPerClass`
-  ADD CONSTRAINT `CreditsPerClass_ibfk_2` FOREIGN KEY (`ClassID`) REFERENCES `Classes` (`ID`);
-
---
--- Constraints for table `Location`
---
-ALTER TABLE `Location`
-  ADD CONSTRAINT `Location_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`);
-
---
--- Constraints for table `Qualification`
---
-ALTER TABLE `Qualification`
-  ADD CONSTRAINT `Qualification_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`);
-
---
--- Constraints for table `Student`
---
-ALTER TABLE `Student`
-  ADD CONSTRAINT `Student_ibfk_1` FOREIGN KEY (`Subject`) REFERENCES `Subjects` (`ID`);
-
---
--- Constraints for table `UserAboutMe`
---
-ALTER TABLE `UserAboutMe`
-  ADD CONSTRAINT `fk_userId` FOREIGN KEY (`UserID`) REFERENCES `Users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `Users`
---
-ALTER TABLE `Users`
-  ADD CONSTRAINT `Users_ibfk_1` FOREIGN KEY (`UserType`) REFERENCES `UserType` (`ID`),
-  ADD CONSTRAINT `Users_ibfk_2` FOREIGN KEY (`ZonalHead`) REFERENCES `Users` (`ID`);
-
---
--- Constraints for table `Zones`
---
-ALTER TABLE `Zones`
-  ADD CONSTRAINT `Zones_ibfk_1` FOREIGN KEY (`ZonalHead`) REFERENCES `Users` (`ID`);
+ALTER TABLE `classestaught`
+  ADD CONSTRAINT `ClassesTaught_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
