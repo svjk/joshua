@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2020 at 05:03 PM
+-- Generation Time: Jan 18, 2020 at 05:47 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -1036,7 +1036,28 @@ CREATE TABLE `tutors` (
 --
 
 INSERT INTO `tutors` (`tutor_id`, `tutor_name`, `tutor_phone`, `tutor_email`, `gender_id`, `tutor_dob`, `tutor_age`, `qualification_id`, `subject_id`, `experience_id`, `tutor_location`, `tutor_lat`, `tutor_lng`, `city_id`, `tutor_desired_city`, `job_type_id`, `tutor_salary`, `languages_id`, `address_proof_id`, `tutor_designation`, `classnames_id`, `boards_id`, `tutor_svjk_score`, `tutor_rating`, `passport_status`, `teaching_medium_id`, `tutor_specialization`, `teaching_certification`, `institution_name`, `criminal_cases_complaints`, `teaching_mode_id`, `tutor_created_datetime`, `tutor_updated_datetime`) VALUES
-(1, 'Dodda', '7896543210', 'chawan@gmail.com', 1, '2018-12-13', 23, 4, 2, 4, 'Jalahalli', NULL, NULL, 1, '1', 1, 1, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 1, '2020-01-16 18:02:57', '2020-01-16 18:02:57');
+(1, 'Dodda', '7896543210', 'chawan@gmail.com', 1, '2018-12-13', 23, 4, 2, 4, 'Jalahalli', NULL, NULL, 1, '1', 1, 1, 1, NULL, 1, 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 1, '2020-01-16 18:02:57', '2020-01-16 18:02:57'),
+(2, 'Dodda', '7896543211', 'chawan@gmail.com', 2, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 2, 'NULL', 'NULL', 'NULL', 'NULL', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 'Dodda', '7896543212', 'chawan@gmail.com', 3, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 3, 'NULL', 'NULL', 'NULL', 'NULL', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 'Dodda', '7896543213', 'chawan@gmail.com', 4, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 4, 'NULL', 'NULL', 'NULL', 'NULL', 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 'Dodda', '7896543214', 'chawan@gmail.com', 5, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 5, 'NULL', 'NULL', 'NULL', 'NULL', 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 'Dodda', '7896543215', 'chawan@gmail.com', 6, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 6, 'NULL', 'NULL', 'NULL', 'NULL', 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(7, 'Dodda', '7896543216', 'chawan@gmail.com', 7, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 7, 'NULL', 'NULL', 'NULL', 'NULL', 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, 'Dodda', '7896543217', 'chawan@gmail.com', 8, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 8, 'NULL', 'NULL', 'NULL', 'NULL', 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(9, 'Dodda', '7896543218', 'chawan@gmail.com', 9, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 9, 'NULL', 'NULL', 'NULL', 'NULL', 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(10, 'Dodda', '7896543219', 'chawan@gmail.com', 10, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 10, 'NULL', 'NULL', 'NULL', 'NULL', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(11, 'Dodda', '7896543220', 'chawan@gmail.com', 11, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 11, 'NULL', 'NULL', 'NULL', 'NULL', 11, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(12, 'Dodda', '7896543221', 'chawan@gmail.com', 12, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 12, 'NULL', 'NULL', 'NULL', 'NULL', 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(13, 'Dodda', '7896543222', 'chawan@gmail.com', 13, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 13, 'NULL', 'NULL', 'NULL', 'NULL', 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(14, 'Dodda', '7896543223', 'chawan@gmail.com', 14, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 14, 'NULL', 'NULL', 'NULL', 'NULL', 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(15, 'Dodda', '7896543224', 'chawan@gmail.com', 15, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 15, 'NULL', 'NULL', 'NULL', 'NULL', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(16, 'Dodda', '7896543225', 'chawan@gmail.com', 16, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 16, 'NULL', 'NULL', 'NULL', 'NULL', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(17, 'Dodda', '7896543226', 'chawan@gmail.com', 17, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 17, 'NULL', 'NULL', 'NULL', 'NULL', 17, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(18, 'Dodda', '7896543227', 'chawan@gmail.com', 18, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 18, 'NULL', 'NULL', 'NULL', 'NULL', 18, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(19, 'Dodda', '7896543228', 'chawan@gmail.com', 19, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 19, 'NULL', 'NULL', 'NULL', 'NULL', 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(20, 'Dodda', '7896543229', 'chawan@gmail.com', 20, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 20, 'NULL', 'NULL', 'NULL', 'NULL', 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(21, 'Dodda', '7896543230', 'chawan@gmail.com', 21, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 21, 'NULL', 'NULL', 'NULL', 'NULL', 21, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(22, 'Dodda', '7896543231', 'chawan@gmail.com', 22, '0000-00-00', 23, 4, 2, 4, 'Jalahalli', '0.000000', '0.000000', 1, '1', 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 22, 'NULL', 'NULL', 'NULL', 'NULL', 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1566,7 +1587,7 @@ ALTER TABLE `teaching_mode`
 -- AUTO_INCREMENT for table `tutors`
 --
 ALTER TABLE `tutors`
-  MODIFY `tutor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `tutor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `tutor_performance`
