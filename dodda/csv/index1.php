@@ -1,10 +1,6 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "svjk";
-$db_connect = mysqli_connect($servername, $username, $password, $dbname);
-if (!$db_connect) {
+$conn = mysqli_connect("localhost", "root", "", "test");
+if (!$conn) {
     echo "Error";
 }
 if (isset($_POST["import"])) {
@@ -16,9 +12,9 @@ if (isset($_POST["import"])) {
         $file = fopen($fileName, "r");
         
         while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
-            $sqlInsert = "
-            INSERT INTO tutors(tutor_id, tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob, tutor_age, qualification_id, subject_id, experience_id, tutor_location, tutor_lat, tutor_lng, city_id, tutor_desired_city, job_type_id, tutor_salary, languages_id, address_proof_id, tutor_designation, classnames_id, boards_id, tutor_svjk_score, tutor_rating, passport_status, teaching_medium_id, tutor_specialization, teaching_certification, institution_name, criminal_cases_complaints, teaching_mode_id, tutor_created_datetime, tutor_updated_datetime) VALUES ('" . $column[0] . "','" . $column[1] . "','" . $column[2] . "','" . $column[3] . "','" . $column[4] . "', '" . $column[5] . "','" . $column[6] . "','" . $column[7] . "','" . $column[8] . "','" . $column[9] . "', '" . $column[10] . "','" . $column[11] . "','" . $column[12] . "','" . $column[13] . "','" . $column[14] . "','" . $column[15] . "','" . $column[16] . "','" . $column[17] . "','" . $column[18] . "','" . $column[19] . "','" . $column[20] . "','" . $column[21] . "','" . $column[22] . "','" . $column[23] . "','" . $column[24] . "', '" . $column[25] . "','" . $column[26] . "','" . $column[27] . "','" . $column[28] . "','" . $column[29] . "', '" . $column[30] . "','" . $column[31] . "','" . $column[32] . "')";
-            $result = mysqli_query($db_connect, $sqlInsert);
+            $sqlInsert = "INSERT into users (userId,userName,password,firstName,lastName)
+                   values ('" . $column[0] . "','" . $column[1] . "','" . $column[2] . "','" . $column[3] . "','" . $column[4] . "')";
+            $result = mysqli_query($conn, $sqlInsert);
             
             if (! empty($result)) {
                 $type = "success";
@@ -147,7 +143,7 @@ $(document).ready(function() {
         </div>
                <?php
             $sqlSelect = "SELECT * FROM users";
-            $result = mysqli_query($db_connect, $sqlSelect);
+            $result = mysqli_query($conn, $sqlSelect);
             
             if (mysqli_num_rows($result) > 0) {
                 ?>
