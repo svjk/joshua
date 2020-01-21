@@ -1,3 +1,6 @@
+<?php 
+include '.././db/selects.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

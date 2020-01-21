@@ -581,3 +581,7 @@ body{
         display: inline-block
     }
 }
+
+.checkbox-labels{
+    color: rgb(0,0,0, .5);
+}
