@@ -1,5 +1,6 @@
 <?php 
 include '.././db/selects.php';
+include 'add_edits.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +17,7 @@ include '.././db/selects.php';
                     <?php include 'side_bar.php'; ?>
                    <div class="content-panel">
                     <h2 class="title">My Profile<span class="pro-label label label-warning">Update</span></h2>
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" action="" method="POST">
                         <fieldset class="fieldset">
                             <h3 class="fieldset-title">Others</h3>
                             <div class="form-group">
@@ -26,13 +27,13 @@ include '.././db/selects.php';
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <?php
-                                        for ($i=1; $i <=3 ; $i++) { 
+                                        <?php
+                                        foreach ($languagesArray as $languages) {
                                         ?>
                                         <div class="col-md-3">
                                             <div class="form-group form-check">                         
                                                 <label class="form-check-label checkbox-labels" for="">
-                                                  <input type="checkbox" name="" class="form-check-input" id="" > Language name
+                                                  <input type="checkbox" name="languagesKnown" class="form-check-input" id="" value="<?php echo $languages['languages_id'] ?>"> <?php echo $languages['languages_name'] ?> 
                                                 </label>
                                             </div>
                                         </div>
@@ -47,7 +48,7 @@ include '.././db/selects.php';
                                     <label style="color: rgb(0,0,0,.5);">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</label>
                                 </div>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" name="answer1" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -56,7 +57,7 @@ include '.././db/selects.php';
                                     <label style="color: rgb(0,0,0,.5);">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</label>
                                 </div>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" name="answer2" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -65,14 +66,14 @@ include '.././db/selects.php';
                                     <label style="color: rgb(0,0,0,.5);">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</label>
                                 </div>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" name="answer3" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"></textarea>
                                 </div>
                             </div>                          
                         </fieldset>
                         <hr>
                         <div class="form-group">
                             <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
-                                <button class="btn btn-primary">NEXT <i class="fa fa-arrow-right"></i></button>
+                                <button class="btn btn-primary" name="update5">NEXT <i class="fa fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </form>

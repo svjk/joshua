@@ -25,6 +25,45 @@ while ($row = mysqli_fetch_array($fetchTeachingModes)) {
 	$teachingModeArray[] = $row;
 }
 // *******	End Select Teaching Modes ****
+// ******* Select Teaching Mediums *******
+$selectTeachingMediums = mysqli_query($db_connect, "SELECT * FROM teaching_mediums");
+$teachingMediumArray = array();
+while ($row = mysqli_fetch_array($selectTeachingMediums)) {
+	$teachingMediumArray[] = $row;
+}
+// ******* End Teaching Mediums **********
+// ******* Select Job Types *******
+$selectJobTypes = mysqli_query($db_connect, "SELECT * FROM job_types");
+$jobTypesArray = array();
+while ($row = mysqli_fetch_array($selectJobTypes)) {
+	$jobTypesArray[] = $row;
+}
+
+// ******* End Job Types **********
+
+// ****** Select ID Proofs Types ***
+$selectAddressProofTypes = mysqli_query($db_connect, "SELECT * FROM address_proofs");
+$addressProofArray = array();
+while ($row = mysqli_fetch_array($selectAddressProofTypes)) {
+	$addressProofArray[] = $row;
+}
+// ****** End ID Proofs Types ******
+// ****** Select Experience ********
+$selectExperience = mysqli_query($db_connect, "SELECT * FROM experience");
+$experienceArray = array();
+while ($row = mysqli_fetch_array($selectExperience)) {
+	$experienceArray[] = $row;
+}
+// ****** End Experience ********
+
+// ****** Select Languages ******
+$selectLanguages =mysqli_query($db_connect, "SELECT * FROM languages");
+$languagesArray = array();
+while ($row  = mysqli_fetch_array($selectLanguages)) {
+	$languagesArray[] = $row;
+}
+// ****** End Languaes **********
+
 // *******	Select User Types ********
 $selectUserTypes = "SELECT * FROM usertype";
 $fetchUserTypes = mysqli_query($db_connect, $selectUserTypes);
@@ -103,11 +142,20 @@ while ($row = mysqli_fetch_array($fetchAllTutors)) {
 $selectQualifications = "SELECT * FROM qualifications";
 $qualificationsArray = $connect->query($selectQualifications);
 
-$selectGender = "SELECT * FROM gender";
-$genderArray = $connect->query($selectGender);
+$selectGender = mysqli_query($db_connect, "SELECT * FROM gender");
+$genderArray = array();
+while ($row = mysqli_fetch_array($selectGender)) {
+	$genderArray[] = $row;
+}
+// $genderArray = $connect->query($selectGender);
 
-$selectExperience = "SELECT * FROM experience";
-$experienceArray = $connect->query($selectExperience);
 
+
+$selectBoards = "SELECT * FROM boards";
+$fetchBoards = mysqli_query($db_connect, $selectBoards);
+$boardsArray = array();
+while ($row = mysqli_fetch_array($fetchBoards)) {
+	$boardsArray[] = $row;
+}
 
 ?>
