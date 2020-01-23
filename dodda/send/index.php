@@ -1,3 +1,8 @@
+<?php
+if (isset($_POST['send'])) {
+  "https://2factor.in/API/V1/{293832-67745-11e5-88de-5600000c6b13}/SMS/+91{$_POST['send']}/AUTOGEN";
+}
+?>
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN"
 "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -15,6 +20,12 @@
     <link rel="stylesheet" href="style.css" type="text/css"/>
   </head>
   <body style="max-width:400px">
+    <div class="container">
+      <form action="" method="POST">
+        <input type="text" name="phone" class="form-control" placeholder="To Enter Phone">
+        <button name="send" class="btn btn-primary">SEND</button>
+      </form>
+    </div>
     <div class="w3-container w3-red">
       <h1>Send Free SMS</h1>
     </div>
