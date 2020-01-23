@@ -1,44 +1,54 @@
 <?php
 
-  // Declare the security credentials to use
-  $username = "9880604765";
-  $password = "100004";
+//Your authentication key
+$authKey = "YourAuthKey";
 
-  // Set the attributes of the message to send
-  $message  = "Hello World";
-  $type     = "2-way";
-  $senderid = "TUSVJK";
-  $to       = "9739981327";
+//Multiple mobiles numbers separated by comma
+$mobileNumber = "9999999";
 
-  // Build the URL to send the message to. Make sure the 
-  // message text and Sender ID are URL encoded. You can
-  // use HTTP or HTTPS
-  $url = "http://2factor.in/API/V1/293832-67745-11e5-88de-5600000c6b13/ADDON_SERVICES/SEND/PSMS?" .
-         "username=" . $username . "&" .
-         "password=" . $password . "&" .
-         "message="  . urlencode($message) . "&" .
-         "type="     . $type . "&" .
-         "senderid=" . urlencode($senderid) . "&" .
-         "to="       . $to;
+//Sender ID,While using route4 sender id should be 6 characters long.
+$senderId = "102234";
 
-  // Send the request
-  $output = file($url);
+//Your message to send, Add URL encoding here.
+$message = urlencode("Test message");
 
-  // The response from the gateway is going to look like 
-  // this:
-  // id: a4c5ad77ad6faf5aa55f66a
-  // 
-  // In the event of an error, it will look like this:
-  // err: invalid login credentials
-  $result = explode(":", $output[0]);
+//Define route 
+$route = "default";
+//Prepare you post parameters
+$postData = array(
+    'authkey' => $authKey,
+    'mobiles' => $mobileNumber,
+    'message' => $message,
+    'sender' => $senderId,
+    'route' => $route
+);
 
-  if($result[0] == "id") 
-  {
-    echo("Message sent\n");
-  }
-  else
-  {
-    echo("Error - " . $result[1] . "\n");
-  }
+//API URL
+$url="http://api.msg91.com/api/sendhttp.php";
 
-?>
+// init the resource
+$ch = curl_init();
+curl_setopt_array($ch, array(
+    CURLOPT_URL => $url,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => $postData
+    //,CURLOPT_FOLLOWLOCATION => true
+));
+
+
+//Ignore SSL certificate verification
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+
+//get response
+$output = curl_exec($ch);
+
+//Print error if any
+if(curl_errno($ch))
+{
+    echo 'error:' . curl_error($ch);
+}
+
+curl_close($ch);
