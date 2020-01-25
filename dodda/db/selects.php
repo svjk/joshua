@@ -129,7 +129,7 @@ if (isset($_POST['mediumSearchBtn'])) {
 
 
 $selectAllTutors = "
-SELECT tut.tutor_id, tut.tutor_name, tut.tutor_phone, qf.qualification_name, sb.Subject, gr.gender_name, exp.experience_name, tut.tutor_location 
+SELECT tut.tutor_id, tut.tutor_name, tut.tutor_email, tut.tutor_phone, qf.qualification_name, sb.Subject, gr.gender_name, exp.experience_name, tut.tutor_location 
 FROM tutors AS tut, qualifications AS qf, subjects AS sb, gender AS gr, experience AS exp
 WHERE tut.qualification_id=qf.qualification_id AND tut.subject_id=sb.ID AND tut.gender_id=gr.gender_id AND tut.experience_id=exp.experience_id ";
 $fetchAllTutors = mysqli_query($db_connect, $selectAllTutors);
