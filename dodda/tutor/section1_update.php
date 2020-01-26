@@ -8,8 +8,6 @@ include 'add_edits.php';
     <?php include 'header_links.php'; ?>
 </head>
 <body>
-    
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <div class="container">
         <div class="view-account">
             <section class="module">
@@ -60,7 +58,7 @@ include 'add_edits.php';
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">DOB</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control dobdatepicker" name="dob" required placeholder="dd-mm-yyyy">
+                                    <input type="date" class="form-control dobdatepicker" name="dob" required>
                                 </div>
                             </div>
                             <div class="form-group">

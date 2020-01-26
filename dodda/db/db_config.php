@@ -1,4 +1,7 @@
  <?php
+ date_default_timezone_set("Asia/Kolkata");//India time (GMT+5:30)
+ $now = date('Y-m-d H:i:s');
+ if (!isset($_SESSION)) { session_start();}
 $servername = "localhost";
 $username = "root";
 $password = "";

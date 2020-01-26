@@ -26,6 +26,21 @@
             <li class="">
                 <a href="section5_update.php"><span class="fa fa-info-circle"></span> Other Information</a>
             </li>
+            <li class="">
+                <a href="log_out.php"><span class="fa fa-sign-out"></span>Logout</a>
+            </li>
+            <li class="">
+                <a href="#" onclick="deleteTutor()"><span class="fa fa-trash"></span> Delete Account</a>
+            </li>
         </ul>
     </nav>
 </div>
+<script type="text/javascript">
+    function deleteTutor() {
+      if (confirm("Do you really want to delete your account") == true) {
+        window.location = "tutor_delete.php";
+      } else {
+        return false;
+      }
+    }
+</script>

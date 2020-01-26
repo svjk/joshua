@@ -4,7 +4,11 @@ tutor_id, tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob, tutor_loca
 // Ramona Joy Paul
 ******************************************** */
 include '.././db/db_config.php';
-$phone_number = '7829419174';
+$phone_number = $_SESSION['phoneNumber'];
+$selectTutorProfile = mysqli_query($db_connect, "SELECT * FROM tutors WHERE tutor_phone='$phone_number' ");
+$row = mysqli_fetch_array($selectTutorProfile);
+$_SESSION['tutor_id'] = $row['tutor_id'].'</br>';
+
 if (isset($_POST['update1'])) {
 	$tutName = $_POST['name'];
 	$tutEmail = $_POST['email'];
@@ -17,7 +21,7 @@ if (isset($_POST['update1'])) {
 	
 	if ($tutProfileImg) {
 		move_uploaded_file($_FILES['profile-image']['tmp_name'], $uploadImage);
-		$updateQuery = "UPDATE tutors SET tutor_name='$tutName', tutor_email='$tutEmail', gender_id='$tutGender', tutor_dob='$tutDOB', tutor_location='$tutAddress', tutor_profile_image='$tutProfileImg', tutor_updated_datetime=now() WHERE tutor_phone='$phone_number' ";
+		$updateQuery = "UPDATE tutors SET tutor_name='$tutName', tutor_email='$tutEmail', gender_id='$tutGender', tutor_dob='$tutDOB', tutor_location='$tutAddress', tutor_profile_image='$tutProfileImg', tutor_updated_datetime='$now' WHERE tutor_phone='$phone_number' ";
 		$updatePersonalInfo = mysqli_query($db_connect, $updateQuery);
 		if ($updatePersonalInfo) {
 			echo "<script>alert('Personal Information Updated')</script>";
@@ -25,7 +29,7 @@ if (isset($_POST['update1'])) {
 		}
 	}
 	else{
-		$updateQuery = "UPDATE tutors SET tutor_name='$tutName', tutor_email='$tutEmail', gender_id='$tutGender', tutor_dob='$tutDOB', tutor_location='$tutAddress', tutor_updated_datetime=now() WHERE tutor_phone='$phone_number' ";
+		$updateQuery = "UPDATE tutors SET tutor_name='$tutName', tutor_email='$tutEmail', gender_id='$tutGender', tutor_dob='$tutDOB', tutor_location='$tutAddress', tutor_updated_datetime='$now' WHERE tutor_phone='$phone_number' ";
 		$updatePersonalInfo = mysqli_query($db_connect, $updateQuery);
 		if ($updatePersonalInfo) {
 			echo "<script>alert('Personal Information Updated')</script>";
@@ -42,7 +46,7 @@ if (isset($_POST['update2'])) {
 	$teachMediums = $_POST['teachingMedium'];
 	$jobType = $_POST['jobType'];
 
-	$updateQuery = "UPDATE tutors SET boards_id='$boardIDs', classnames_id='$classNamesIDs', teaching_mode_id='$teachModes', teaching_medium_id='$teachMediums', job_type_id='$jobType', tutor_updated_datetime=now() WHERE tutor_phone='$phone_number' ";
+	$updateQuery = "UPDATE tutors SET boards_id='$boardIDs', classnames_id='$classNamesIDs', teaching_mode_id='$teachModes', teaching_medium_id='$teachMediums', job_type_id='$jobType', tutor_updated_datetime='$now' WHERE tutor_phone='$phone_number' ";
 	$updateBasicInfo = mysqli_query($db_connect, $updateQuery);
 	if ($updateBasicInfo) {
 		echo "<script>alert('Basic Information Updated')</script>";
@@ -60,7 +64,7 @@ if (isset($_POST['update3'])) {
 	if ($proofDocument) {
 		move_uploaded_file($_FILES['addressProofDocument']['tmp_name'], $uploadImage);
 
-		$updateQuery = "UPDATE tutors SET permanent_address='$permtAddres', address_proof_id='$proofIdType', proof_id_number='$proofIdNum', address_proof_front='$proofDocument', tutor_updated_datetime=now() WHERE tutor_phone='$phone_number' ";
+		$updateQuery = "UPDATE tutors SET permanent_address='$permtAddres', address_proof_id='$proofIdType', proof_id_number='$proofIdNum', address_proof_front='$proofDocument', tutor_updated_datetime='$now' WHERE tutor_phone='$phone_number' ";
 		$updateContactInfo = mysqli_query($db_connect, $updateQuery);
 		if ($updateContactInfo) {
 			echo "<script>alert('Contact Information Updated')</script>";
@@ -68,7 +72,7 @@ if (isset($_POST['update3'])) {
 		}
 	}
 	else{
-		$updateQuery = "UPDATE tutors SET permanent_address='$permtAddres', address_proof_id='$proofIdType', proof_id_number='$proofIdNum', tutor_updated_datetime=now() WHERE tutor_phone='$phone_number' ";
+		$updateQuery = "UPDATE tutors SET permanent_address='$permtAddres', address_proof_id='$proofIdType', proof_id_number='$proofIdNum', tutor_updated_datetime='$now' WHERE tutor_phone='$phone_number' ";
 		$updateContactInfo = mysqli_query($db_connect, $updateQuery);
 		if ($updateContactInfo) {
 			echo "<script>alert('Contact Information Updated')</script>";
@@ -85,7 +89,7 @@ if (isset($_POST['update4'])) {
 	$desigNation = $_POST['old_designation'];
 	$currSalary = $_POST['current_sal'];
 
-	$updateQuery = "UPDATE tutors SET experience_id='$expID', institution_name='$orgName', tutor_designation='$desigNation', tutor_salary='$currSalary', tutor_updated_datetime=now() WHERE tutor_phone='$phone_number'";
+	$updateQuery = "UPDATE tutors SET experience_id='$expID', institution_name='$orgName', tutor_designation='$desigNation', tutor_salary='$currSalary', tutor_updated_datetime='$now' WHERE tutor_phone='$phone_number'";
 	$updateExpInfo = mysqli_query($db_connect, $updateQuery);
 	if ($updateExpInfo) {
 		echo "<script>alert('Experience Information Updated')</script>";
@@ -100,7 +104,7 @@ if (isset($_POST['update5'])) {
 	$quesAnwer1 = $_POST['answer1'];
 	$quesAnwer2 = $_POST['answer2'];
 	$quesAnwer3 = $_POST['answer3'];
-	$updateQuery = "UPDATE tutors SET languages_id='$lngKnown', question1_answer='$quesAnwer1', question2_answer='$quesAnwer2', question3_answer='$quesAnwer3', tutor_updated_datetime=now() WHERE tutor_phone='$phone_number'";
+	$updateQuery = "UPDATE tutors SET languages_id='$lngKnown', question1_answer='$quesAnwer1', question2_answer='$quesAnwer2', question3_answer='$quesAnwer3', tutor_updated_datetime='$now' WHERE tutor_phone='$phone_number'";
 	$updateOtherInfo = mysqli_query($db_connect, $updateQuery);
 	if ($updateOtherInfo) {
 		echo "<script>alert('Profile Successfully Updated')</script>";
