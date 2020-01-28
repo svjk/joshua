@@ -4,30 +4,38 @@ include '.././db/db_config.php';
 $YourAPIKey='33119aa2-46a6-11e9-8806-0200cd936042';
 
 if (isset($_POST['sendOtp'])) {
-	$_SESSION['phoneNumber'] = $phone = $_POST['phoneNumber'];
-	$SentTo=$phone; 
-	### Customer's phone number in International number format ( with leading + sign)
-	//Prabhakar sir Number+919731263208	
+	$phone = $_POST['phoneNumber'];
+	$_SESSION['phoneNumber'] = $phone ;
+	$selectPhone = mysqli_query($db_connect, "SELECT tutor_phone FROM tutors WHERE tutor_phone='$phone' ");
+	if (mysqli_num_rows($selectPhone)>=1) {
+		echo "<script>parent.location='section1_update.php'</script>";
+	}
+	else if (mysqli_num_rows($selectPhone)<=0) {
+		$SentTo=$phone; 
+		### Customer's phone number in International number format ( with leading + sign)
+		//Prabhakar sir Number+919731263208	
 
-	### Sending OTP to Customer's Number
-	$agent= 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)';
-	$url = "https://2factor.in/API/V1/$YourAPIKey/SMS/$SentTo/AUTOGEN"; 
-	$ch = curl_init(); 
-	curl_setopt($ch, CURLOPT_URL,$url); 
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_USERAGENT, $agent);
-	$Response= curl_exec($ch); 
-	curl_close($ch);
-	### Store OTP Session Id In Session Variable ( to be used in Verify step)
+		### Sending OTP to Customer's Number
+		$agent= 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)';
+		$url = "https://2factor.in/API/V1/$YourAPIKey/SMS/$SentTo/AUTOGEN"; 
+		$ch = curl_init(); 
+		curl_setopt($ch, CURLOPT_URL,$url); 
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+		$Response= curl_exec($ch); 
+		curl_close($ch);
+		### Store OTP Session Id In Session Variable ( to be used in Verify step)
+		
+		$Response_json=json_decode($Response,false);
+		if ($_SESSION['OTPSessionId']=$Response_json->Details) {
+
+			echo "<script>alert('OTP Sent Your Phone Number')</script>";
+		}
+		else{
+			echo "<script>alert('Enter Valid Phone Number Phone Number')</script>";
+		}
+	}
 	
-	$Response_json=json_decode($Response,false);
-	if ($_SESSION['OTPSessionId']=$Response_json->Details) {
-
-		echo "<script>alert('OTP Sent Your Phone Number')</script>";
-	}
-	else{
-		echo "<script>alert('Enter Valid Phone Number Phone Number')</script>";
-	}
 	
 }
 if (isset($_POST['verifyOtp'])) {

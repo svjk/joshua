@@ -109,16 +109,8 @@ if (isset($_POST['sendEmail'])) {
 						<form action="" method="POST">
 							<table class="table table-bordered">
 								<tr>
-									<th>Location</th>
-									<th>Qualification</th>
-									<th>Subject</th>							
-									<th>Gender</th>
-									<th>Exerieance</th>
-									<th></th>
-								</tr>
-								<tr>
 									<td>
-										<input type="text" class="form-control" name="location" required list="localityList" value="<?php
+										<input type="text" class="form-control" name="location" required list="localityList" placeholder="Location" value="<?php
 										if(isset($_POST['advSearchBtn']) AND $_POST['location']){
 											echo $_POST['location'];
 										}
@@ -133,7 +125,7 @@ if (isset($_POST['sendEmail'])) {
 									</td>
 									<td>
 										<select class="form-control" name="qualification">
-											<option value="">Select</option>
+											<option value="">Select Qualification</option>
 											<?php
 											foreach ($qualificationsArray as $qualifications) {
 												?>
@@ -150,7 +142,7 @@ if (isset($_POST['sendEmail'])) {
 									</td>
 									<td>
 										<select class="form-control" name="subject">
-											<option value="">Select</option>
+											<option value="">Select Subjects</option>
 											<?php
 											foreach ($subjectsArray as $subject) {
 												?>
@@ -167,7 +159,7 @@ if (isset($_POST['sendEmail'])) {
 									</td>
 									<td>
 										<select class="form-control" name="gender">
-											<option value="">Select</option>
+											<option value="">Select Gender</option>
 											<?php
 											foreach ($genderArray as $gender) {
 												?>
@@ -184,7 +176,7 @@ if (isset($_POST['sendEmail'])) {
 									</td>
 									<td>
 										<select class="form-control" name="experience">
-											<option value="">Select</option>
+											<option value="">Select Experience</option>
 											<?php
 											foreach ($experienceArray as $experience) {
 												?>
@@ -251,7 +243,7 @@ if (isset($_POST['sendEmail'])) {
 										<td><?php echo $searchedTutors['qualification_name'] ?></td>
 										<td><?php echo $searchedTutors['Subject'] ?></td>
 										<td><?php echo $searchedTutors['gender_name'] ?></td>
-										<td><?php echo $searchedTutors['experience_name'] ?></td>
+										<td><?php echo $searchedTutors['experience_name'] ?> Year</td>
 										<td><?php echo $searchedTutors['tutor_location'] ?></td>
 									</tr>
 								<?php }?>
@@ -308,7 +300,7 @@ if (isset($_POST['sendEmail'])) {
 											<td><?php echo $allTutors['qualification_name'] ?></td>
 											<td><?php echo $allTutors['Subject'] ?></td>
 											<td><?php echo $allTutors['gender_name'] ?></td>
-											<td><?php echo $allTutors['experience_name'] ?></td>
+											<td><?php echo $allTutors['experience_name'] ?> Year</td>
 											<td><?php echo $allTutors['tutor_location'] ?></td>
 										</tr>
 									<?php }?>

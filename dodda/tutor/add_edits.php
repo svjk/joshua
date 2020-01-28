@@ -1,13 +1,14 @@
 <?php
 /********************************************
-tutor_id, tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob, tutor_location, tutor_profile_image, tutor_age, boards_id, classnames_id, teaching_mode_id, teaching_medium_id, job_type_id, permanent_address, address_proof_id, proof_id_number, address_proof_front, address_proof_back, experience_id, institution_name, tutor_designation, tutor_salary, languages_id, question1_answer, question2_answer, question3_answer, qualification_id, subject_id, tutor_lat, tutor_lng, city_id, tutor_desired_city, tutor_svjk_score, tutor_rating, passport_status, tutor_specialization, teaching_certification, criminal_cases_complaints, tutor_created_datetime, tutor_updated_datetime
+tutor_id, tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob, tutor_location, tutor_profile_image, tutor_age, qualification_id, boards_id, classnames_id, subject_id, teaching_mode_id, teaching_medium_id, job_type_id, permanent_address, address_proof_id, proof_id_number, address_proof_front, address_proof_back, experience_id, institution_name, tutor_designation, tutor_salary, languages_id, question1_answer, question2_answer, question3_answer, tutor_lat, tutor_lng, city_id, tutor_desired_city, tutor_svjk_score, tutor_rating, passport_status, tutor_specialization, teaching_certification, criminal_cases_complaints, tutor_created_datetime, tutor_updated_datetime
 // Ramona Joy Paul
 ******************************************** */
 include '.././db/db_config.php';
 $phone_number = $_SESSION['phoneNumber'];
 $selectTutorProfile = mysqli_query($db_connect, "SELECT * FROM tutors WHERE tutor_phone='$phone_number' ");
 $row = mysqli_fetch_array($selectTutorProfile);
-$_SESSION['tutor_id'] = $row['tutor_id'].'</br>';
+$_SESSION['tutor_id'] = $row['tutor_id'];
+$tutorID = $_SESSION['tutor_id'];
 
 if (isset($_POST['update1'])) {
 	$tutName = $_POST['name'];
@@ -40,13 +41,90 @@ if (isset($_POST['update1'])) {
 // *********** End Update 1 **********
 
 if (isset($_POST['update2'])) {
+	$qfication = $_POST['qualification'];
 	$boardIDs = $_POST['boards'];
 	$classNamesIDs = $_POST['classStandards'];
+	$subjects = $_POST['subjectsTeach'];
 	$teachModes = $_POST['teachingMode'];
 	$teachMediums = $_POST['teachingMedium'];
 	$jobType = $_POST['jobType'];
 
-	$updateQuery = "UPDATE tutors SET boards_id='$boardIDs', classnames_id='$classNamesIDs', teaching_mode_id='$teachModes', teaching_medium_id='$teachMediums', job_type_id='$jobType', tutor_updated_datetime='$now' WHERE tutor_phone='$phone_number' ";
+	if (!empty($boardIDs)) {
+		$selectTutorsBoards = mysqli_query($db_connect, "SELECT * FROM tutor_selected_boards WHERE tutor_id = '$tutorID' ");
+		if (mysqli_num_rows($selectTutorsBoards)>=1) {
+			$deleteOldSelectedBoards = mysqli_query($db_connect, "DELETE  FROM tutor_selected_boards WHERE tutor_id = '$tutorID' ");
+			for ($i=0; $i <count($boardIDs) ; $i++) { 
+				$insertNewBoards = mysqli_query($db_connect, "INSERT INTO tutor_selected_boards(tutor_id, boards_id) VALUES ('$tutorID', '".$boardIDs[$i]."')");
+			}
+		}
+		else if (mysqli_num_rows($selectTutorsBoards)<=0){
+			for ($i=0; $i <count($boardIDs) ; $i++) { 
+				$insertNewBoards = mysqli_query($db_connect, "INSERT INTO tutor_selected_boards(tutor_id, boards_id) VALUES ('$tutorID', '".$boardIDs[$i]."')");
+			}
+		}
+	}
+
+	if (!empty($classNamesIDs)) {
+		$selectTutorClass = mysqli_query($db_connect, "SELECT * FROM tutor_selected_class WHERE tutor_id='$tutorID' ");
+		if (mysqli_num_rows($selectTutorClass)>=1) {
+			$deleteOldSelectedClass = mysqli_query($db_connect, "DELETE  FROM tutor_selected_class WHERE tutor_id = '$tutorID' ");
+			for ($i=0; $i <count($classNamesIDs) ; $i++) { 
+				$insertNewClass = mysqli_query($db_connect, "INSERT INTO tutor_selected_class(tutor_id, classnames_id) VALUES ('$tutorID', '".$classNamesIDs[$i]."')");
+			}
+		}
+		else if (mysqli_num_rows($selectTutorClass)<=0){
+			for ($i=0; $i <count($classNamesIDs) ; $i++) { 
+				$insertNewClass = mysqli_query($db_connect, "INSERT INTO tutor_selected_class(tutor_id, classnames_id) VALUES ('$tutorID', '".$classNamesIDs[$i]."')");
+			}
+		}
+	}
+
+	if (!empty($subjects)) {
+		$selectTutorSubjects = mysqli_query($db_connect, "SELECT * FROM tutor_selected_subjects WHERE tutor_id='$tutorID' ");
+		if (mysqli_num_rows($selectTutorSubjects)>=1) {
+			$deleteOldSelectedSubjects = mysqli_query($db_connect, "DELETE  FROM tutor_selected_subjects WHERE tutor_id = '$tutorID' ");
+			for ($i=0; $i <count($subjects) ; $i++) { 
+				$insertNewSubjects = mysqli_query($db_connect, "INSERT INTO tutor_selected_subjects(tutor_id, subject_id) VALUES ('$tutorID', '".$subjects[$i]."')");
+			}
+		}
+		else if (mysqli_num_rows($selectTutorSubjects)<=0){
+			for ($i=0; $i <count($subjects) ; $i++) { 
+				$insertNewSubjects = mysqli_query($db_connect, "INSERT INTO tutor_selected_subjects(tutor_id, subject_id) VALUES ('$tutorID', '".$subjects[$i]."')");
+			}
+		}
+	}
+	
+	if (!empty($teachModes)) {
+		$selectTutorTutionTypes = mysqli_query($db_connect, "SELECT * FROM tutor_selected_teaching_mode WHERE tutor_id='$tutorID' ");
+		if (mysqli_num_rows($selectTutorTutionTypes)>=1) {
+			$deleteOldSelected = mysqli_query($db_connect, "DELETE  FROM tutor_selected_teaching_mode WHERE tutor_id = '$tutorID' ");
+			for ($i=0; $i <count($teachModes) ; $i++) { 
+				$insertNewTutionTypes = mysqli_query($db_connect, "INSERT INTO tutor_selected_teaching_mode(tutor_id, teaching_mode_id) VALUES ('$tutorID', '".$teachModes[$i]."')");
+			}
+		}
+		else if (mysqli_num_rows($selectTutorTutionTypes)<=0){
+			for ($i=0; $i <count($teachModes) ; $i++) { 
+				$insertNewTutionTypes = mysqli_query($db_connect, "INSERT INTO tutor_selected_teaching_mode(tutor_id, teaching_mode_id) VALUES ('$tutorID', '".$teachModes[$i]."')");
+			}
+		}
+	}
+
+	if (!empty($teachMediums)) {
+		$selectTutorTeachMedium = mysqli_query($db_connect, "SELECT * FROM tutor_selected_teaching_medium WHERE tutor_id='$tutorID' ");
+		if (mysqli_num_rows($selectTutorTeachMedium)>=1) {
+			$deleteOldSelected = mysqli_query($db_connect, "DELETE  FROM tutor_selected_teaching_medium WHERE tutor_id = '$tutorID' ");
+			for ($i=0; $i <count($teachMediums) ; $i++) { 
+				$insertNewTeachMedium = mysqli_query($db_connect, "INSERT INTO tutor_selected_teaching_medium(tutor_id, teaching_medium_id) VALUES ('$tutorID', '".$teachMediums[$i]."')");
+			}
+		}
+		else if (mysqli_num_rows($selectTutorTeachMedium)<=0){
+			for ($i=0; $i <count($teachMediums) ; $i++) { 
+				$insertNewTeachMedium = mysqli_query($db_connect, "INSERT INTO tutor_selected_teaching_medium(tutor_id, teaching_medium_id) VALUES ('$tutorID', '".$teachMediums[$i]."')");
+			}
+		}
+	}
+
+	$updateQuery = "UPDATE tutors SET qualification_id='$qfication', job_type_id='$jobType', tutor_updated_datetime='$now' WHERE tutor_phone='$phone_number' ";
 	$updateBasicInfo = mysqli_query($db_connect, $updateQuery);
 	if ($updateBasicInfo) {
 		echo "<script>alert('Basic Information Updated')</script>";

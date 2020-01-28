@@ -1,6 +1,11 @@
 <?php 
 include '.././db/selects.php';
 include 'add_edits.php';
+$selectTutorSelectedBoards = mysqli_query($db_connect, "SELECT * FROM tutor_selected_boards WHERE tutor_id='$tutorID' ");
+$tutorSelectedBoardsArray = array();
+while ($row = mysqli_fetch_array($selectTutorSelectedBoards)) {
+    $tutorSelectedBoardsArray[] = $row;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +25,31 @@ include 'add_edits.php';
                     <form class="form-horizontal" action="" method="POST">
                         <fieldset class="fieldset">
                             <h3 class="fieldset-title">Information</h3>
-                            
+
+                            <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                    Select Your Qualification
+                                </label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <select class="form-control" name="qualification">
+                                                    <option value="">Select</option>
+                                                    <?php
+                                                    foreach ($qualificationsArray as $qualifications) {
+                                                    ?>
+                                                    <option value="<?php echo $qualifications['qualification_id'] ?>">
+                                                        <?php echo $qualifications['qualification_name'] ?>
+                                                    </option>
+                                                    <?php }?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">
                                     Select Boards
@@ -28,17 +57,20 @@ include 'add_edits.php';
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                        <?php
-                                        foreach ($boardsArray as $boards) {
-                                        ?>
-                                        <div class="col-md-3">
-                                            <div class="form-group form-check">                         
-                                                <label class="form-check-label checkbox-labels" for="">
-                                                  <input type="checkbox" name="boards" class="form-check-input" id="" value="<?php echo $boards['ID'] ?>"> <?php echo $boards['Boards'] ?>
-                                                </label>
+                                            <div class="row">
+                                                <?php
+                                                foreach ($boardsArray as $boards) {   
+                                                ?>
+                                                <div class="col-md-3">
+                                                    <div class="form-group form-check">           
+                                                        <label class="form-check-label checkbox-labels" for="">
+                                                          <input type="checkbox" name="boards[]" class="form-check-input" id="" value="<?php echo $boards['ID'] ?>">
+                                                          <?php echo $boards['Boards'] ?>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <?php }?>
                                             </div>
-                                        </div>
-                                        <?php }?>
                                         </div>
                                     </div>
                                 </div>
@@ -50,61 +82,91 @@ include 'add_edits.php';
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <?php
-                                        foreach ($classCategoryArray as $classCategory) {
-                                        ?>
-                                        <div class="col-md-3">
-                                            <div class="form-group form-check">                         
-                                                <label class="form-check-label checkbox-labels" for="">
-                                                  <input type="checkbox" name="classStandards" class="form-check-input" id="" value="<?php echo $classCategory['ID'] ?>"> <?php echo $classCategory['Classes'] ?> 
-                                                </label>
+                                            <div class="row">
+                                                <?php
+                                                foreach ($classCategoryArray as $classCategory) {
+                                                ?>
+                                                <div class="col-md-4">
+                                                    <div class="form-group form-check">                         
+                                                        <label class="form-check-label checkbox-labels" for="">
+                                                          <input type="checkbox" name="classStandards[]" class="form-check-input" id="" value="<?php echo $classCategory['ID'] ?>"> <?php echo $classCategory['Classes'] ?> 
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <?php }?>
                                             </div>
-                                        </div>
-                                        <?php }?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">
-                                    Select Tution Mode
+                                    Select Subjects
                                 </label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                        <?php
-                                        foreach ($teachingModeArray as $teachingMode) {
-                                        ?>
-                                        <div class="col-md-3">
-                                            <div class="form-group form-check">                         
-                                                <label class="form-check-label checkbox-labels" for="">
-                                                  <input type="checkbox" name="teachingMode" class="form-check-input" id="" value="<?php echo $teachingMode['teaching_mode_id'] ?>"> <?php echo $teachingMode['teaching_mode_name'] ?> 
-                                                </label>
+                                            <div class="row">
+                                                <?php
+                                                foreach ($subjectsArray as $subjects) {
+                                                ?>
+                                                <div class="col-md-4">
+                                                    <div class="form-group form-check">                         
+                                                        <label class="form-check-label checkbox-labels" for="">
+                                                          <input type="checkbox" name="subjectsTeach[]" class="form-check-input" id="" value="<?php echo $subjects['ID'] ?>"> <?php echo $subjects['Subject'] ?> 
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <?php }?>
                                             </div>
-                                        </div>
-                                        <?php }?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                    Select Tution Mode
+                                </label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <?php
+                                                foreach ($teachingModeArray as $teachingMode) {
+                                                ?>
+                                                <div class="col-md-4">
+                                                    <div class="form-group form-check">                         
+                                                        <label class="form-check-label checkbox-labels" for="">
+                                                          <input type="checkbox" name="teachingMode[]" class="form-check-input" id="" value="<?php echo $teachingMode['teaching_mode_id'] ?>"> <?php echo $teachingMode['teaching_mode_name'] ?> 
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <?php }?>
+                                            </div>                                    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">
                                     Teaching Medium
                                 </label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                        <?php
-                                        foreach ($teachingMediumArray as $teachingMediums) {
-                                        ?>
-                                        <div class="col-md-3">
-                                            <div class="form-group form-check">                         
-                                                <label class="form-check-label checkbox-labels" for="">
-                                                  <input type="checkbox" name="teachingMedium" class="form-check-input" id="" value="<?php echo $teachingMediums['teaching_medium_id'] ?>"> <?php echo $teachingMediums['teaching_medium_name'] ?> 
-                                                </label>
+                                            <div class="row">
+                                                <?php
+                                                foreach ($teachingMediumArray as $teachingMediums) {
+                                                ?>
+                                                <div class="col-md-3">
+                                                    <div class="form-group form-check">                         
+                                                        <label class="form-check-label checkbox-labels" for="">
+                                                          <input type="checkbox" name="teachingMedium[]" class="form-check-input" id="" value="<?php echo $teachingMediums['teaching_medium_id'] ?>"> <?php echo $teachingMediums['teaching_medium_name'] ?> 
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <?php }?>
                                             </div>
-                                        </div>
-                                        <?php }?>
                                         </div>
                                     </div>
                                 </div>
@@ -142,3 +204,6 @@ include 'add_edits.php';
 <?php include 'script_links.php'; ?>
 </body>
 </html>
+<script type="text/javascript">
+    $('select').selectpicker();
+</script>

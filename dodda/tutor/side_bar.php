@@ -3,7 +3,7 @@
         <img class="img-profile img-circle img-responsive center-block" src="tutor_upload_images/avatar1.png" alt="">
         <ul class="meta list list-unstyled">
             <li class="name">Doddanna
-                <label class="label label-info">Web Developer</label>
+                <label class="label label-info">9739981327</label>
             </li>
             <li class="email"><a href="#">email.com</a></li>
             <li class="activity">Last Updated : Today at 2:18pm</li>
