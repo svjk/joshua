@@ -1,16 +1,19 @@
 <div class="side-bar">
     <div class="user-info">
-        <img class="img-profile img-circle img-responsive center-block" src="tutor_upload_images/avatar1.png" alt="">
+        <img class="img-profile img-circle img-responsive center-block" src="<?php echo $tutorImageUrl ?>" alt="<?php echo $tutName ?>">
         <ul class="meta list list-unstyled">
-            <li class="name">Doddanna
-                <label class="label label-info">9739981327</label>
+            <li class="name"><?php echo $tutName ?>
+                <label class="label label-info"><?php echo $tutPhone ?></label>
             </li>
-            <li class="email"><a href="#">email.com</a></li>
-            <li class="activity">Last Updated : Today at 2:18pm</li>
+            <li class="email"><a><?php echo $tutEmail ?></a></li>
+            <li class="activity">Last Updated : <?php echo date('D, M d, h:i A', strtotime($tutUpdated)) ?></li>
         </ul>
     </div>
     <nav class="side-menu">
         <ul class="nav">
+            <li class="">
+                <a href="my_profile.php"><span class="fa fa-user"></span> My Profile</a>
+            </li>
             <li class="">
                 <a href="section1_update.php"><span class="fa fa-user"></span> Personal Information</a>
             </li>

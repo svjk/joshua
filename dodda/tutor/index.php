@@ -8,7 +8,7 @@ if (isset($_POST['sendOtp'])) {
 	$_SESSION['phoneNumber'] = $phone ;
 	$selectPhone = mysqli_query($db_connect, "SELECT tutor_phone FROM tutors WHERE tutor_phone='$phone' ");
 	if (mysqli_num_rows($selectPhone)>=1) {
-		echo "<script>parent.location='section1_update.php'</script>";
+		echo "<script>parent.location='my_profile.php'</script>";
 	}
 	else if (mysqli_num_rows($selectPhone)<=0) {
 		$SentTo=$phone; 
@@ -62,7 +62,7 @@ if (isset($_POST['verifyOtp'])) {
 		$phone = $_SESSION['phoneNumber'] ;
 		$insertTutor = mysqli_query($db_connect, "INSERT INTO tutors (tutor_phone, tutor_created_datetime) VALUE ('$phone', '$now')");
 		echo "<script>alert('Phone Number Verified Succes')</script>";
-		echo "<script>parent.location='section1_update.php'</script>";
+		echo "<script>parent.location='my_profile.php'</script>";
 	}
 	else{
 		echo "<script>alert('OTP Mismatched')</script>";
