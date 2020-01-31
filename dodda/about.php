@@ -1,5 +1,5 @@
-<!-- <a href="https://api.whatsapp.com/send?phone=+91 9731352841" class="whatsapp"><img src="/newpropertydetails.com/images/whatsapp.png" style="height: 32px;width: 32px;"></a> -->
-<!-- <a href="tel://+91 9731352841" class="phoneMe"><img src="/newpropertydetails.com/images/phone.png" style="width: 32px;height: 32px;"></a> -->
+<!-- <a href="https://api.whatsapp.com/send?phone=+91 " class="whatsapp"><img src="/newpropertydetails.com/images/whatsapp.png" style="height: 32px;width: 32px;"></a> -->
+<!-- <a href="tel://+91 " class="phoneMe"><img src="/newpropertydetails.com/images/phone.png" style="width: 32px;height: 32px;"></a> -->
 <!DOCTYPE html>
 <html lang="en">
 
