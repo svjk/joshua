@@ -4,12 +4,13 @@ include './db/search_actions.php';
 include './PHPMailer/PHPMailerAutoload.php';
 // *********** Send SMS ****************** 
 if (isset($_POST['sendSMS'])) {
+	echo "<script>alert('hi')</script>";
 	$checkedTutors = $_POST['tutorPhone'];
 	for ($i=0; $i <COUNT($checkedTutors) ; $i++) {
 		$checkedTutorsID = $checkedTutors[$i];
-		$selectTutorsPhones = mysqli_query($db_connect, "SELECT tut.tutor_id, tut.tutor_name, tut.tutor_phone, tut.tutor_email, qf.qualification_name, sb.Subject, gr.gender_name, exp.experience_name, tut.tutor_location 
-			FROM tutors AS tut, qualifications AS qf, subjects AS sb, gender AS gr, experience AS exp
-			WHERE tut.qualification_id=qf.qualification_id AND tut.subject_id=sb.ID AND tut.gender_id=gr.gender_id AND tut.experience_id=exp.experience_id AND tutor_id='".$checkedTutorsID."' ");
+		$selectTutorsPhones = mysqli_query($db_connect, "SELECT *
+			FROM tutors
+			WHERE tutor_id='".$checkedTutorsID."' ");
 		
 		$tutorsPhoneEmailArray = array();
 		while ($row = mysqli_fetch_array($selectTutorsPhones)) {
@@ -20,7 +21,7 @@ if (isset($_POST['sendSMS'])) {
 			$From='TFCTOR';
 			$To=$tutorsPhoneEmail['tutor_phone'];
 
-			$Msg='Dear Sir/Medam this is doddanna from svjk';
+			$Msg='Dear Sir/Madam, '.$tutorsPhoneEmail['tutor_name']. 'Please Update Your Profile'.'"<a href ="http://www.example.com">www.example.com</a>"';
 
 
 			### DO NOT Change anything below this line
@@ -44,9 +45,9 @@ if (isset($_POST['sendEmail'])) {
 	$checkedTutors = $_POST['tutorPhone'];
 	for ($i=0; $i <COUNT($checkedTutors) ; $i++) {
 		$checkedTutorsID = $checkedTutors[$i];
-		$selectTutorsEmail = mysqli_query($db_connect, "SELECT tut.tutor_id, tut.tutor_name, tut.tutor_phone, tut.tutor_email, qf.qualification_name, sb.Subject, gr.gender_name, exp.experience_name, tut.tutor_location 
-			FROM tutors AS tut, qualifications AS qf, subjects AS sb, gender AS gr, experience AS exp
-			WHERE tut.qualification_id=qf.qualification_id AND tut.subject_id=sb.ID AND tut.gender_id=gr.gender_id AND tut.experience_id=exp.experience_id AND tutor_id='".$checkedTutorsID."' ");
+		$selectTutorsEmail = mysqli_query($db_connect, "SELECT *
+			FROM tutors AS tut
+			WHERE tutor_id='".$checkedTutorsID."' ");
 		
 		$tutorsPhoneEmailArray = array();
 		while ($row = mysqli_fetch_array($selectTutorsEmail)) {
