@@ -1,6 +1,7 @@
 <?php 
 include '.././db/selects.php';
 include 'add_edits.php';
+include 'selects_tutor_profile.php';
 $selectTutorSelectedBoards = mysqli_query($db_connect, "SELECT * FROM tutor_selected_boards WHERE tutor_id='$tutorID' ");
 $tutorSelectedBoardsArray = array();
 while ($row = mysqli_fetch_array($selectTutorSelectedBoards)) {

@@ -1,6 +1,7 @@
 <?php 
 include '.././db/selects.php';
 include 'add_edits.php';
+include 'selects_tutor_profile.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

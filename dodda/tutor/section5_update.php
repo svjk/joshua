@@ -1,6 +1,7 @@
 <?php 
 include '.././db/selects.php';
 include 'add_edits.php';
+include 'selects_tutor_profile.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,17 +28,19 @@ include 'add_edits.php';
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                        <?php
-                                        foreach ($languagesArray as $languages) {
-                                        ?>
-                                        <div class="col-md-3">
-                                            <div class="form-group form-check">                         
-                                                <label class="form-check-label checkbox-labels" for="">
-                                                  <input type="checkbox" name="languagesKnown" class="form-check-input" id="" value="<?php echo $languages['languages_id'] ?>"> <?php echo $languages['languages_name'] ?> 
-                                                </label>
+                                            <div class="row">
+                                                <?php
+                                                foreach ($languagesArray as $languages) {
+                                                ?>
+                                                <div class="col-md-3">
+                                                    <div class="form-group form-check">                         
+                                                        <label class="form-check-label checkbox-labels" for="">
+                                                          <input type="checkbox" name="languagesKnown[]" class="form-check-input" id="" value="<?php echo $languages['languages_id'] ?>"> <?php echo $languages['languages_name'] ?> 
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <?php }?>
                                             </div>
-                                        </div>
-                                        <?php }?>
                                         </div>
                                     </div>
                                 </div>

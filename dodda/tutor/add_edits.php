@@ -182,11 +182,27 @@ if (isset($_POST['update5'])) {
 	$quesAnwer1 = $_POST['answer1'];
 	$quesAnwer2 = $_POST['answer2'];
 	$quesAnwer3 = $_POST['answer3'];
-	$updateQuery = "UPDATE tutors SET languages_id='$lngKnown', question1_answer='$quesAnwer1', question2_answer='$quesAnwer2', question3_answer='$quesAnwer3', tutor_updated_datetime='$now' WHERE tutor_phone='$phone_number'";
+
+	if (!empty($lngKnown)) {
+		$selectTutorTutionTypes = mysqli_query($db_connect, "SELECT * FROM tutor_selected_languages_known WHERE tutor_id='$tutorID' ");
+		if (mysqli_num_rows($selectTutorTutionTypes)>=1) {
+			$deleteOldSelected = mysqli_query($db_connect, "DELETE  FROM tutor_selected_languages_known WHERE tutor_id = '$tutorID' ");
+			for ($i=0; $i <count($lngKnown) ; $i++) { 
+				$insertNewTutionTypes = mysqli_query($db_connect, "INSERT INTO tutor_selected_languages_known(tutor_id, languages_id) VALUES ('$tutorID', '".$lngKnown[$i]."')");
+			}
+		}
+		else if (mysqli_num_rows($selectTutorTutionTypes)<=0){
+			for ($i=0; $i <count($lngKnown) ; $i++) { 
+				$insertNewTutionTypes = mysqli_query($db_connect, "INSERT INTO tutor_selected_languages_known(tutor_id, languages_id) VALUES ('$tutorID', '".$lngKnown[$i]."')");
+			}
+		}
+	}
+
+	$updateQuery = "UPDATE tutors SET question1_answer='$quesAnwer1', question2_answer='$quesAnwer2', question3_answer='$quesAnwer3', tutor_updated_datetime='$now' WHERE tutor_phone='$phone_number'";
 	$updateOtherInfo = mysqli_query($db_connect, $updateQuery);
 	if ($updateOtherInfo) {
 		echo "<script>alert('Profile Successfully Updated')</script>";
-		echo "<script>parent.location='index.php'</script>";
+		echo "<script>parent.location='my_profile.php'</script>";
 	}
 }
 // *********** End Update 5 **********

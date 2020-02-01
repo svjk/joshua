@@ -1,7 +1,7 @@
 <?php
 include '.././db/db_config.php';
 include '.././db/selects.php';
-include 'selects.php';
+include 'selects_tutor_profile.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -300,7 +300,7 @@ include 'selects.php';
                             <div class="form-group">
                                 <label class="col-md-2  col-sm-3 col-xs-12 control-label">Upload ID Proof</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <img src="<?php echo $tutProofDocUrl ?>" style="width: 250px;height: 150px;">
+                                    <img src="<?php echo $tutProofDocUrl ?>" style="width: 250px;height: 150px;" alt="<?php echo $tutProofDoc ?>">
                                 </div>
                             </div>
                         </fieldset>
@@ -311,12 +311,17 @@ include 'selects.php';
                                     Select Experience
                                 </label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <select class="form-control" name="experienceID">
+                                    <select class="form-control" name="experienceID" readonly>
                                         <option value="">Select</option>
                                         <?php
                                         foreach ($experienceArray as $experience) {
                                         ?>
-                                        <option value="<?php echo $experience['experience_id'] ?>">
+                                        <option value="<?php echo $experience['experience_id'] ?>"
+                                        <?php
+                                        if ($tutuExperID==$experience['experience_id']) {
+                                            echo "selected=selected";
+                                        }
+                                        ?>>
                                             <?php echo $experience['experience_name'] ?> Year
                                         </option>
                                         <?php }?>
@@ -327,19 +332,19 @@ include 'selects.php';
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Company / Organization Name</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" name="organization_name">
+                                    <input type="text" class="form-control" name="organization_name" readonly value="<?php echo $tutOrg?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Designation</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" name="old_designation">
+                                    <input type="text" class="form-control" name="old_designation" readonly value="<?php echo $tutDesig?>">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-3 col-xs-12 control-label">Current Salary</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" name="current_sal">
+                                    <input type="text" class="form-control" name="current_sal" readonly value="<?php echo $tutSal?>">
                                 </div>
                             </div>
                         </fieldset>
@@ -353,17 +358,25 @@ include 'selects.php';
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                        <?php
-                                        foreach ($languagesArray as $languages) {
-                                        ?>
-                                        <div class="col-md-3">
-                                            <div class="form-group form-check">                         
-                                                <label class="form-check-label checkbox-labels" for="">
-                                                  <input type="checkbox" name="languagesKnown" class="form-check-input" id="" value="<?php echo $languages['languages_id'] ?>"> <?php echo $languages['languages_name'] ?> 
-                                                </label>
+                                            <div class="row">
+                                                <?php
+                                                foreach ($tutLangKnownArray as $tutLangKnown) {
+                                                
+                                                foreach ($languagesArray as $languages) {
+                                                    if ($languages['languages_id']==$tutLangKnown['languages_id']) {
+                                                        $selectedLangKnown = $languages['languages_name'];
+                                                    }
+                                                }
+                                                ?>
+                                                <div class="col-md-3">
+                                                    <div class="form-group form-check">                         
+                                                        <label class="form-check-label checkbox-labels" for="">
+                                                          <input type="checkbox" name="languagesKnown[]" class="form-check-input" id="" value="<?php echo $selectedLangKnown ?>" disabled="disabled" checked> <?php echo $selectedLangKnown ?> 
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <?php }?>
                                             </div>
-                                        </div>
-                                        <?php }?>
                                         </div>
                                     </div>
                                 </div>
@@ -374,7 +387,7 @@ include 'selects.php';
                                     <label style="color: rgb(0,0,0,.5);">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</label>
                                 </div>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <textarea class="form-control" name="answer1" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"></textarea>
+                                    <textarea class="form-control" name="answer1" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" readonly><?php echo $tutAns1 ?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -383,7 +396,7 @@ include 'selects.php';
                                     <label style="color: rgb(0,0,0,.5);">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</label>
                                 </div>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <textarea class="form-control" name="answer2" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"></textarea>
+                                    <textarea class="form-control" name="answer2" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" readonly><?php echo $tutAns2 ?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -392,12 +405,18 @@ include 'selects.php';
                                     <label style="color: rgb(0,0,0,.5);">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</label>
                                 </div>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <textarea class="form-control" name="answer3" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"></textarea>
+                                    <textarea class="form-control" name="answer3" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" readonly><?php echo $tutAns3 ?></textarea>
                                 </div>
                             </div>                          
                         </fieldset>
                         <hr>
-                        
+                        <div class="form-group">
+                            <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
+                                <a href="section1_update.php" class="btn btn-primary">
+                                    Go to Update <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
