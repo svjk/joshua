@@ -4,7 +4,6 @@ include './db/search_actions.php';
 include './PHPMailer/PHPMailerAutoload.php';
 // *********** Send SMS ****************** 
 if (isset($_POST['sendSMS'])) {
-	echo "<script>alert('hi')</script>";
 	$checkedTutors = $_POST['tutorPhone'];
 	for ($i=0; $i <COUNT($checkedTutors) ; $i++) {
 		$checkedTutorsID = $checkedTutors[$i];
@@ -17,11 +16,13 @@ if (isset($_POST['sendSMS'])) {
 			$tutorsPhoneEmailArray[] = $row;
 		}
 		foreach ($tutorsPhoneEmailArray as $tutorsPhoneEmail) {
+			$_SESSION['tutor_phone'] = $tutorsPhoneEmail['tutor_phone'];
+			$toPhone = $_SESSION['tutor_phone'];
 			$YourAPIKey='33119aa2-46a6-11e9-8806-0200cd936042';
 			$From='TFCTOR';
 			$To=$tutorsPhoneEmail['tutor_phone'];
 
-			$Msg='Dear Sir/Madam, '.$tutorsPhoneEmail['tutor_name']. 'Please Update Your Profile'.'"<a href ="http://www.example.com">www.example.com</a>"';
+			$Msg='Dear Sir/Madam '.$tutorsPhoneEmail['tutor_name'].' Please Update Your Profile Clicking Below Link'."http://localhost/joshua/dodda/tutor/my_profile.php";
 
 
 			### DO NOT Change anything below this line
@@ -54,6 +55,7 @@ if (isset($_POST['sendEmail'])) {
 			$tutorsPhoneEmailArray[] = $row;
 		}
 		foreach ($tutorsPhoneEmailArray as $tutorsPhoneEmail) {
+			$p = $_SESSION['tutor_phone']=$tutorsPhoneEmail['tutor_phone'];
 			$mail = new PHPMailer;
 			$mail->isSMTP();
 			$mail->SMTPSecure = 'ssl';
@@ -67,7 +69,7 @@ if (isset($_POST['sendEmail'])) {
 			$mail->addReplyTo('testsvjk@gmail.com');
 			$mail->isHTML(true);
 			$mail->Subject = "Test Message From Svjk";
-			$mail->Body = 'Test Mail from SVJK';
+			$mail->Body = 'Dear Sir/Madam '.$tutorsPhoneEmail['tutor_name'].' Please Login and Update Your Profile to get Part/Full Time Job By Clicking Below'.'<br>'."http://localhost/joshua/dodda/tutor/index.php?phone=$p".'WhatsApp for More Detail '. "https://api.whatsapp.com/send?phone=+919731263208";
 
 			if (!$mail->send()) {
 				echo "ERROR: " . $mail->ErrorInfo;
@@ -104,6 +106,10 @@ if (isset($_POST['sendEmail'])) {
 					<div class="col-md-12">
 						<div class="text-center">
 							<h3>Search Tutor's</h3>
+
+							<a href="tel://+91 9739981327" class="phoneMe">Call</a>
+
+  							<a href="https://api.whatsapp.com/send?phone=+91 9739981327" class="whatsapp">WhatsApp</a>
 						</div>
 					</div>
 					<div class="col-md-12">
@@ -264,10 +270,16 @@ if (isset($_POST['sendEmail'])) {
 							<table id="allTutorsTable" class="table table-striped table-bordered" style="width:100%">
 								<thead>
 									<tr>
-										<th colspan="5" class="text-center">All Tutors</th>
+										<th colspan="6" class="text-center">All Tutors</th>
 										<th>
 											<button class="btn btn-primary btn-sm" name="sendSMS">
 												<i class="fas fa-sms"></i> SMS
+											</button>
+										</th>
+										<th>
+											<a href="https://api.whatsapp.com/send?phone=919739981327&text=Hi%20Dear%20Sir%20/%20Madam">Whats App</a>
+											<button class="btn btn-success btn-sm" name="sendWhatsApp">
+												<i class="fab fa-whatsapp"></i> WhatsApp
 											</button>
 										</th>
 										<th>
@@ -275,7 +287,7 @@ if (isset($_POST['sendEmail'])) {
 												<i class="fa fa-envelope" aria-hidden="true"></i> E-Mail
 											</button>
 										</th>
-										<th><a href="" class="btn btn-success btn-sm"><i class="fa fa-download" aria-hidden="true"></i> Download</a></th>
+										<th><a href="" class="btn btn-secondary btn-sm"><i class="fa fa-download" aria-hidden="true"></i> Download</a></th>
 									</tr>
 									<tr>
 										<th><input type="checkbox" id="checkAllTutor"></th>
@@ -286,6 +298,8 @@ if (isset($_POST['sendEmail'])) {
 										<th>Gender</th>
 										<th>Experience</th>
 										<th>Location</th>
+										<th>SEND SMS</th>
+										<th>SEND EMAIL</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -303,6 +317,12 @@ if (isset($_POST['sendEmail'])) {
 											<td><?php echo $allTutors['gender_name'] ?></td>
 											<td><?php echo $allTutors['experience_name'] ?> Year</td>
 											<td><?php echo $allTutors['tutor_location'] ?></td>
+											<td>
+												<a href="" class="btn btn-sm btn-primary">Send SMS Link</a>
+											</td>
+											<td>
+												<a href="" class="btn btn-sm btn-info">Send Email Link</a>
+											</td>
 										</tr>
 									<?php }?>
 								</tbody>

@@ -1,5 +1,6 @@
 <?php
 include '.././db/db_config.php';
+$phone = $_GET['phone'];
 #### 2Factor Credentials
 $YourAPIKey='33119aa2-46a6-11e9-8806-0200cd936042';
 
@@ -84,21 +85,21 @@ if (isset($_POST['verifyOtp'])) {
 					<div class="row">
 						<div class="col-md-3">
 							<div class="form-group">
-								<input type="text" class="form-control" name="phoneNumber" placeholder="Enter Phone Number" required>
+								<input type="text" class="form-control" name="phoneNumber" placeholder="Enter Phone Number" required value="<?php echo $phone?>" readonly>
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-3">
 							<button class="btn btn-primary" name="sendOtp">
-								Submit
+								Login to Update <i class="fa fa-hand-o-right"></i> 
 							</button>
 						</div>
 					</div>
 				</form>
 			</div>
 		</div>
-		<div class="container" style="padding-top: 20px;">
+		<!-- <div class="container" style="padding-top: 20px;">
 			<div class="col-md-12">
 				<form action="" method="POST">
 					<div class="row">
@@ -117,7 +118,7 @@ if (isset($_POST['verifyOtp'])) {
 					</div>
 				</form>
 			</div>
-		</div>
+		</div> -->
 	</section>
 	<?php include 'script_links.php'; ?>
 </body>
