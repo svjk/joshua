@@ -16,13 +16,13 @@ if (isset($_POST['sendSMS'])) {
 			$tutorsPhoneEmailArray[] = $row;
 		}
 		foreach ($tutorsPhoneEmailArray as $tutorsPhoneEmail) {
-			$_SESSION['tutor_phone'] = $tutorsPhoneEmail['tutor_phone'];
-			$toPhone = $_SESSION['tutor_phone'];
+			$p = $_SESSION['tutor_phone']=$tutorsPhoneEmail['tutor_phone'];
+
 			$YourAPIKey='33119aa2-46a6-11e9-8806-0200cd936042';
 			$From='TFCTOR';
 			$To=$tutorsPhoneEmail['tutor_phone'];
 
-			$Msg='Dear Sir/Madam '.$tutorsPhoneEmail['tutor_name'].' Please Update Your Profile Clicking Below Link'."http://localhost/joshua/dodda/tutor/my_profile.php";
+			$Msg='Dear Sir/Madam '.$tutorsPhoneEmail['tutor_name'].' Please Login and Update Your Profile to get Part/Full Time Job By Clicking Below'.' '."http://localhost/joshua/dodda/tutor/index.php?phone=$p";
 
 
 			### DO NOT Change anything below this line
@@ -69,7 +69,7 @@ if (isset($_POST['sendEmail'])) {
 			$mail->addReplyTo('testsvjk@gmail.com');
 			$mail->isHTML(true);
 			$mail->Subject = "Test Message From Svjk";
-			$mail->Body = 'Dear Sir/Madam '.$tutorsPhoneEmail['tutor_name'].' Please Login and Update Your Profile to get Part/Full Time Job By Clicking Below'.'<br>'."http://localhost/joshua/dodda/tutor/index.php?phone=$p".'WhatsApp for More Detail '. "https://api.whatsapp.com/send?phone=+919731263208";
+			$mail->Body = 'Dear Sir/Madam '.$tutorsPhoneEmail['tutor_name'].' Please Login and Update Your Profile to get Part/Full Time Job By Clicking Below'.'<br>'."http://localhost/joshua/dodda/tutor/index.php?phone=$p".' <br>'.'WhatsApp for More Detail '. "https://api.whatsapp.com/send?phone=+919731263208";
 
 			if (!$mail->send()) {
 				echo "ERROR: " . $mail->ErrorInfo;
@@ -82,6 +82,67 @@ if (isset($_POST['sendEmail'])) {
 }
 // ************ End Email ****************
 
+if (isset($_POST['indviSMSBtn'])) {
+	$tutID = $_POST['tutor_id'];
+	$selectOneTut = mysqli_query($db_connect, "SELECT * FROM tutors WHERE tutor_id='$tutID' ");
+	$row = mysqli_fetch_array($selectOneTut);
+	echo $p = $_SESSION['tutor_phone'] =$row['tutor_phone'];
+	$tutName = $row['tutor_name'];
+
+	$YourAPIKey='33119aa2-46a6-11e9-8806-0200cd936042';
+	$From='TFCTOR';
+	$To=$p;
+
+	$Msg='Dear Sir/Madam '.$tutName.' Please Login and Update Your Profile to get Part/Full Time Job By Clicking Below'.' '."http://localhost/joshua/dodda/tutor/index.php?phone=$p";
+
+
+			### DO NOT Change anything below this line
+	$agent= 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)';
+	$url = "https://2factor.in/API/V1/$YourAPIKey/ADDON_SERVICES/SEND/PSMS"; 
+	$ch = curl_init(); 
+	curl_setopt($ch,CURLOPT_URL,$url); 
+	curl_setopt($ch,CURLOPT_POST,true); 
+	curl_setopt($ch,CURLOPT_RETURNTRANSFER,true); 
+	curl_setopt($ch,CURLOPT_POSTFIELDS,"From=$From&To=$To&Msg=$Msg"); 
+	curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+	echo curl_exec($ch); 
+	curl_close($ch);
+}
+// *********** End Single Message Sending ********
+
+// ********** Start Single Tutor Mail Sending ***********
+if (isset($_POST['indviMailBtn'])) {
+	$tutID = $_POST['tutor_id'];
+	$selectOneTut = mysqli_query($db_connect, "SELECT * FROM tutors WHERE tutor_id='$tutID' ");
+	$row = mysqli_fetch_array($selectOneTut);
+	$p = $_SESSION['tutor_phone']=$row['tutor_phone'];
+	$tutName = $row['tutor_name'];
+	$tutEmail = $row['tutor_email'];
+	
+	$mail = new PHPMailer;
+	$mail->isSMTP();
+	$mail->SMTPSecure = 'ssl';
+	$mail->SMTPAuth = true;
+	$mail->Host = 'smtp.gmail.com';
+	$mail->Port = 465;
+	$mail->Username = 'testsvjk@gmail.com'; //svjktutor@gmail.com
+	$mail->Password = 'test@SVJK70'; //svjk123!@#
+	$mail->setFrom('testsvjk@gmail.com');
+	$mail->addBCC($tutEmail);
+	$mail->addReplyTo('testsvjk@gmail.com');
+	$mail->isHTML(true);
+	$mail->Subject = "Test Message From Svjk";
+	$mail->Body = 'Dear Sir/Madam '.$tutName.' Please Login and Update Your Profile to get Part/Full Time Job By Clicking Below'.'<br>'."http://localhost/joshua/dodda/tutor/index.php?phone=$p".' <br>'.'WhatsApp for More Detail '. "https://api.whatsapp.com/send?phone=+919731263208";
+
+	if (!$mail->send()) {
+		echo "ERROR: " . $mail->ErrorInfo;
+	} else {
+		echo "SUCCESS  ";
+	}
+	
+}
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -90,6 +151,7 @@ if (isset($_POST['sendEmail'])) {
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 </head>
 <body>
 	<section>
@@ -318,10 +380,10 @@ if (isset($_POST['sendEmail'])) {
 											<td><?php echo $allTutors['experience_name'] ?> Year</td>
 											<td><?php echo $allTutors['tutor_location'] ?></td>
 											<td>
-												<a href="" class="btn btn-sm btn-primary">Send SMS Link</a>
+												<a href="#" class="btn btn-sm btn-primary sendSmsLink" id="<?php echo $allTutors['tutor_id'] ?>"><?php echo $allTutors['tutor_id'] ?> Send SMS Link</a>
 											</td>
 											<td>
-												<a href="" class="btn btn-sm btn-info">Send Email Link</a>
+												<a href="#" class="btn btn-sm btn-info sendMailLink" id="<?php echo $allTutors['tutor_id'] ?>"><?php echo $allTutors['tutor_id'] ?> Send Email Link</a>
 											</td>
 										</tr>
 									<?php }?>
@@ -341,9 +403,23 @@ if (isset($_POST['sendEmail'])) {
 	<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 </body>
 </html>
+<script type="text/javascript">
+	$('.sendSmsLink').click(function () {
+		var tutID = $(this).attr('id');
+		$("#sms_tutor_id").val(tutID);
+    	$("#sendIndiviualSmsModal").modal('show');
+    })
+	$('.sendMailLink').click(function () {
+		var tutID = $(this).attr('id');
+		$("#mail_tutor_id").val(tutID);
+		$('#sendIndiviualMailModal').modal('show');
+	})
+</script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		
+
 		$('#allTutorsTable').DataTable();
 	} );
 </script>
@@ -363,3 +439,88 @@ if (isset($_POST['sendEmail'])) {
 		$('input:checkbox').not(this).prop('checked', this.checked);
 	});
 </script>
+
+<!-- The Modal -->
+<div class="modal" id="sendIndiviualSmsModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Send SMS</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST">
+        	<div class="row">
+        		<div class="col-md-12">
+        			<div class="form-group">
+        				<input type="text" class="form-control" name="tutor_id" id="sms_tutor_id" readonly>
+        			</div>
+        		</div>
+        		<div class="col-md-12">
+        			<div class="modal-footer">
+        				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        				<button class="btn btn-primary" name="indviSMSBtn">SEND</button>
+        			</div>
+        		</div>
+        	</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="sendIndiviualSmsModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Send SMS</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST">
+        	<div class="row">
+        		<div class="col-md-12">
+        			<div class="form-group">
+        				<input type="text" class="form-control" name="tutor_id" id="tutor_id" readonly>
+        			</div>
+        		</div>
+        		<div class="col-md-12">
+        			<div class="modal-footer">
+        				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        				<button class="btn btn-primary" name="indviSMSBtn">SEND</button>
+        			</div>
+        		</div>
+        	</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="sendIndiviualMailModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Send MAIL</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST">
+        	<div class="row">
+        		<div class="col-md-12">
+        			<div class="form-group">
+        				<input type="text" class="form-control" name="tutor_id" id="mail_tutor_id" readonly>
+        			</div>
+        		</div>
+        		<div class="col-md-12">
+        			<div class="modal-footer">
+        				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        				<button class="btn btn-primary" name="indviMailBtn">SEND</button>
+        			</div>
+        		</div>
+        	</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
