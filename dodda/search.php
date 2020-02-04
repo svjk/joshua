@@ -332,7 +332,7 @@ if (isset($_POST['indviMailBtn'])) {
 							<table id="allTutorsTable" class="table table-striped table-bordered" style="width:100%">
 								<thead>
 									<tr>
-										<th colspan="6" class="text-center">All Tutors</th>
+										<th colspan="7" class="text-center">All Tutors</th>
 										<th>
 											<button class="btn btn-primary btn-sm" name="sendSMS">
 												<i class="fas fa-sms"></i> SMS
@@ -362,6 +362,7 @@ if (isset($_POST['indviMailBtn'])) {
 										<th>Location</th>
 										<th>SEND SMS</th>
 										<th>SEND EMAIL</th>
+										<th>Update</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -384,6 +385,11 @@ if (isset($_POST['indviMailBtn'])) {
 											</td>
 											<td>
 												<a href="#" class="btn btn-sm btn-info sendMailLink" id="<?php echo $allTutors['tutor_id'] ?>"><?php echo $allTutors['tutor_id'] ?> Send Email Link</a>
+											</td>
+											<td>
+												<a href="./tutor/index.php?phone=<?php echo $allTutors['tutor_phone'] ?>">
+													Update
+												</a>
 											</td>
 										</tr>
 									<?php }?>
