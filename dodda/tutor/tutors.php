@@ -142,6 +142,42 @@ if (isset($_POST['indviMailBtn'])) {
     }
     
 }
+
+if (isset($_POST['sendMultiSMS'])) {
+    $tutsPhone = $_POST['tutorPh']; 
+    $smsMessage = $_POST['smsMessage']; 
+// use of explode 
+    $string = "$tutsPhone"; 
+    $str_arr = explode (",", $string);
+    foreach ($str_arr as $str_phon) {
+        $selectTuts = mysqli_query($db_connect, "SELECT * FROM tutors WHERE tutor_phone='$str_phon' ");
+        $checkedTuts = array();
+        while ($row = mysqli_fetch_array($selectTuts)) {
+            $checkedTuts[] = $row;
+        }
+        foreach ($checkedTuts as $checkedTutors) {
+            $p = $_SESSION['tutor_phone']=$checkedTutors['tutor_phone'];
+            $YourAPIKey='33119aa2-46a6-11e9-8806-0200cd936042';
+            $From='TFCTOR';
+            $To=$p;
+
+            $Msg='Shri '.$checkedTutors['tutor_name'].' '. $smsMessage ;
+
+
+            ### DO NOT Change anything below this line
+            $agent= 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)';
+            $url = "https://2factor.in/API/V1/$YourAPIKey/ADDON_SERVICES/SEND/PSMS"; 
+            $ch = curl_init(); 
+            curl_setopt($ch,CURLOPT_URL,$url); 
+            curl_setopt($ch,CURLOPT_POST,true); 
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,true); 
+            curl_setopt($ch,CURLOPT_POSTFIELDS,"From=$From&To=$To&Msg=$Msg"); 
+            curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+            echo curl_exec($ch); 
+            curl_close($ch);
+        }
+    }
+}
 /*
 tutor_id, tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob, tutor_location, tutor_profile_image, tutor_age, qualification_id, boards_id, classnames_id, subject_id, teaching_mode_id, teaching_medium_id, job_type_id, permanent_address, address_proof_id, proof_id_number, address_proof_front, address_proof_back, experience_id, institution_name, tutor_designation, tutor_salary, languages_id, question1_answer, question2_answer, question3_answer, tutor_lat, tutor_lng, city_id, tutor_desired_city, tutor_svjk_score, tutor_rating, passport_status, tutor_specialization, teaching_certification, criminal_cases_complaints, tutor_created_datetime, tutor_updated_datetime
 */
@@ -171,17 +207,20 @@ tutor_id, tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob, tutor_loca
                     <?php include 'side_bar_svjk.php'; ?>
                    <div class="content-panel">
                     <!-- <h2 class="title">My Profile<span class="pro-label label label-warning">Update</span></h2> -->
-                    <form class="form-horizontal" action="" method="POST">
+                    <form class="form-horizontal" action="" method="POST" id="allTutorsForm">
                         <fieldset class="fieldset">
                             <h3 class="fieldset-title">All Tutors</h3>
                             <div class="row" style="">
                                 <div class="col-md-12">
+                                    <input type="text" class="form-control" name="" id="selectedTuts">
+                                </div>
+                                <div class="col-md-12">
                                     <table id="allTutorsTable" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th colspan="5" class="text-center">All Tutors</th>
+                                                <th colspan="4" class="text-center">All Tutors</th>
                                                 <th>
-                                                    <button class="btn btn-primary btn-sm" name="sendSMS">
+                                                    <button type="button" class="btn btn-primary btn-sm sendSMS" name="">
                                                         <i class="fas fa-sms"></i> SMS
                                                     </button>
                                                 </th>
@@ -204,7 +243,6 @@ tutor_id, tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob, tutor_loca
                                                 <th>Name</th>
                                                 <th>Phone</th>
                                                 <th>Qualificaton</th>
-                                                <th>Subject</th>
                                                 <th>Gender</th>
                                                 <th>Experience</th>
                                                 <th>Location</th>
@@ -272,12 +310,11 @@ tutor_id, tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob, tutor_loca
                                             ?>
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="tutorPhone[]" value="<?php echo $allTutors['tutor_id'] ?>">
+                                                    <input type="checkbox" name="tutorPhone[]" value="<?php echo $allTutors['tutor_phone'] ?>" id="tutorPhone">
                                                 </td>
                                                 <td><?php echo $tutsName ?></td>
                                                 <td><?php echo $tutsPhone ?></td>
                                                 <td><?php echo $tutsQualification ?></td>
-                                                <td><?php echo $tutsSubjects ?></td>
                                                 <td><?php echo $tutsGender ?></td>
                                                 <td><?php echo $tutsExper ?></td>
                                                 <td><?php echo $tutsLocation ?></td>
@@ -324,8 +361,37 @@ tutor_id, tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob, tutor_loca
         $('#allTutorsTable').DataTable();
     } );
 </script>
-
 <script type="text/javascript">
+    function getChcked(){
+    var form = document.getElementById('myform');
+    var chks = form.querySelectorAll('input[type="checkbox"]');
+    var checked = [];
+    for(var i = 0; i < chks.length; i++){
+        if(chks[i].checked){
+            checked.push(chks[i].value)
+        }
+    }
+    return checked;
+}
+</script>
+<script type="text/javascript">
+    $(".sendSMS").click(function () {
+        var form = document.getElementById('allTutorsForm');
+        var chks = form.querySelectorAll('input[type="checkbox"]');
+        var checked = [];
+        for(var i = 0; i < chks.length; i++){
+            if(chks[i].checked){
+                checked.push(chks[i].value);
+                $("#smsSelectedTuts").val(checked);
+            }
+        }
+        $("#sendMultipleSMS").modal('show');
+        return checked;
+        // var ph = $("#tutorPhone").val();
+        // alert(ph);
+
+
+    })
     $('.sendSmsLink').click(function () {
         var tutID = $(this).attr('id');
         $("#sms_tutor_id").val(tutID);
