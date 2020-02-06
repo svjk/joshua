@@ -2,7 +2,7 @@
 include '.././db/db_config.php';
 if (!empty($_GET['phone'])) {
 	$phone = $_GET['phone'];
-	$disabled = 'disabled';
+	$disabled = '';
 }
 else{
 	$phone = '';
@@ -210,3 +210,15 @@ if (isset($_POST['verifyOtp'])) {
 	<?php include 'script_links.php'; ?>
 </body>
 </html>
+<script type="text/javascript">
+	var ph = $("#phoneNumber").val();
+	if (ph!='') {
+		// alert('hi');
+		document.getElementsById("phoneNumber").disabled=true;
+	}
+	else if (ph==''){
+		// alert('bye');
+		document.getElementsById("phoneNumber").disabled=false;
+	}
+</script>
+<!-- document.getElementsByName("ftp_hostname")[0].disabled=true; -->
