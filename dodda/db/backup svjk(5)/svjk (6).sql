@@ -1131,8 +1131,8 @@ CREATE TABLE `tutors` (
   `tutor_specialization` text DEFAULT NULL,
   `teaching_certification` varchar(500) DEFAULT NULL,
   `criminal_cases_complaints` varchar(250) DEFAULT NULL,
-  `tutor_created_datetime` DATETIME DEFAULT current_timestamp(),
-  `tutor_updated_datetime` DATETIME DEFAULT current_timestamp()
+  `tutor_created_datetime` varchar(250) DEFAULT current_timestamp(),
+  `tutor_updated_datetime` varchar(250) DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
