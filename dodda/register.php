@@ -13,18 +13,16 @@
 	{
 		font-family: verdana;
 		font-size: 12px;
-		margin: 15px;
+		margin: 12px;
 	}
 	
-	#div_login_register
-	{
-		border-style: solid;
-		border-width: 1px;
+	#fs_registration
+	{		
 		border-radius: 5px;
 		padding: 10px;
 		width: 300px;
 		margin-left: 330px;
-		margin-top: 80px;
+		margin-top: 50px;
 	}
 	
 	.mandatory
@@ -37,9 +35,46 @@
 	{
 		color: Red;		
 	}
+	
+	.msg
+	{
+		color: Black;
+		font-weight: bold;	
+	}
+	
+	select
+	{
+		border-radius: 3px;		
+		width: 150px;
+		height: 25px;
+		border-style: solid;
+		border-width: 1px;
+	}
+	
+	input
+	{
+		border-radius: 3px;			
+		width: 300px;
+		height: 20px;
+		border-style: solid;
+		border-width: 1px;
+		border-color: gray;
+	}	
+	
+	#submit_register
+	{
+		border-radius: 3px;			
+		width: 100px;
+		height: 30px;
+		border-style: solid;
+		border-width: 1px;
+	}
   </style>
   
-  <script>	
+  <script src="js/google_auth.js">
+  </script>
+  
+  <script>
 	$(document).ready( function() {
 				
 		$("#submit_register").click( function() {
@@ -53,12 +88,14 @@
 			var error_msg=$("#error_msg");
 			error_msg.html("");
 			var msg="";
+			var email_validated = false;
+			var mobile_validated = false;
 			
 			var return_val=true;
 			
 			if(selectOption == "--Select--")
 			{
-				msg+="*Please select UserType<br/>";				
+				msg+="*Please select User Type<br/>";				
 				return_val=false;
 			}
 			
@@ -73,11 +110,19 @@
 				msg+="*Please enter Email<br/>";				
 				return_val=false;
 			}
+			else
+			{
+				email_validated = true;
+			}
 						
 			if(txtMobile.val().trim() == null || txtMobile.val().trim() == "")
 			{
 				msg+="*Please enter Mobile No<br/>";								
 				return_val=false;
+			}
+			else
+			{
+				mobile_validated = true;
 			}
 			
 			if(txtPassword.val().trim() == null || txtPassword.val().trim() == "")
@@ -98,79 +143,80 @@
 				return_val=false;
 			}
 			
-			msg+="<br/>";
+			if(email_validated==true)
+			{
+				var return_val2 = validateEmail(txtEmail);
+				if(return_val2==0)
+				{
+					msg+="*Invalid Email<br/>";
+				}	
+			}
 			
+			if(mobile_validated==true)
+			{
+				var return_val3 = validateMobile(txtMobile);
+				if(return_val3==0)
+				{
+					msg+="*Invalid Mobile No.<br/>";
+				}	
+			}
+			
+			msg+="<br/>";
 			error_msg.html(msg);
+			
 			return return_val;
 			
 		});	
 		
-	});	
-	
-	function onSignIn(googleUser) 
-	{
-	  //alert("Signed In");
-	  
-	  var profile = googleUser.getBasicProfile();
-	  //alert(profile.getId());
-	  //alert(profile.getName());
-	  //alert(profile.getImageUrl());
-	  //alert(profile.getEmail());
-	  
-	  //console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-	  //console.log('Name: ' + profile.getName());
-	  //console.log('Image URL: ' + profile.getImageUrl());
-	  //console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-	  
-	  window.location.href = "tutor/tutor_dashboard.php";
-	}
-	
-	function signOut() 
-	{		
-		//alert("Signed Out");
-		
-		var auth2 = gapi.auth2.getAuthInstance();		
-		
-		auth2.signOut().then(function () 
+		$("#mobile").bind("keypress", function (e) 
 		{
-		  //alert("Signed out");
-		  
-		  var x = document.cookie;
-		  //alert(x);
-		  
-		  //deleteAllCookies();
-		  
-		  var y = document.cookie;
-		  alert(y);
-		  		  
-		  console.log('User signed out.');
-		  
-		  location.href="http://localhost/joshua/dodda/login_register.php?signout=1";
+          var keyCode = e.which ? e.which : e.keyCode
+               
+          if (!(keyCode >= 48 && keyCode <= 57)) 
+		  {
+            return false;
+          }
+		  else
+		  {            
+          }
 		});
 		
-		
+	});
+	
+	function validateEmail(ele)
+	{
+		var userinput = $(ele).val();
+		var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;		
+		var return_val = pattern.test(userinput);
+		if(!return_val)
+		{
+			return 0;
+		}
+		return 1;
 	}
 	
-	function deleteAllCookies() {
-    var cookies = document.cookie.split(";");
+	function validateMobile(ele)
+	{
+		var userinput = $(ele).val();
+		var pattern = /[2-9]{2}\d{8}/;		
+		var return_val = pattern.test(userinput);
+		if(!return_val)
+		{
+			return 0;			
+		}		
+		return 1;
+	}
+</script>
 
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
-}
-	
-  </script>
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
 	<?php
 	 require_once 'database_functions.php';	
 	?>
-	<form name="frmRegister" method="post">		
-		<div id="div_login_register">
+	<form name="frmRegister" method="post">
+		<fieldset id="fs_registration">
+		<legend>Registration</legend>		
 			<?php
 				require_once 'business_functions.php';
 			?>
@@ -186,10 +232,20 @@
 					
 					$return_val = registerUser($userType, $name, $email, $mobile, $password);
 					
-					echo "<div class='error_msg'>$return_val</div><br/>";
+					if($return_val == "Tutor registered successfully" or 
+							$return_val == "Student registered successfully")
+					{
+						echo "<div class='msg'>$return_val</div><br/>";
+					}		
+					else
+					{
+						echo "<div class='error_msg'>$return_val</div><br/>";
+					}
 				}
+				
 			?>
 			<div id="error_msg"></div>
+			<div id="msg"></div>
 			<label>User Type</label>
 			<label class="mandatory">*</label>
 			<br/>
@@ -203,45 +259,50 @@
 			<label>Name</label>
 			<label class="mandatory">*</label>
 			<br/>
-			<input type="text" name="name" id="name" maxlength="30"
-				value="<?php echo isset($_POST['name']) ? $_POST['name'] : "" ?>"	/>
+			<input type="text" name="name" id="name" maxlength="40"
+				value="<?php echo isset($_POST['name']) ? $_POST['name'] : "" ?>" autocomplete="off" />
 			<br/>
 			<br/>
 			<label>Email</label>
 			<label class="mandatory">*</label>
 			<br/>
 			<input type="text" name="email" id="email" maxlength="40" 
-					value="<?php echo isset($_POST['email']) ? $_POST['email'] : "" ?>" />				
+					value="<?php echo isset($_POST['email']) ? $_POST['email'] : "" ?>" autocomplete="off"  />				
 			<br/>
 			<br/>
-			<label>Mobile</label>
+			<label>Mobile No.</label>
 			<label class="mandatory">*</label>
 			<br/>
 			<input type="text" name="mobile" id="mobile" maxlength="10"
-			value="<?php echo isset($_POST['mobile']) ? $_POST['mobile'] : "" ?>"/>
+			value="<?php echo isset($_POST['mobile']) ? $_POST['mobile'] : "" ?>" autocomplete="off" />
 			<br/>
 			<br/>
 			<label>Password</label>
 			<label class="mandatory">*</label>
 			<br/>
 			<input type="password" name="password" id="password" maxlength="15"
-				value="<?php echo isset($_POST['password']) ? $_POST['password'] : "" ?>"/>
+				value="<?php echo isset($_POST['password']) ? $_POST['password'] : "" ?>" autocomplete="off" />
 			<br/>
 			<br/>
 			<label>Confirm Password</label>
 			<label class="mandatory">*</label>
 			<br/>
 			<input type="password" name="confirm_password" id="confirm_password" maxlength="15"
-				value="<?php echo isset($_POST['confirm_password']) ? $_POST['confirm_password'] : "" ?>"/>		
+				value="<?php echo isset($_POST['confirm_password']) ? $_POST['confirm_password'] : "" ?>" 
+				autocomplete="off" />		
 			<br/>
 			<br/>
-			<input type="submit" id="submit_register" name="submit_register" value="Register"/>		
+			<input type="submit" id="submit_register" name="submit_register" value="Register"/>	
+			<a style="margin: 20px;" href="login_svjk.php">Click here to login</a>
 			<br/>
 			<br/>
+			<!--
 			<div>-------------------OR-------------------</div>
 			<br/>
-			<div class="g-signin2" data-onsuccess="onSignIn"></div>
-			<!--<a href="#" onclick="signOut();">Sign out</a>-->
-		</div>
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>	
+			<br/>
+			<a href="#" onclick="signOut();">Sign out</a>
+			-->		
+		</fieldset>
 	</form>
 </body>
