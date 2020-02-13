@@ -5,7 +5,7 @@
 <html lang="en">
 
 <head>
-  <?php include 'head_links.php'; ?>
+  <?php include 'head_links.php'; ?>  
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -364,9 +364,7 @@
     <?php 
     include 'subscribe_form.php';
     include 'footer.php';
-    ?>   
-    
-
+    ?>
   </div>
   <!-- .site-wrap -->
   <?php include 'script_links.php'; ?>

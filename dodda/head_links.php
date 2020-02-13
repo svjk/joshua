@@ -24,3 +24,5 @@
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/cutom.css">
+
+<script src="js/jquery-3.3.1.min.js"></script>
