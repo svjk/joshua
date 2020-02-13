@@ -5,8 +5,10 @@
 <head> 
   <script src="js/jquery-3.3.1.min.js"></script>
   
+  <!--
   <script src="https://apis.google.com/js/platform.js" async defer></script>  
   <meta name="google-signin-client_id" content="1001357057262-dmc1djlim88hunosf9ug0mmequq35km2.apps.googleusercontent.com">
+  -->
   
   <style>
 	body
@@ -212,7 +214,7 @@
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
 	<?php
-	 require_once 'database_functions.php';	
+	 require_once 'database_functions.php';
 	?>
 	<form name="frmRegister" method="post">
 		<fieldset id="fs_registration">

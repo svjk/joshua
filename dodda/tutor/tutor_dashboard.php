@@ -41,6 +41,7 @@
 			header("Location: ../login_svjk.php");
 		}
 		
+		session_destroy();		
 	}
 ?>
 
