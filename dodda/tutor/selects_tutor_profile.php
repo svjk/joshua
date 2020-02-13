@@ -2,8 +2,10 @@
 /*
 tutor_id, tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob, tutor_location, tutor_profile_image, tutor_age, qualification_id, boards_id, classnames_id, subject_id, teaching_mode_id, teaching_medium_id, job_type_id, permanent_address, address_proof_id, proof_id_number, address_proof_front, address_proof_back, experience_id, institution_name, tutor_designation, tutor_salary, languages_id, question1_answer, question2_answer, question3_answer, tutor_lat, tutor_lng, city_id, tutor_desired_city, tutor_svjk_score, tutor_rating, passport_status, tutor_specialization, teaching_certification, criminal_cases_complaints, tutor_created_datetime, tutor_updated_datetime
 */
+
 include '.././db/db_config.php';
-$phone_number = $_SESSION['phoneNumber'];
+
+$phone_number = $_SESSION['tutor_phone'];
 $selectTutor = mysqli_query($db_connect, "SELECT * FROM tutors WHERE tutor_phone='$phone_number' ");
 $row = mysqli_fetch_array($selectTutor);
 $_SESSION['tutor_id'] = $row['tutor_id'];

@@ -7,9 +7,22 @@ include 'selects_tutor_profile.php';
 <html lang="en">
 <head>
     <?php include 'header_links.php'; ?>
+    <style>
+		.mandatory-label
+		{
+			color: red;
+		}    	
+
+    </style>
 </head>
 <body>
-    
+<?php
+	require_once '../business_functions.php';
+?>
+
+<?php
+	require_once 'check_auth_tutor.php';
+?>    
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <div class="container">
         <div class="view-account">
@@ -23,54 +36,50 @@ include 'selects_tutor_profile.php';
                     <form class="form-horizontal">
                         <fieldset class="fieldset">
                             <h3 class="fieldset-title">Personal Info</h3>
-                            <!-- <div class="form-group avatar">
-                                <figure class="figure col-md-2 col-sm-3 col-xs-12">
-                                    <img class="img-rounded img-responsive" src="tutor_upload_images/avatar1.png" alt="">
-                                </figure>
-                                <div class="form-inline col-md-10 col-sm-9 col-xs-12">
-                                    <input type="file" class="file-uploader pull-left">
-                                    <button type="submit" class="btn btn-sm btn-default-alt pull-left">Update Image</button>
-                                </div>
-                            </div> -->
+                                                        
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Name</label>
+                                <label class="col-md-2 col-sm-3 col-xs-12 control-label" style="width: 55px;">Name</label>
+                                <label class="mandatory-label">*</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" value="<?php echo $tutName ?>" readonly>
+                                    <input type="text" class="form-control" value="<?php echo $tutName ?>">
                                 </div>
                             </div>
                             
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Email</label>
+                                <label class="col-md-2 col-sm-3 col-xs-12 control-label" style="width: 50px;">Email</label>
+                                <label class="mandatory-label">*</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="email" class="form-control" name="" value="<?php echo $tutEmail ?>" readonly>
+                                    <input type="email" class="form-control" name="" value="<?php echo $tutEmail ?>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Phone</label>
+                                <label class="col-md-2 col-sm-3 col-xs-12 control-label" style="width: 56px;">Phone</label>
+                                <label class="mandatory-label">*</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" name="" value="<?php echo $tutPhone ?>" readonly>
+                                    <input type="text" class="form-control" name="" value="<?php echo $tutPhone ?>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Addrees</label>
+                                <label class="col-md-2  col-sm-3 col-xs-12 control-label" style="width: 69px;">Addrees</label>
+                                <label class="mandatory-label">*</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" value="<?php echo $tutLocation?>" readonly>
+                                    <input type="text" class="form-control" value="<?php echo $tutLocation?>">
                                 </div>
-                            </div>
-                            
+                            </div>                            
                         </fieldset>
+                        <br/>
                         <fieldset class="fieldset">
                             <h3 class="fieldset-title">Information</h3>
 
                             <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                <label style="width: 95px; margin-left: 15px;">
                                     Qualification
                                 </label>
                                 <div class="col-md-9 col-sm-9 col-xs-12">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="row">
-                                                <select class="form-control" name="qualification" readonly>
+                                            <div class="row" style="margin-left: 0px;">
+                                                <select class="form-control" name="qualification">
                                                     <option value="">Select</option>
                                                     <?php
                                                     foreach ($qualificationsArray as $qualifications) {
@@ -92,7 +101,7 @@ include 'selects_tutor_profile.php';
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                <label style="width: 120px; margin-left: 15px;">
                                     Selected Boards
                                 </label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
@@ -122,7 +131,7 @@ include 'selects_tutor_profile.php';
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                <label style="width: 108px; margin-left: 15px;">
                                     Selected Class
                                 </label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
@@ -151,7 +160,7 @@ include 'selects_tutor_profile.php';
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                <label style="width: 112px; margin-left: 15px;">
                                     Select Subjects
                                 </label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
@@ -180,7 +189,7 @@ include 'selects_tutor_profile.php';
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                <label style="width: 145px; margin-left: 15px;">
                                     Select Tution Mode
                                 </label>
                                 <div class="col-md-9 col-sm-9 col-xs-12">
@@ -209,7 +218,7 @@ include 'selects_tutor_profile.php';
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">
+                                <label style="width: 133px; margin-left: 15px;">
                                     Teaching Medium
                                 </label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
@@ -238,11 +247,11 @@ include 'selects_tutor_profile.php';
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                <label style="width: 68px; margin-left: 15px;">
                                     Job Type
                                 </label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <select class="form-control" name="jobType" readonly>
+                                    <select class="form-control" name="jobType">
                                         <option value="">Select</option>
                                         <?php 
                                         foreach ($jobTypesArray as $jobTypes) {
@@ -261,20 +270,20 @@ include 'selects_tutor_profile.php';
                                 </div>
                             </div>
                         </fieldset>
-                        
+                        <br/>
                         <fieldset class="fieldset">
                             <h3 class="fieldset-title">Contact Detail</h3>
                             <div class="form-group">
-                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Permanent Addrees</label>
+                                <label style="width: 145px; margin-left: 15px;">Permanent Addrees</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" name="permanentAddress" value="<?php echo $tutPermAddress ?>" readonly>
+                                    <input type="text" class="form-control" name="permanentAddress" value="<?php echo $tutPermAddress ?>">
                                 </div>
                             </div>
                             
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Choose ID Type</label>
+                                <label style="width: 117px; margin-left: 15px;">Choose ID Type</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <select class="form-control" name="proof_type_id" readonly>
+                                    <select class="form-control" name="proof_type_id">
                                         <option value="">Select</option>
                                         <?php
                                         foreach ($addressProofArray as $addressProofs) {
@@ -292,26 +301,27 @@ include 'selects_tutor_profile.php';
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">ID Number</label>
+                                <label style="width: 85px; margin-left: 15px;">ID Number</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" name="proofIdNumber" readonly value="<?php echo $tutProofIdNum ?>">
+                                    <input type="text" class="form-control" name="proofIdNumber" value="<?php echo $tutProofIdNum ?>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Upload ID Proof</label>
+                                <label style="width: 120px; margin-left: 15px;">Upload ID Proof</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <img src="<?php echo $tutProofDocUrl ?>" style="width: 250px;height: 150px;" alt="<?php echo $tutProofDoc ?>">
                                 </div>
                             </div>
                         </fieldset>
+                        <br/>
                         <fieldset class="fieldset">
                             <h3 class="fieldset-title">Experience</h3>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                <label style="width: 200px; margin-left: 15px;">
                                     Select Experience
                                 </label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <select class="form-control" name="experienceID" readonly>
+                                    <select class="form-control" name="experienceID">
                                         <option value="">Select</option>
                                         <?php
                                         foreach ($experienceArray as $experience) {
@@ -330,29 +340,29 @@ include 'selects_tutor_profile.php';
                             </div>
                             
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Company / Organization Name</label>
+                                <label style="width: 228px; margin-left: 15px;">Company / Organization Name</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" name="organization_name" readonly value="<?php echo $tutOrg?>" readonly>
+                                    <input type="text" class="form-control" name="organization_name"  value="<?php echo $tutOrg?>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Designation</label>
+                                <label style="width: 90px; margin-left: 15px;">Designation</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" name="old_designation" readonly value="<?php echo $tutDesig?>">
+                                    <input type="text" class="form-control" name="old_designation" value="<?php echo $tutDesig?>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Current Salary</label>
+                                <label style="width: 106px; margin-left: 15px;">Current Salary</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" name="current_sal" readonly value="<?php echo $tutSal?>">
+                                    <input type="text" class="form-control" name="current_sal" value="<?php echo $tutSal?>">
                                 </div>
                             </div>
                         </fieldset>
-
+                        <br/>
                         <fieldset class="fieldset">
                             <h3 class="fieldset-title">Others</h3>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">
+                                <label style="width: 135px; margin-left: 15px;">
                                     Languages Known
                                 </label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
@@ -382,30 +392,30 @@ include 'selects_tutor_profile.php';
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Question 1</label>
+                                <label style="width: 85px; margin-left: 15px;">Question 1</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <label style="color: rgb(0,0,0,.5);">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</label>
                                 </div>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <textarea class="form-control" name="answer1" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" readonly><?php echo $tutAns1 ?></textarea>
+                                    <textarea class="form-control" name="answer1" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"><?php echo $tutAns1 ?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Question 3</label>
+                                <label style="width: 85px; margin-left: 15px;">Question 2</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <label style="color: rgb(0,0,0,.5);">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</label>
                                 </div>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <textarea class="form-control" name="answer2" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" readonly><?php echo $tutAns2 ?></textarea>
+                                    <textarea class="form-control" name="answer2" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"><?php echo $tutAns2 ?></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Question 3</label>
+                                <label style="width: 85px; margin-left: 15px;">Question 3</label>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
                                     <label style="color: rgb(0,0,0,.5);">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</label>
                                 </div>
                                 <div class="col-md-10 col-sm-9 col-xs-12">
-                                    <textarea class="form-control" name="answer3" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" readonly><?php echo $tutAns3 ?></textarea>
+                                    <textarea class="form-control" name="answer3" placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"><?php echo $tutAns3 ?></textarea>
                                 </div>
                             </div>                          
                         </fieldset>

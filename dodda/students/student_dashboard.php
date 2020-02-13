@@ -17,15 +17,8 @@
 ?>
 
 <?php
-	require_once 'check_auth_tutor.php';
+	require_once 'check_auth_student.php';
 ?>
-
-<?php
-	//$return_val = get_tutor_info();
-	//print_r($return_val);
-	//echo $return_val[0]["tutor_phone"];
-?>
-
 	<form name="frmDashboard" method="post">
 		<input type="submit" value="Logout" name="submit_logout"/>
 	</form>	

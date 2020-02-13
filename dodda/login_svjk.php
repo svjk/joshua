@@ -128,21 +128,51 @@
 					$loginName = trim($_POST['loginName']);					
 					$password = trim($_POST['password']);
 					
-					$return_val = tutorLoginExists($userType, $loginName, $password);
-					
-					if($return_val == 1)
+					if($userType == 3)
 					{
-						$cookie_name = "AUTH_SVJK";
-						$cookie_value = "1";
+						$return_val = tutorLoginExists($userType, $loginName, $password);
+						
 						if($return_val == 1)
 						{
-							setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");						
-							header("Location: tutor/tutor_dashboard.php");
-						}						
+							$cookie_name = "AUTH_SVJK";
+							$cookie_value = "1";
+							if($return_val == 1)
+							{
+								$return_val = get_tutor_info();
+								if(count($return_val)>0)
+								{
+									$_SESSION["tutor_name"] = $return_val[0]["tutor_name"];
+									$_SESSION["tutor_email"] = $return_val[0]["tutor_email"];
+									$_SESSION["tutor_phone"] = $return_val[0]["tutor_phone"];
+								}
+								
+								setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");						
+								header("Location: tutor/tutor_dashboard.php");
+							}						
+						}
+						else
+						{
+							echo "<div class='error_msg'>Invalid Login/Password</div><br/>";
+						}
 					}
-					else
+					else if($userType == 4)
 					{
-						echo "<div class='error_msg'>Invalid Login/Password</div><br/>";
+						$return_val = studentLoginExists($userType, $loginName, $password);
+						
+						if($return_val == 1)
+						{
+							$cookie_name = "AUTH_SVJK";
+							$cookie_value = "1";
+							if($return_val == 1)
+							{
+								setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");						
+								header("Location: students/student_dashboard.php");
+							}						
+						}
+						else
+						{
+							echo "<div class='error_msg'>Invalid Login/Password</div><br/>";
+						}
 					}
 				}
 			?>

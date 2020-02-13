@@ -4,7 +4,7 @@ tutor_id, tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob, tutor_loca
 // Ramona Joy Paul
 ******************************************** */
 include '.././db/db_config.php';
-$phone_number = $_SESSION['phoneNumber'];
+$phone_number = $_SESSION['tutor_phone'];
 $selectTutorProfile = mysqli_query($db_connect, "SELECT * FROM tutors WHERE tutor_phone='$phone_number' ");
 $row = mysqli_fetch_array($selectTutorProfile);
 $_SESSION['tutor_id'] = $row['tutor_id'];

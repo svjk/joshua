@@ -73,6 +73,18 @@
 		return $return_val;
 	}
 	
+	function studentLoginExists($userType, $loginName, $password)
+	{
+		$return_val = studentExists($userType, $loginName, $password);
+		
+		return $return_val;
+	}
+	
+	function get_tutor_info()
+	{
+		return(getTutorInfo());	
+	}
+	
 	function isAuthenticated($cookeName)
 	{
 		if(isset($_COOKIE[$cookeName])) 
