@@ -85,6 +85,93 @@
 		return(getTutorInfo());	
 	}
 	
+	function get_countries()
+	{
+		$return_val = getCountries();
+		
+		return $return_val;
+	}
+	
+	function get_states_country_id($country_id)
+	{
+		$return_val = getStatesByCountryID($country_id);
+		
+		return $return_val;
+	}
+	
+	function get_cities_by_state_id($state_id)
+	{
+		$return_val = getCitiesByStateID($state_id);
+		
+		return $return_val;
+	}
+	
+	function get_qualifications()
+	{
+		$return_val = getQualifications();
+		
+		return $return_val;
+	}
+	
+	function get_boards()
+	{
+		$return_val = getBoards();
+		
+		return $return_val;
+	}
+	
+	function get_classes()
+	{
+		$return_val = getClasses();
+		
+		return $return_val;
+	}
+	
+	function get_subjects()
+	{
+		$return_val = getSubjects();
+		
+		return $return_val;
+	}
+	
+	function get_teaching_modes()
+	{
+		$return_val = getTeachingModes();
+		
+		return $return_val;
+	}
+	
+	function get_teaching_mediums()
+	{
+		$return_val = getTeachingMediums();
+		
+		return $return_val;
+	}
+	
+	function get_job_types()
+	{
+		$return_val = getJobTypes();
+		
+		return $return_val;
+	}
+	
+	function update_tutor_profile_step1($name, $email, $mobile, $address_line1, 
+				$address_line2, $city_id, $tutor_email)
+	{
+		$return_val = updateTutorProfileStep1($name, $email, $mobile, $address_line1, 
+				$address_line2, $city_id, $tutor_email);
+		
+		return $return_val;
+	}
+	
+	function update_tutor_qualification_job_type($qualification_id, $job_type_id, $tutor_email)
+	{
+		$return_val = updateTutorQualificationJobType($qualification_id, 
+			$job_type_id, $tutor_email);
+		
+		return $return_val;
+	}
+	
 	function isAuthenticated($cookeName)
 	{
 		if(isset($_COOKIE[$cookeName])) 

@@ -32,16 +32,18 @@
 <?php
 	if(isset($_POST['submit_logout']))
 	{
+		$cookie_name = "AUTH_SVJK";
+		$cookie_value = "1";
+		
 		$return_val1 = isAuthenticated($cookie_name);
 		//$return_val2 = isGoogleAuthenticated($google_cookie_name);
 		
 		if($return_val1 == 1)
 		{
-			setcookie($cookie_name, $cookie_value, time() - 2592000, '/');			
+			setcookie($cookie_name, $cookie_value, time() - 2592000, '/');
+			session_destroy();
 			header("Location: ../login_svjk.php");
-		}
-		
-		session_destroy();		
+		}		
 	}
 ?>
 
