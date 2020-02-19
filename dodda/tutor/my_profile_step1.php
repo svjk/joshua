@@ -255,7 +255,7 @@
                             <label class="mandatory-label">*</label>  
 							<br/>	
                             <input type="email" name="email" id="email" class="text-box"
-									maxlength="35" name="" value="<?php echo $tutor_email ?>">                            
+									maxlength="35" value="<?php echo $tutor_email ?>">                            
                             
 							<br/>
                             <br/>

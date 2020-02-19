@@ -164,13 +164,91 @@
 		return $return_val;
 	}
 	
-	function update_tutor_qualification_job_type($qualification_id, $job_type_id, $tutor_email)
+	function update_tutor_qualification_job_type($qualification_id, $job_type_id, $job_timings,
+			$tutor_email)
 	{
 		$return_val = updateTutorQualificationJobType($qualification_id, 
-			$job_type_id, $tutor_email);
+			$job_type_id, $job_timings, $tutor_email);
 		
 		return $return_val;
 	}
+	
+	function get_tutor_qualification_job_type($tutor_email)
+	{
+		$return_val = getTutorQualificationJobType($tutor_email);
+		
+		return $return_val;
+	}
+	
+	function get_selected_tutor_boards($tutor_email)
+	{
+		$return_val = getSelectedTutorBoards($tutor_email);
+		
+		return $return_val;
+	}
+	
+	function update_tutor_boards($selectedBoards, $tutor_id)
+	{
+		$return_val = updateTutorBoards($selectedBoards, $tutor_id);
+		
+		return $return_val;	
+	}
+	
+	function update_tutor_classes($selectedClasses, $tutor_id)
+	{
+		$return_val = updateTutorClasses($selectedClasses, $tutor_id);
+		
+		return $return_val;	
+	}
+	
+	function get_selected_tutor_classes($tutor_email)
+	{
+		$return_val = getSelectedTutorClasses($tutor_email);
+		
+		return $return_val;
+	}
+	
+	function update_tutor_subjects($selectedSubjects, $tutor_id)
+	{
+		$return_val = updateTutorSubjects($selectedSubjects, $tutor_id);
+		
+		return $return_val;	
+	}
+	
+	function get_selected_tutor_subjects($tutor_email)
+	{
+		$return_val = getSelectedTutorSubjects($tutor_email);
+		
+		return $return_val;
+	}	
+	
+	function update_tutor_teaching_modes($selectedTeachingModes, $tutor_id)
+	{
+		$return_val = updateTutorTeachingModes($selectedTeachingModes, $tutor_id);
+		
+		return $return_val;	
+	}
+	
+	function get_selected_tutor_teaching_modes($tutor_email)
+	{
+		$return_val = getSelectedTutorTeachingModes($tutor_email);
+		
+		return $return_val;
+	}	
+	
+	function update_tutor_teaching_mediums($selectedTeachingMediums, $tutor_id)
+	{
+		$return_val = updateTutorTeachingMediums($selectedTeachingMediums, $tutor_id);
+		
+		return $return_val;			
+	}
+	
+	function get_selected_tutor_teaching_mediums($tutor_email)
+	{
+		$return_val = getSelectedTutorTeachingMediums($tutor_email);
+		
+		return $return_val;
+	}	
 	
 	function isAuthenticated($cookeName)
 	{
@@ -191,6 +269,18 @@
 			return 1;
 		}
 		return 0;
+	}
+	
+	function array_element_exists($arr, $ele)
+	{
+		if (in_array($ele, $arr)) 
+		{ 
+		  return 1; 
+		} 
+		else
+		{ 
+		  return 0; 
+		} 
 	}
 	
 ?>
