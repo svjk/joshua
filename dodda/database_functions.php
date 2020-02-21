@@ -1,9 +1,5 @@
 <?php
-	if (session_status() == PHP_SESSION_NONE) 
-	{
-		session_start();
-	}
-	
+
 	function get_post($conn, $var)
 	{
 		return $conn->real_escape_string($_POST[$var]);
@@ -304,7 +300,7 @@
 		return 0;
 	}
 
-	function getTutorInfo()
+	function getTutorInfo($login_name, $login_type)
 	{
 		$hn = 'localhost';
 		$db = 'svjk';
@@ -312,63 +308,59 @@
 		$pw = '';
 		
 		$conn = new mysqli($hn, $un, $pw, $db);
-		if ($conn->connect_error) die($conn->connect_error);
-		
-		if(isset($_SESSION["user_type"]))
-		{
-			if($_SESSION["user_type"] == "tutor")
-			{
-				$loginName = $_SESSION["login_name"];				
-				if($_SESSION["login_type"] == "email")
-				{	
-					$query = "SELECT T.*, CS.id AS country_id, S.id AS state_id, 
-							C.id AS city_id FROM tutors T 
-						 LEFT JOIN Cities C ON C.id=T.city_id
-						 LEFT JOIN States S ON S.id=C.state_id
-						 LEFT JOIN Countries CS ON CS.id=S.country_id
-						 WHERE tutor_email = '$loginName'";
-				}
-				else if($_SESSION["login_type"] == "mobile")
-				{	
-					$query = "SELECT T.*, CS.id AS country_id, S.id AS state_id, 
-							C.id AS city_id FROM tutors T 
-						LEFT JOIN Cities C ON C.id=T.city_id
-						 LEFT JOIN States S ON S.id=C.state_id
-						 LEFT JOIN Countries CS ON CS.id=S.country_id
-						 WHERE tutor_phone = '$loginName'";
-				}
+		if ($conn->connect_error) die($conn->connect_error);		
+						
+		if($login_type == "email")
+		{	
+			$query = "SELECT T.*, CS.id AS country_id, S.id AS state_id, 
+					C.id AS city_id FROM tutors T 
+				 LEFT JOIN Cities C ON C.id=T.city_id
+				 LEFT JOIN States S ON S.id=C.state_id
+				 LEFT JOIN Countries CS ON CS.id=S.country_id
+				 WHERE tutor_email = '$login_name'";
+		}
+		else if($login_type == "phone")
+		{	
+			$query = "SELECT T.*, CS.id AS country_id, S.id AS state_id, 
+					C.id AS city_id FROM tutors T 
+				LEFT JOIN Cities C ON C.id=T.city_id
+				LEFT JOIN States S ON S.id=C.state_id
+			    LEFT JOIN Countries CS ON CS.id=S.country_id
+				WHERE tutor_phone = '$login_name'";
+		}
 								
-				$result = $conn->query($query);
-				if (!$result) die($conn->error);
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
 				
-				$rows = $result->num_rows;				 
+		$rows = $result->num_rows;				 
 				
-				$res = array();
-				for($i=0; $i<$rows; ++$i)
-				{
-					$result->data_seek($i);
-					$row = $result->fetch_array(MYSQLI_ASSOC);
+		$res = array();
+		for($i=0; $i<$rows; ++$i)
+		{
+			$result->data_seek($i);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
 					
-					$res[] = array("tutor_id"=>$row['tutor_id'], 
-							"tutor_email"=>trim($row['tutor_email']),
-							"tutor_phone"=>trim($row['tutor_phone']),
-							"tutor_name"=>trim($row['tutor_name']),
-							"address_line1"=>trim($row['address_line1']),
-							"address_line2"=>trim($row['address_line2']),
-							"address_line2"=>trim($row['address_line2']),
-							"country_id"=>$row['country_id'],
-							"state_id"=>$row['state_id'],
-							"city_id"=>$row['city_id']
-							);
-				}
-				$result->close();
-				$conn->close();				
+			$res[] = array("tutor_id"=>$row['tutor_id'], 
+					"tutor_email"=>trim($row['tutor_email']),
+					"tutor_phone"=>trim($row['tutor_phone']),
+					"tutor_name"=>trim($row['tutor_name']),
+					"gender_id"=>trim($row['gender_id']),
+					"id_proof_type_id"=>trim($row['id_proof_type_id']),
+					"address_line1"=>trim($row['address_line1']),
+					"address_line2"=>trim($row['address_line2']),
+					"address_line2"=>trim($row['address_line2']),
+					"country_id"=>$row['country_id'],
+					"state_id"=>$row['state_id'],
+					"city_id"=>$row['city_id'],
+					"gender_id"=>$row['gender_id'],
+					"dob"=>$row['tutor_dob'],
+					"id_proof_type_id"=>$row['id_proof_type_id']
+					);
+		}
+		$result->close();
+		$conn->close();				
 				
-				return $res;
-				
-			}
-		}			
-		
+		return $res;
 	}	
 	
 	function getCountries()
@@ -698,8 +690,10 @@
 	}
 	
 	
-	function updateTutorProfileStep1($name, $email, $mobile, $address_line1, 
-				$address_line2, $city_id, $tutor_email)
+	function updateTutorPersonalDetails($name, $email, $mobile,
+				$address_line1, $address_line2, $city_id, $tutor_email, 
+				$gender_id, $dob, $id_proof_type_id, $id_proof_front_filename, 
+				$id_proof_back_filename)
 	{
 		$hn = 'localhost';
 		$db = 'svjk';
@@ -711,7 +705,11 @@
 		
 		$query = "UPDATE tutors SET tutor_name='$name', tutor_email='$email',
 					tutor_phone='$mobile', address_line1='$address_line1',
-					 address_line2='$address_line2', city_id='$city_id'
+					 address_line2='$address_line2', city_id='$city_id',
+					 gender_id='$gender_id', tutor_dob='$dob',
+					 id_proof_type_id='$id_proof_type_id',
+					 address_proof_front='$id_proof_front_filename',
+					 address_proof_back='$id_proof_back_filename'
 					 WHERE tutor_email='$tutor_email'";
 		
 		$result = $conn->query($query);
@@ -822,6 +820,7 @@
 		if ($conn->connect_error) die($conn->connect_error);
 		
 		$query = "DELETE FROM tutor_boards WHERE tutor_id='$tutor_id'";
+		
 		$result = $conn->query($query);
 		if (!$result) die($conn->error);
 		
@@ -1079,6 +1078,140 @@
 		
 		return $res;	
 		
+	}
+	
+	function getGenders()
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "SELECT * FROM genders ORDER BY gender_id ASC";
+				
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		$rows = $result->num_rows;				 
+		
+		$res = array();
+		for($i=0; $i<$rows; ++$i)
+		{
+			$result->data_seek($i);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
+			
+			$res[] = array("id"=>$row['gender_id'],
+						 "gender_name"=>$row['gender_name']);
+		}
+		$result->close();
+		$conn->close();
+		
+		return $res;
+	}
+	
+	function getIDProofTypes()
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "SELECT * FROM id_proof_types ORDER BY id_proof_type_name ASC";
+				
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		$rows = $result->num_rows;				 
+		
+		$res = array();
+		for($i=0; $i<$rows; ++$i)
+		{
+			$result->data_seek($i);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
+			
+			$res[] = array("id"=>$row['id'],
+						 "id_proof_type_name"=>$row['id_proof_type_name']);
+		}
+		$result->close();
+		$conn->close();
+		
+		return $res;
+	}
+	
+	function setSession($session_id, $email, $phone)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "INSERT INTO session_states(session_id, email, phone) 
+				VALUES('$session_id', '$email', '$phone')";	
+		
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		return $result;
+	}
+	
+	function removeSession($session_id)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "DELETE FROM session_states WHERE session_id='$session_id'";	
+		
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		return $result;
+	}
+	
+	function getSession($session_id)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "SELECT * FROM session_states WHERE session_id='$session_id'";
+				
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		$rows = $result->num_rows;				 
+		
+		$res = array();
+		for($i=0; $i<$rows; ++$i)
+		{
+			$result->data_seek($i);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
+			
+			$res[] = array("session_id"=>$row['session_id'],
+						 "email"=>$row['email'],
+						 "phone"=>$row['phone']);
+		}
+		$result->close();
+		$conn->close();
+		
+		return $res;
 	}
 
 	

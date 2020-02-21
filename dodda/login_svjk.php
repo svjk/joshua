@@ -128,6 +128,15 @@
 					$loginName = trim($_POST['loginName']);					
 					$password = trim($_POST['password']);
 					
+					if(strpos($loginName , ".") and strpos($loginName , "@"))
+					{
+						$login_type = "email";
+					}
+					else
+					{
+						$login_type = "phone";
+					}
+					
 					if($userType == 3)
 					{
 						$return_val = tutorLoginExists($userType, $loginName, $password);
@@ -138,16 +147,19 @@
 							$cookie_value = "1";
 							if($return_val == 1)
 							{
-								$return_val = get_tutor_info();
+								$return_val = get_tutor_info($loginName, $login_type);								
 								if(count($return_val)>0)
 								{
-									$_SESSION["tutor_name"] = $return_val[0]["tutor_name"];
-									$_SESSION["tutor_email"] = $return_val[0]["tutor_email"];
-									$_SESSION["tutor_phone"] = $return_val[0]["tutor_phone"];
+									$svjk_session_id = uniqid();	
+									setcookie('svjk_session_id', $svjk_session_id, time() + (86400 * 30), "/");
+									setcookie('svjk_email', $return_val[0]["tutor_email"], time() + (86400 * 30), "/");
+									setcookie('svjk_phone', $return_val[0]["tutor_phone"], time() + (86400 * 30), "/");	
+									setcookie('svjk_user_type', "tutor", time() + (86400 * 30), "/");	
+									setcookie('svjk_login_type', $login_type, time() + (86400 * 30), "/");	
+										
+									setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");						
+									header("Location: tutor/tutor_personal_details.php");
 								}
-								
-								setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");						
-								header("Location: tutor/tutor_dashboard.php");
 							}						
 						}
 						else

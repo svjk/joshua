@@ -36,7 +36,7 @@
 	}
 	
 	
-	#submit_update_profile2
+	#submit_update_teaching_details
 	{
 		border-radius: 5px;
 		width: 100px;
@@ -63,7 +63,99 @@
 		border-radius: 5px;	
 		border-color: #E8E8E8;
 	}
+	
+	#error_msg, .error_msg
+	{
+		color: Red;
+	}
+	
+	.msg
+	{
+		color: Black;
+		font-weight: bold;
+		margin-left: 180px;
+	}
     </style>
+	
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	
+	<script>
+		$(document).ready( function() {
+			$("#submit_update_teaching_details").click( function() {
+			
+			var qualification_id=$("#qualification").val();						
+			var job_type_id=$("#job_type").val();				
+			var job_timings=$("#job_timings");		
+			var boards=$("#div_boards input[type=checkbox]:checked");
+			var classes=$("#div_classes input[type=checkbox]:checked");
+			var subjects=$("#div_subjects input[type=checkbox]:checked");
+			var teaching_modes=$("#div_teaching_modes input[type=checkbox]:checked");
+			var teaching_mediums=$("#div_teaching_mediums input[type=checkbox]:checked");
+			
+			var error_msg=$("#error_msg");
+			
+			var return_val=true;
+			var msg="";
+			var email_validated = false;
+			var mobile_validated = false;			
+			
+			
+			if(qualification_id == 0)
+			{
+				msg+="*Please select Qualification<br/>";				
+				return_val=false;
+			}			
+			
+			if(job_type_id == 0)
+			{
+				msg+="*Please select Job Type<br/>";				
+				return_val=false;
+			}
+			
+			if(job_timings.val().trim() == null || job_timings.val().trim() == "")
+			{
+				msg+="*Please enter Job Timings<br/>";				
+				return_val=false;
+			}	
+			
+			if(boards.length <= 0)
+			{
+				msg+="*Please select at least one Board<br/>";				
+				return_val=false;
+			}	
+
+			
+			if(classes.length <= 0)
+			{
+				msg+="*Please select at least one Class<br/>";				
+				return_val=false;
+			}
+
+			if(subjects.length <= 0)
+			{
+				msg+="*Please select at least one Subject<br/>";				
+				return_val=false;
+			}	
+			
+			if(teaching_modes.length <= 0)
+			{
+				msg+="*Please select at least one Teaching Mode<br/>";				
+				return_val=false;
+			}			
+			
+			if(teaching_mediums.length <= 0)
+			{
+				msg+="*Please select at least one Teaching Medium<br/>";				
+				return_val=false;
+			}
+			
+			msg+="<br/>";
+			error_msg.html(msg);
+			
+			return return_val;
+		});
+	});
+	</script>
 </head>
 <body>
 <?php
@@ -97,10 +189,23 @@
 	$return_val_job_types = get_job_types();
 	//print_r($return_val_job_types);
 	
-	
-	
 	/* Assign tutor values */
-	$return_val_tutor_info = get_tutor_info();	
+	$svjk_session_id = get_cookie_value('svjk_session_id');
+	$svjk_email = get_cookie_value('svjk_email');
+	$svjk_phone = get_cookie_value('svjk_phone');
+	$svjk_user_type = get_cookie_value('svjk_user_type');
+	$svjk_login_type = get_cookie_value('svjk_login_type');
+
+	if($svjk_login_type == "email")
+	{
+		$login_name = $svjk_email;
+	}
+	else if($svjk_login_type == "phone")
+	{
+		$login_name = $svjk_phone;
+	}
+	
+	$return_val_tutor_info = get_tutor_info($login_name, $svjk_login_type);	
 	
 	if(count($return_val_tutor_info) > 0)
 	{	
@@ -137,7 +242,7 @@
 	}
 	
 	
-	if(isset($_POST["submit_update_profile2"]))
+	if(isset($_POST["submit_update_teaching_details"]))
 	{	
 		if($_POST['qualification'] != 0 and $_POST['job_type'] != 0 and trim($_POST['job_timings']) != "")
 		{	
@@ -152,7 +257,7 @@
 
 		if(!empty($_POST["boards"]))
 		{
-			update_tutor_boards($_POST["boards"], $tutor_id);
+			update_tutor_boards($_POST["boards"], $tutor_id);			
 			$return_val_selected_boards = get_selected_tutor_boards($tutor_email);
 		}
 		
@@ -179,12 +284,15 @@
 			update_tutor_teaching_mediums($_POST["teaching_mediums"], $tutor_id);
 			$return_val_selected_teaching_mediums = get_selected_tutor_teaching_mediums($tutor_email);
 		}
+		
+		echo "<div class='msg'>Tutor teaching details updated successfully</div><br/>";		
 	}	
 ?>
 <body>
 <div>
 	<div style="width: 340px; margin: 0 auto; border-style: solid; border-width: 0px; width: 630px;">
 	<form id="frmProfileUpdate2" name="frmProfileUpdate2" method="post">
+	<div id="error_msg"></div>	
 	<fieldset id="fs_info">
 		<legend>Teaching Details</legend>
 		<div style="height: 50px; border-style: solid; border-width: 0px; width: 160px; clear: right; float: left;">
@@ -216,7 +324,7 @@
 		<label class="mandatory-label">*</label>
 		<br/>
 			<div class="div_box1" style="height: 30px; border-width: 0px;">
-				<select name="job_type">
+				<select name="job_type" id="job_type">
                     <option value="0">--Select--</option>
 					<?php
 						for($i=0; $i<count($return_val_job_types); $i++)
@@ -242,7 +350,7 @@
 		<label class="mandatory-label">*</label>
 		<br/>
 			<div class="div_box1" style="height: 30px; border-width: 0px;">
-				<input type="text" name="job_timings" class="text-box" placeholder="eg. 5PM to 8PM" 
+				<input type="text" name="job_timings" id="job_timings" class="text-box" placeholder="eg. 5PM to 8PM" 
 				maxlength="35" autocomplete="off" value="<?php echo $tutor_job_timings ?>" />
 			</div>
 		</div>		
@@ -255,7 +363,7 @@
 		<label>Select Boards:</label>
 		<label class="mandatory-label">*</label>
 		<br/>
-			<div class="div_box1" style="height: 65px;">
+			<div class="div_box1" id="div_boards" style="height: 65px;">
 				<?php
 				for($i=0; $i<count($return_val_boards); $i++)
 				{	
@@ -286,7 +394,7 @@
 		<label>Select Classes:</label>
 		<label class="mandatory-label">*</label>
 		<br/>
-			<div class="div_box1" style="height: 150px;">
+			<div class="div_box1" id="div_classes" style="height: 150px;">
 				<?php
 				for($i=0; $i<count($return_val_classes); $i++)
 				{
@@ -317,7 +425,7 @@
 		<label>Select Subjects:</label>
 		<label class="mandatory-label">*</label>
 		<br/>
-			<div class="div_box1" style="height: 120px;">
+			<div class="div_box1" id="div_subjects" style="height: 120px;">
 				<?php
 				for($i=0; $i<count($return_val_classes); $i++)
 				{
@@ -348,7 +456,7 @@
 		<label>Select Teaching Modes:</label>
 		<label class="mandatory-label">*</label>
 		<br/>
-			<div class="div_box1" style="height: 70px;">
+			<div class="div_box1" id="div_teaching_modes" style="height: 70px;">
 				<?php
 				for($i=0; $i<count($return_val_teaching_modes); $i++)
 				{
@@ -379,7 +487,7 @@
 		<label>Select Teaching Mediums:</label>
 		<label class="mandatory-label">*</label>
 		<br/>
-			<div class="div_box1" style="height: 65px;">
+			<div class="div_box1" id="div_teaching_mediums" style="height: 65px;">
 				<?php
 				for($i=0; $i<count($return_val_teaching_modes); $i++)
 				{
@@ -409,7 +517,7 @@
 	<br/>
 	<div>
 		<span>
-			<input type="submit" value="Next" name="submit_update_profile2" id="submit_update_profile2">
+			<input type="submit" value="Next" name="submit_update_teaching_details" id="submit_update_teaching_details">
 		</span>
 		<span style="margin-left: 10px;">
 			<a href="#">Skip</a>
