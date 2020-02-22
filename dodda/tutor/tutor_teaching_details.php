@@ -40,8 +40,7 @@
 	{
 		border-radius: 5px;
 		width: 100px;
-		padding: 5px;
-		background-color: #4da6ff;
+		padding: 5px;		
 		border-width: 1px;
 		border-color: gray;
 		
@@ -517,10 +516,10 @@
 	<br/>
 	<div>
 		<span>
-			<input type="submit" value="Next" name="submit_update_teaching_details" id="submit_update_teaching_details">
+			<input type="submit" value="Update" name="submit_update_teaching_details" id="submit_update_teaching_details">
 		</span>
 		<span style="margin-left: 10px;">
-			<a href="#">Skip</a>
+			<a href="tutor_experience_details.php">Skip</a>
 		</span>
 	</div>
 	<div>

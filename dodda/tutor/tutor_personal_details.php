@@ -41,8 +41,7 @@
 	{
 		border-radius: 5px;
 		width: 100px;
-		padding: 5px;
-		background-color: #4da6ff;
+		padding: 5px;		
 		border-width: 1px;
 		border-color: gray;
 		
@@ -55,7 +54,7 @@
 		border-width: 1px;
 		border-color: #E8E8E8;
 		width: 520px;
-		height: 370px;
+		height: 500px;
 		padding: 10px;
 		border-radius: 5px;
 	}	
@@ -167,6 +166,7 @@
 			var dob = $("#dob").val();
 			var selected_id_proof_type = $("#id_proof_type option:selected").val();
 			var id_proof_front = $("#id_proof_upload1").val();
+			var hdn_id_proof_front_filname = $("#hdn_id_proof_filname").val();			
 			
 			var error_msg=$("#error_msg");
 			
@@ -229,7 +229,7 @@
 				return_val=false;
 			}
 			
-			if(id_proof_front == "")
+			if(hdn_id_proof_front_filname == "" && id_proof_front="")
 			{
 				msg+="*Please select ID Proof Front<br/>";				
 				return_val=false;
@@ -246,7 +246,7 @@
 	</script>
 </head>
 <body>
-<?php
+<?php	
 	require_once '../business_functions.php';
 ?>
 
@@ -301,6 +301,8 @@
 		$tutor_gender_id = $return_val_tutor_info[0]["gender_id"];
 		$tutor_dob = $return_val_tutor_info[0]["dob"];
 		$tutor_id_proof_type_id = $return_val_tutor_info[0]["id_proof_type_id"];
+		$id_proof_type_filename = $return_val_tutor_info[0]["address_proof_front"];
+		$tutor_profile_image = $return_val_tutor_info[0]["tutor_profile_image"];
 	}
 	
 	if(isset($_POST["submit_update_personal_details"]))
@@ -315,35 +317,40 @@
 		$dob = trim($_POST['dob']);
 		$id_proof_type_id = trim($_POST['id_proof_type']);
 		
-		//echo $_FILES['id_proof_upload1']['name'];
+		$target_dir = "tutor_upload_images/";
+		$profile_image_filename = "";
+		$id_proof_front_filename = "";
+		$id_proof_back_filename = "";
 		
-		/*
-		if (($_FILES['id_proof_upload1']['name']!=""))
-		{		
-		 $target_dir = "upload/";
-		 $file = $_FILES['id_proof_upload1']['name'];
-		 $path = pathinfo($file);
-		 $filename = $path['filename'];
-		 $ext = $path['extension'];
-		 $temp_name = $_FILES['my_file']['tmp_name'];
-		 $path_filename_ext = $target_dir.$filename.".".$ext;
-		 
-			// Check if file already exists
-			if (file_exists($path_filename_ext)) 
-			{
-			 echo "Sorry, file already exists.";
-			}
-			else
-			{
-			 //move_uploaded_file($temp_name,$path_filename_ext);
-			 echo "Congratulations! File Uploaded Successfully.";
-			}
+		//Upload profile image				
+		if($_FILES['photo_upload']['name']) 
+		{
+			$tutor_profile_image_filename = uniqid() . '_' . $_FILES['photo_upload']['name'];		
+			$upload_profile_image_fullpath = $target_dir .basename($tutor_profile_image_filename);
+			move_uploaded_file($_FILES['photo_upload']['tmp_name'], 
+				$upload_profile_image_fullpath);
+			$profile_image_filename = $tutor_profile_image_filename;
+		}	
+
+		//Upload id proof front side
+		if($_FILES['id_proof_upload1']['name']) 
+		{
+			$id_proof_image_filename1 = uniqid() . '_' . $_FILES['id_proof_upload1']['name'];		
+			$id_proof_image_fullpath1 = $target_dir .basename($id_proof_image_filename1);
+			move_uploaded_file($_FILES['id_proof_upload1']['tmp_name'], 
+				$id_proof_image_fullpath1);
+			$id_proof_front_filename = $id_proof_image_filename1;
+		}	
+		
+		//Upload id proof back side
+		if($_FILES['id_proof_upload2']['name']) 
+		{
+			$id_proof_image_filename2 = uniqid() . '_' . $_FILES['id_proof_upload2']['name'];		
+			$id_proof_image_fullpath2 = $target_dir .basename($id_proof_image_filename2);
+			move_uploaded_file($_FILES['id_proof_upload2']['tmp_name'], 
+				$id_proof_image_fullpath2);
+			$id_proof_back_filename = $id_proof_image_filename2;
 		}
-		
-		*/
-		
-		$id_proof_front_filename = "temp1.jpg";
-		$id_proof_back_filename = "temp2.jpg";
 		
 		
 		$tutor_email = $svjk_email;
@@ -352,7 +359,8 @@
 		{
 			$return_val_udpate1 = update_tutor_personal_details($name, $email, $mobile,
 				$address_line1, $address_line2, $city_id, $tutor_email, $gender_id, $dob,
-				$id_proof_type_id, $id_proof_front_filename, $id_proof_back_filename);
+				$profile_image_filename, $id_proof_type_id, $id_proof_front_filename, 
+				$id_proof_back_filename);
 				
 			$return_val_tutor_info = get_tutor_info($login_name, $svjk_login_type);
 			if(count($return_val_tutor_info) > 0)
@@ -368,6 +376,8 @@
 				$tutor_gender_id = $return_val_tutor_info[0]["gender_id"];
 				$tutor_dob = $return_val_tutor_info[0]["dob"];
 				$tutor_id_proof_type_id = $return_val_tutor_info[0]["id_proof_type_id"];
+				$id_proof_type_filename = $return_val_tutor_info[0]["address_proof_front"];
+				$tutor_profile_image = $return_val_tutor_info[0]["tutor_profile_image"];
 			}
 			
 			echo "<div class='msg'>Tutor personal/contact details updated successfully</div><br/>";	
@@ -379,8 +389,8 @@
 ?>
 <body>
 <div>
-	<div style="margin: 0 auto; border-style: solid; border-width: 0px; width: 600px;">
-		<form id="frmProfileUpdate" name="frmProfileUpdate" method="post">
+	<div style="margin: 0 auto; border-style: solid; border-width: 0px; width: 550px;">
+		<form id="frmProfileUpdate" name="frmProfileUpdate" method="post" enctype="multipart/form-data">
 		<div id="error_msg"></div>
 		<div id="msg"></div>
 		<fieldset id="fs_personal_info">
@@ -520,23 +530,30 @@
 			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px; float: left;">                                                   
 				<label>DOB:</label>                                
 				<label class="mandatory-label">*</label>  
-				<input id="dob" name="dob" type="text" class="text-box" style="width: 145px;"
+				<input id="dob" name="dob" type="date" class="text-box" style="width: 145px;"
 					value="<?php echo $tutor_dob ?>" autocomplete="off" placeholder="yyyy-mm-dd">                               
 			</div>
 			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px; float: left;">                                                   
 												
 			</div>
 		</div>
+			
 		<div>
-			<div style="height: 50px; border-style: solid; border-width: 0px; width: 500px; float: left;"> 
+			<div style="height: 100px; border-style: solid; border-width: 0px; width: 100px; float: left;"> 
+				<div>
+					<img style="height: 100px; width: 90px;" src="<?php echo 'tutor_upload_images/'. $tutor_profile_image ?>" />                               
+				</div>
+			</div>
+			<div style="height: 50px; border-style: solid; border-width: 0px; width: 200px; float: left;"> 
 				<label>Upload Photo:</label>                                
 				<label class="mandatory-label">*</label>  
 				<div>
 					<input id="photo_upload" name="photo_upload" type="file" style="width: 150px;">                               
 				</div>
 			</div>		
-		</div>	
-		<div>
+		</div>
+		
+		<div style="height: 50px; border-style: solid; border-width: 0px; width: 155px;">
 			<div style="height: 50px; border-style: solid; border-width: 0px; width: 155px; clear: right; float: left;">
 				<label>ID Proof Type:</label>                                
 				<label class="mandatory-label">*</label> 
@@ -562,7 +579,9 @@
 			<div style="height: 50px; border-style: solid; border-width: 0px; width: 160px; float: left;">                                                   
 				<label>ID Proof Front:</label>                                
 				<label class="mandatory-label">*</label>  
-				<input id="id_proof_upload1" name="id_proof_upload1" type="file" style="width: 150px;">                               
+				<input id="id_proof_upload1" name="id_proof_upload1" type="file" style="width: 150px;">  
+				<input id="hdn_id_proof_filname" name="hdn_id_proof_filname" type="hidden" 
+					value="<?php echo $id_proof_type_filename ?>" />
 			</div>
 			<div style="height: 50px; border-style: solid; border-width: 0px; width: 160px; float: left;">                                                   
 				<label>ID Proof Back:</label>                                				  
@@ -573,7 +592,7 @@
 		<br/>
 		<div>
 			<span>
-				<input type="submit" value="Next" name="submit_update_personal_details" 
+				<input type="submit" value="Update" name="submit_update_personal_details" 
 					id="submit_update_personal_details">
 			</span>
 			<span style="margin-left: 10px;">

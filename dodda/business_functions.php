@@ -146,12 +146,13 @@
 	
 	function  update_tutor_personal_details($name, $email, $mobile,
 				$address_line1, $address_line2, $city_id, $tutor_email, 
-				$gender_id, $dob, $id_proof_type_id, $id_proof_front_filename, 
-				$id_proof_back_filename)
+				$gender_id, $dob, $profile_filename, $id_proof_type_id, 
+				$id_proof_front_filename,$id_proof_back_filename)
 	{
 		$return_val = updateTutorPersonalDetails($name, $email, $mobile,
 				$address_line1, $address_line2, $city_id, $tutor_email, 
-				$gender_id, $dob, $id_proof_type_id, $id_proof_front_filename, $id_proof_back_filename);
+				$gender_id, $dob, $profile_filename, $id_proof_type_id, 
+				$id_proof_front_filename, $id_proof_back_filename);
 		return $return_val;
 	}
 	
@@ -241,21 +242,55 @@
 		return $return_val;
 	}
 	
-	function set_session($session_id, $email, $phone)
+	function get_experiences()
 	{
-		$return_val = setSession($session_id, $email, $phone);
+		$return_val = getExperiences();
 		return $return_val;
 	}
 	
-	function remove_session($session_id)
+	function update_tutor_experience_details($experience_id, $company_name, 
+			$designation, $current_salary, $tutor_email)
 	{
-		$return_val = removeSession($session_id);
+		$return_val = updateTutorExperienceDetails($experience_id, $company_name, 
+						$designation, $current_salary, $tutor_email);
 		return $return_val;
 	}
 	
-	function get_session($session_id)
+	function get_experience_details($tutor_email)
 	{
-		$return_val = getSession($session_id);
+		$return_val = getExperienceDetails($tutor_email);
+		return $return_val;
+	}
+	
+	function get_languages()
+	{
+		$return_val = getLanguages();
+		return $return_val;
+	}
+	
+	function update_tutor_languages_known($selectedLanguages, $tutor_id)
+	{
+		$return_val = updateTutorLanguagesKnown($selectedLanguages, $tutor_id);
+		return $return_val;
+	}
+	
+	function get_selected_tutor_known_languages($tutor_email)
+	{
+		$return_val = getSelectedTutorKnownLanguages($tutor_email);
+		return $return_val;
+	}
+	
+	function update_tutor_questions_details($question_1_answer, $question_2_answer, 
+			$question_3_answer, $tutor_email)
+	{
+		$return_val = updateTutorQuestionsDetails($question_1_answer, $question_2_answer, 
+				$question_3_answer, $tutor_email);
+		return $return_val;
+	}
+	
+	function get_tutor_questions_details($tutor_email)
+	{
+		$return_val = getTutorQuestionsDetails($tutor_email);
 		return $return_val;
 	}
 	

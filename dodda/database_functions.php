@@ -354,7 +354,13 @@
 					"city_id"=>$row['city_id'],
 					"gender_id"=>$row['gender_id'],
 					"dob"=>$row['tutor_dob'],
-					"id_proof_type_id"=>$row['id_proof_type_id']
+					"id_proof_type_id"=>$row['id_proof_type_id'],
+					"experience_id"=>$row['experience_id'],
+					"institution_name"=>$row['institution_name'],
+					"tutor_designation"=>$row['tutor_designation'],
+					"tutor_salary"=>$row['tutor_salary'],
+					"tutor_profile_image"=>$row['tutor_profile_image'],
+					"address_proof_front"=>$row['address_proof_front']
 					);
 		}
 		$result->close();
@@ -692,7 +698,7 @@
 	
 	function updateTutorPersonalDetails($name, $email, $mobile,
 				$address_line1, $address_line2, $city_id, $tutor_email, 
-				$gender_id, $dob, $id_proof_type_id, $id_proof_front_filename, 
+				$gender_id, $dob, $profile_filename, $id_proof_type_id, $id_proof_front_filename, 
 				$id_proof_back_filename)
 	{
 		$hn = 'localhost';
@@ -703,14 +709,28 @@
 		$conn = new mysqli($hn, $un, $pw, $db);
 		if ($conn->connect_error) die($conn->connect_error);
 		
-		$query = "UPDATE tutors SET tutor_name='$name', tutor_email='$email',
+		if(trim($profile_filename)!="" and trim($id_proof_front_filename)!=""
+			and trim($id_proof_back_filename)!="")
+		{
+			$query = "UPDATE tutors SET tutor_name='$name', tutor_email='$email',
 					tutor_phone='$mobile', address_line1='$address_line1',
 					 address_line2='$address_line2', city_id='$city_id',
 					 gender_id='$gender_id', tutor_dob='$dob',
+					 tutor_profile_image = '$profile_filename',
 					 id_proof_type_id='$id_proof_type_id',
 					 address_proof_front='$id_proof_front_filename',
 					 address_proof_back='$id_proof_back_filename'
 					 WHERE tutor_email='$tutor_email'";
+		}
+		else
+		{
+			$query = "UPDATE tutors SET tutor_name='$name', tutor_email='$email',
+					tutor_phone='$mobile', address_line1='$address_line1',
+					 address_line2='$address_line2', city_id='$city_id',
+					 gender_id='$gender_id', tutor_dob='$dob',					 
+					 id_proof_type_id='$id_proof_type_id'					 					 
+					 WHERE tutor_email='$tutor_email'";
+		}
 		
 		$result = $conn->query($query);
 		if (!$result) die($conn->error);
@@ -786,7 +806,7 @@
 		
 		$query = "SELECT TB.id, TB.board_id 
 				FROM boards B LEFT JOIN tutor_boards TB 
-				ON TB.board_id=B.id LEFT JOIN tutors T 				
+				ON TB.board_id=B.id INNER JOIN tutors T 				
 				ON T.tutor_email='$tutor_email'";
 					
 		$result = $conn->query($query);
@@ -874,7 +894,7 @@
 		
 		$query = "SELECT TC.id, TC.class_id FROM classes C 
 					LEFT JOIN tutor_classes TC ON TC.class_id=C.id 
-					LEFT JOIN tutors T ON T.tutor_email='$tutor_email'";
+					INNER JOIN tutors T ON T.tutor_email='$tutor_email'";
 					
 		$result = $conn->query($query);
 		if (!$result) die($conn->error);
@@ -934,7 +954,7 @@
 		
 		$query = "SELECT TS.id, TS.subject_id FROM subjects S 
 					LEFT JOIN tutor_subjects TS ON TS.subject_id=S.id 
-					LEFT JOIN tutors T ON T.tutor_email='$tutor_email'";
+					INNER JOIN tutors T ON T.tutor_email='$tutor_email'";
 					
 		$result = $conn->query($query);
 		if (!$result) die($conn->error);
@@ -995,7 +1015,7 @@
 		$query = "SELECT TTM.id, TTM.teaching_mode_id 
 					FROM teaching_modes TM 
 					LEFT JOIN tutor_teaching_modes TTM ON TTM.teaching_mode_id=TM.id 
-					LEFT JOIN tutors T ON T.tutor_email='$tutor_email'";
+					INNER JOIN tutors T ON T.tutor_email='$tutor_email'";
 					
 		$result = $conn->query($query);
 		if (!$result) die($conn->error);
@@ -1057,7 +1077,7 @@
 		$query = "SELECT TTM.id, TTM.teaching_medium_id 
 					FROM teaching_mediums TM 
 					LEFT JOIN tutor_teaching_mediums TTM ON TTM.teaching_medium_id=TM.id 
-					LEFT JOIN tutors T ON T.tutor_email='$tutor_email'";
+					INNER JOIN tutors T ON T.tutor_email='$tutor_email'";
 					
 		$result = $conn->query($query);
 		if (!$result) die($conn->error);
@@ -1144,7 +1164,7 @@
 		return $res;
 	}
 	
-	function setSession($session_id, $email, $phone)
+	function getExperiences()
 	{
 		$hn = 'localhost';
 		$db = 'svjk';
@@ -1154,44 +1174,7 @@
 		$conn = new mysqli($hn, $un, $pw, $db);
 		if ($conn->connect_error) die($conn->connect_error);
 		
-		$query = "INSERT INTO session_states(session_id, email, phone) 
-				VALUES('$session_id', '$email', '$phone')";	
-		
-		$result = $conn->query($query);
-		if (!$result) die($conn->error);
-		
-		return $result;
-	}
-	
-	function removeSession($session_id)
-	{
-		$hn = 'localhost';
-		$db = 'svjk';
-		$un = 'root';
-		$pw = '';
-		
-		$conn = new mysqli($hn, $un, $pw, $db);
-		if ($conn->connect_error) die($conn->connect_error);
-		
-		$query = "DELETE FROM session_states WHERE session_id='$session_id'";	
-		
-		$result = $conn->query($query);
-		if (!$result) die($conn->error);
-		
-		return $result;
-	}
-	
-	function getSession($session_id)
-	{
-		$hn = 'localhost';
-		$db = 'svjk';
-		$un = 'root';
-		$pw = '';
-		
-		$conn = new mysqli($hn, $un, $pw, $db);
-		if ($conn->connect_error) die($conn->connect_error);
-		
-		$query = "SELECT * FROM session_states WHERE session_id='$session_id'";
+		$query = "SELECT * FROM experience";
 				
 		$result = $conn->query($query);
 		if (!$result) die($conn->error);
@@ -1204,16 +1187,225 @@
 			$result->data_seek($i);
 			$row = $result->fetch_array(MYSQLI_ASSOC);
 			
-			$res[] = array("session_id"=>$row['session_id'],
-						 "email"=>$row['email'],
-						 "phone"=>$row['phone']);
+			$res[] = array("id"=>$row['experience_id'],
+						 "experience_name"=>$row['experience_name']);
 		}
 		$result->close();
 		$conn->close();
 		
 		return $res;
 	}
-
+	
+	function updateTutorExperienceDetails($experience_id, $company_name, 
+			$designation, $current_salary, $tutor_email)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "UPDATE tutors SET experience_id='$experience_id',
+					institution_name='$company_name', tutor_designation='$designation',
+					 tutor_salary='$current_salary'
+						WHERE tutor_email='$tutor_email'";
+		
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		return "Tutor experience updated successfully";		
+	}
+	
+	function getExperienceDetails($tutor_email)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "SELECT T.experience_id, T.institution_name,
+					T.tutor_designation, T.tutor_salary
+					FROM tutors T
+					INNER JOIN experience E ON E.experience_id=T.experience_id
+					WHERE T.tutor_email='$tutor_email'";
+				
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		$rows = $result->num_rows;				 
+		
+		$res = array();
+		for($i=0; $i<$rows; ++$i)
+		{
+			$result->data_seek($i);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
+			
+			$res[] = array("experience_id"=>$row['experience_id'],
+						 "institution_name"=>$row['institution_name'],
+						 "tutor_designation"=>$row['tutor_designation'],
+						 "tutor_salary"=>$row['tutor_salary']
+						 );
+		}
+		$result->close();
+		$conn->close();
+		
+		return $res;
+	}
+	
+	function getLanguages()
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "SELECT * FROM languages ORDER BY languages_id ASC";
+				
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		$rows = $result->num_rows;				 
+		
+		$res = array();
+		for($i=0; $i<$rows; ++$i)
+		{
+			$result->data_seek($i);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
+			
+			$res[] = array("id"=>$row['languages_id'],
+						 "language_name"=>$row['languages_name']);
+		}
+		$result->close();
+		$conn->close();
+		
+		return $res;
+	}
+	
+	function updateTutorLanguagesKnown($selectedLanguages, $tutor_id)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "DELETE FROM tutor_languages_known WHERE tutor_id='$tutor_id'";
+		
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		foreach($selectedLanguages as $selected_language)
+		{
+			$query = "INSERT INTO tutor_languages_known(tutor_id, language_id)
+					 VALUES('$tutor_id', '$selected_language')";
+					 
+			$result = $conn->query($query);
+			if (!$result) die($conn->error);
+		}
+		
+		return "Tutor languages known updated successfully!";				
+	}
+	
+	function getSelectedTutorKnownLanguages($tutor_email)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "SELECT TLK.id, TLK.language_id FROM languages L
+				LEFT JOIN tutor_languages_known TLK ON L.languages_id=TLK.language_id 
+				INNER JOIN tutors T ON T.tutor_email='$tutor_email'";
+					
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		$rows = $result->num_rows;				 
+		
+		$res = array();
+		for($i=0; $i<$rows; ++$i)
+		{
+			$result->data_seek($i);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
+			
+			$res[] = array("id"=>$row['id'],
+						"language_id"=>$row['language_id']);
+		}
+		$result->close();
+		$conn->close();
+		
+		return $res;		
+	}
+	
+	function updateTutorQuestionsDetails($question_1_answer, $question_2_answer, 
+			$question_3_answer, $tutor_email)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "UPDATE tutors SET question1_answer='$question_1_answer', 
+					question2_answer='$question_2_answer',
+					question3_answer='$question_3_answer'
+					WHERE tutor_email='$tutor_email'";
+		
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		return "Tutor questions updated successfully";		
+	}
+	
+	function getTutorQuestionsDetails($tutor_email)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "SELECT T.question1_answer, T.question2_answer, T.question3_answer
+				  FROM tutors T
+				  WHERE tutor_email='$tutor_email'";
+		
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		$rows = $result->num_rows;				 
+		
+		$res = array();
+		for($i=0; $i<$rows; ++$i)
+		{
+			$result->data_seek($i);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
+			
+			$res[] = array("question_1_answer"=>$row['question1_answer'],
+						"question_2_answer"=>$row['question2_answer'],
+						"question_3_answer"=>$row['question3_answer']);
+		}
+		$result->close();
+		$conn->close();
+		
+		return $res;			
+	}
 	
 	
 ?>
