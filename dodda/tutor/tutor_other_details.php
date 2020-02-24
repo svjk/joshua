@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>   
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 	body
 	{
 		font-family: verdana;
 		font-size: 12px;
 		margin: 15px;
+		height: 700px;
 	}	
 	
 	.mandatory-label
@@ -42,6 +44,8 @@
 		border-width: 1px;
 		border-color: #E8E8E8;
 		padding: 5px;
+		font-family: verdana;
+		font-size: 12px;
 	}
 	
 	
@@ -59,7 +63,7 @@
 		border-style: solid;
 		border-width: 1px;
 		border-color: #E8E8E8;
-		width: 380px;
+		width: 265px;
 		padding: 10px;
 		border-radius: 5px;
 	}
@@ -83,6 +87,7 @@
 		font-weight: bold;
 		margin-bottom: 10px;
 	}
+	
     </style>
 	
 	<script src="../js/jquery-3.3.1.min.js"></script>
@@ -180,17 +185,17 @@
 ?>
 <body>
 <div>
-	<div style="width: 340px; margin: 0 auto; border-style: solid; border-width: 0px; width: 410px;">
+	<div style="width: 340px; margin: 0 auto; border-style: solid; border-width: 0px; width: 292px;">
 	<form id="frmProfileUpdate2" name="frmProfileUpdate2" method="post">
 	<div id="error_msg"></div>
 	<div id="msg"><?php echo $return_val_message ?></div>
 	<fieldset id="fs_info">
-		<legend>Other Details</legend>
+		<legend style="font-weight: bold;">Other Details</legend>
 		<div>
 		<label>Select Langauges Known:</label>
 		<label class="mandatory-label">*</label>
 		<br/>
-			<div class="div_box1" id="div_languages_known" style="height: 65px; border-style: solid; border-width: 1px;">
+			<div class="div_box1" id="div_languages_known" style="height: 100px; width: 260px; border-style: solid; border-width: 1px;">
 				<?php
 				for($i=0; $i<count($return_val_languages); $i++)
 				{	
@@ -222,7 +227,8 @@
 		<div style="font-weight: bold;">
 			Why do you like teaching?
 		</div>		
-			<textarea id="question_1_answer" name="question_1_answer" rows="4" cols="50" class="text-area" maxlength="200" spellcheck="false"><?php
+			<textarea id="question_1_answer" name="question_1_answer" style="width: 250px;"
+			rows="4" cols="50" class="text-area" maxlength="200" spellcheck="false"><?php
 					echo trim($return_val_question_details[0]['question_1_answer']);
 				?></textarea>
 		</div>	
@@ -233,7 +239,7 @@
 		<div style="font-weight: bold;">
 			Who is your inspiration and why?
 		</div>
-			<textarea id="question_2_answer" name="question_2_answer" rows="4" cols="50" class="text-area" maxlength="200" spellcheck="false"><?php
+			<textarea id="question_2_answer" name="question_2_answer" style="width: 250px;" rows="4" cols="50" class="text-area" maxlength="200" spellcheck="false"><?php
 					echo trim($return_val_question_details[0]['question_2_answer']);
 				?></textarea>
 		</div>	
@@ -244,11 +250,11 @@
 		<div style="font-weight: bold;">
 			Why we have to hire you?
 		</div>		
-			<textarea id="question_3_answer" name="question_3_answer" rows="4" cols="50" class="text-area" maxlength="200" spellcheck="false"><?php
+			<textarea id="question_3_answer" name="question_3_answer" style="width: 250px;" rows="4" cols="50" class="text-area" maxlength="200" spellcheck="false"><?php
 					echo trim($return_val_question_details[0]['question_3_answer']);
 				?></textarea>
 		</div>	
-		<br/>
+		<br/>		
 	</fieldset>
 	<br/>
 	<div>
@@ -257,8 +263,8 @@
 				id="submit_update_other_details">
 		</span>
 		<span style="margin-left: 10px;">
-			<a href="#">Skip</a>
-		</span>
+			<a href="tutor_experience_details.php">Previous</a>
+		</span>		
 	</div>
 	</form>	
 	</div>

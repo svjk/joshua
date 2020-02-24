@@ -20,32 +20,22 @@
 	require_once 'check_auth_tutor.php';
 ?>
 
+<form name="frmDashboard" method="post">
+<input type="submit" value="Logout" name="submit_logout"/>	
 <?php
-	//$return_val = get_tutor_info();
-	//print_r($return_val);
-	//echo $return_val[0]["tutor_phone"];
-?>
-
-	<form name="frmDashboard" method="post">
-		<input type="submit" value="Logout" name="submit_logout"/>
-	</form>	
-<?php
+	$return_val1 = is_authenticated();
+	echo $return_val1;
+	
 	if(isset($_POST['submit_logout']))
-	{
-		$cookie_name = "AUTH_SVJK";
-		$cookie_value = "1";
-		
-		$return_val1 = isAuthenticated($cookie_name);
-		//$return_val2 = isGoogleAuthenticated($google_cookie_name);
-		
+	{	
 		if($return_val1 == 1)
 		{
-			setcookie($cookie_name, $cookie_value, time() - 2592000, '/');
-			session_destroy();
-			header("Location: ../login_svjk.php");
+			clear_all_cookies();			
+			
+			//header("Location: ../login_svjk.php");
 		}		
 	}
 ?>
-
+</form>
 </body>
 </html>

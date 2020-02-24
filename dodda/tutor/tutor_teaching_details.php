@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>   
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 	body
 	{
 		font-family: verdana;
 		font-size: 12px;
 		margin: 15px;
+		height: 1450px;
 	}	
 	
 	.mandatory-label
@@ -27,7 +29,7 @@
 	.text-box
 	{
 		border-radius: 3px;			
-		width: 150px;
+		width: 140px;
 		height: 12px;
 		border-style: solid;
 		border-width: 1px;
@@ -50,7 +52,7 @@
 		border-style: solid;
 		border-width: 1px;
 		border-color: #E8E8E8;
-		width: 600px;
+		width: 300px;
 		padding: 10px;
 		border-radius: 5px;
 	}
@@ -68,11 +70,11 @@
 		color: Red;
 	}
 	
-	.msg
+	.msg, #msg
 	{
 		color: Black;
 		font-weight: bold;
-		margin-left: 180px;
+		margin-bottom: 8px;
 	}
     </style>
 	
@@ -84,7 +86,8 @@
 			
 			var qualification_id=$("#qualification").val();						
 			var job_type_id=$("#job_type").val();				
-			var job_timings=$("#job_timings");		
+			var job_timings_from=$("#job_timings_from");	
+			var job_timings_to=$("#job_timings_to");
 			var boards=$("#div_boards input[type=checkbox]:checked");
 			var classes=$("#div_classes input[type=checkbox]:checked");
 			var subjects=$("#div_subjects input[type=checkbox]:checked");
@@ -96,8 +99,7 @@
 			var return_val=true;
 			var msg="";
 			var email_validated = false;
-			var mobile_validated = false;			
-			
+			var mobile_validated = false;
 			
 			if(qualification_id == 0)
 			{
@@ -111,11 +113,17 @@
 				return_val=false;
 			}
 			
-			if(job_timings.val().trim() == null || job_timings.val().trim() == "")
+			if(job_timings_from.val().trim() == null || job_timings_from.val().trim() == "")
 			{
-				msg+="*Please enter Job Timings<br/>";				
+				msg+="*Please enter Job Timings From<br/>";				
 				return_val=false;
 			}	
+			
+			if(job_timings_to.val().trim() == null || job_timings_to.val().trim() == "")
+			{
+				msg+="*Please enter Job Timings To<br/>";				
+				return_val=false;
+			}
 			
 			if(boards.length <= 0)
 			{
@@ -204,6 +212,8 @@
 		$login_name = $svjk_phone;
 	}
 	
+	$return_val_message = "";
+	
 	$return_val_tutor_info = get_tutor_info($login_name, $svjk_login_type);	
 	
 	if(count($return_val_tutor_info) > 0)
@@ -225,6 +235,13 @@
 		$tutor_qualification_id = $return_val_qualification_job_type[0]["qualification_id"];
 		$tutor_job_type_id = $return_val_qualification_job_type[0]["job_type_id"];
 		$tutor_job_timings = $return_val_qualification_job_type[0]["job_timings"];
+		
+		if($tutor_job_timings !== "")
+		{
+			$job_timings = explode("TO", $tutor_job_timings);
+			$job_timings_from = trim($job_timings[0]);
+			$job_timings_to = trim($job_timings[1]);
+		}
 	}
 	
 	$return_val_selected_boards = get_selected_tutor_boards($tutor_email);
@@ -243,17 +260,25 @@
 	
 	if(isset($_POST["submit_update_teaching_details"]))
 	{	
-		if($_POST['qualification'] != 0 and $_POST['job_type'] != 0 and trim($_POST['job_timings']) != "")
+		if($_POST['qualification'] != 0 and $_POST['job_type'] != 0
+			and trim($_POST['job_timings_from']) != "" and trim($_POST['job_timings_to']) != "")
 		{	
 			$tutor_qualification_id = $_POST['qualification'];
 			$tutor_job_type_id = $_POST['job_type'];
-			$tutor_job_timings = trim($_POST['job_timings']);
+			$tutor_job_timings = trim($_POST['job_timings_from']) . ' TO ' . trim($_POST['job_timings_to']);
 	
 			update_tutor_qualification_job_type($tutor_qualification_id, 
 						$tutor_job_type_id, $tutor_job_timings, $tutor_email);
 			$return_val_qualification_job_type = get_tutor_qualification_job_type($tutor_email);
+			
+			if($tutor_job_timings !== "")
+			{
+				$job_timings = explode("TO", $tutor_job_timings);
+				$job_timings_from = trim($job_timings[0]);
+				$job_timings_to = trim($job_timings[1]);
+			}
 		}
-
+		
 		if(!empty($_POST["boards"]))
 		{
 			update_tutor_boards($_POST["boards"], $tutor_id);			
@@ -284,17 +309,20 @@
 			$return_val_selected_teaching_mediums = get_selected_tutor_teaching_mediums($tutor_email);
 		}
 		
-		echo "<div class='msg'>Tutor teaching details updated successfully</div><br/>";		
+		$return_val_message = "Tutor teaching details updated successfully!";		
 	}	
 ?>
 <body>
 <div>
-	<div style="width: 340px; margin: 0 auto; border-style: solid; border-width: 0px; width: 630px;">
+	<div style="width: 340px; margin: 0 auto; border-style: solid; border-width: 0px; width: 330px;">
 	<form id="frmProfileUpdate2" name="frmProfileUpdate2" method="post">
-	<div id="error_msg"></div>	
+	<div id="error_msg"></div>
+	<div id="msg">
+		<?php echo $return_val_message ?>
+	</div>
 	<fieldset id="fs_info">
-		<legend>Teaching Details</legend>
-		<div style="height: 50px; border-style: solid; border-width: 0px; width: 160px; clear: right; float: left;">
+		<legend style="font-weight: bold;">Teaching Details</legend>
+		<div style="height: 50px; border-style: solid; border-width: 0px; width: 160px;">
 			<label>Qualification:</label>
 			<label class="mandatory-label">*</label>
 			<br/>
@@ -318,7 +346,7 @@
 			</select>
 		</div>
 		
-		<div style="height: 50px; border-style: solid; border-width: 0px; width: 160px; float: left;">
+		<div style="height: 50px; border-style: solid; border-width: 0px; width: 160px;">
 		<label>Select Job Type:</label>
 		<label class="mandatory-label">*</label>
 		<br/>
@@ -344,25 +372,32 @@
 			</div>
 		</div>	
 		
-		<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px; float: left;">
-		<label>Select Job Timings:</label>
-		<label class="mandatory-label">*</label>
-		<br/>
-			<div class="div_box1" style="height: 30px; border-width: 0px;">
-				<input type="text" name="job_timings" id="job_timings" class="text-box" placeholder="eg. 5PM to 8PM" 
-				maxlength="35" autocomplete="off" value="<?php echo $tutor_job_timings ?>" />
-			</div>
+		<div style="height: 55px; border-style: solid; border-width: 0px; width: 300px;">
+			<div>
+				<label>Select Job Timings:</label>
+				<label class="mandatory-label">*</label>	
+			</div>			
+			<div class="div_box1" style="height: 30px; padding: 5px;">				
+				<div style="clear: right; float: left;">
+					<label>From</label>					
+					<input type="time" name="job_timings_from" id="job_timings_from" 
+						class="text-box" style="width: 80px;" min="08:00" max="20:00"
+						maxlength="35" autocomplete="off" value="<?php echo $job_timings_from ?>" />
+				</div>
+				<div style="float: left; margin-left: 10px;">
+					<label>To</label>					
+					<input type="time" name="job_timings_to" id="job_timings_to" 
+						class="text-box" style="width: 80px;" placeholder="eg. 5PM to 8PM" 
+						maxlength="35" autocomplete="off" value="<?php echo $job_timings_to ?>" />
+				</div>
+			</div>			
 		</div>		
 		<br/>
-		<br/>
-		<br/>
-		<br/>
-		
 		<div>
 		<label>Select Boards:</label>
 		<label class="mandatory-label">*</label>
 		<br/>
-			<div class="div_box1" id="div_boards" style="height: 65px;">
+			<div class="div_box1" id="div_boards" style="height: 130px; width: 300px;">
 				<?php
 				for($i=0; $i<count($return_val_boards); $i++)
 				{	
@@ -393,7 +428,7 @@
 		<label>Select Classes:</label>
 		<label class="mandatory-label">*</label>
 		<br/>
-			<div class="div_box1" id="div_classes" style="height: 150px;">
+			<div class="div_box1" id="div_classes" style="height: 305px; width: 300px;">
 				<?php
 				for($i=0; $i<count($return_val_classes); $i++)
 				{
@@ -424,7 +459,7 @@
 		<label>Select Subjects:</label>
 		<label class="mandatory-label">*</label>
 		<br/>
-			<div class="div_box1" id="div_subjects" style="height: 120px;">
+			<div class="div_box1" id="div_subjects" style="height: 300px; width: 300px;">
 				<?php
 				for($i=0; $i<count($return_val_classes); $i++)
 				{
@@ -448,14 +483,14 @@
 				}
 				?>
 			</div>
-		</div>
+		</div>		
 		<br/>
 		
 		<div>
 		<label>Select Teaching Modes:</label>
 		<label class="mandatory-label">*</label>
 		<br/>
-			<div class="div_box1" id="div_teaching_modes" style="height: 70px;">
+			<div class="div_box1" id="div_teaching_modes" style="height: 130px; width: 300px;">
 				<?php
 				for($i=0; $i<count($return_val_teaching_modes); $i++)
 				{
@@ -480,13 +515,13 @@
 				?>
 			</div>
 		</div>
-		<br/>
+		<br/>		
 		
 		<div>
 		<label>Select Teaching Mediums:</label>
 		<label class="mandatory-label">*</label>
 		<br/>
-			<div class="div_box1" id="div_teaching_mediums" style="height: 65px;">
+			<div class="div_box1" id="div_teaching_mediums" style="height: 65px; width: 300px;">
 				<?php
 				for($i=0; $i<count($return_val_teaching_modes); $i++)
 				{
@@ -495,14 +530,14 @@
 						
 					if($tms_id==$teaching_medium_id)
 					{
-						echo "<div style='border-style: solid; border-width: 0px; width: 280px; margin: 5px; clear: right; float: left'>";
+						echo "<div style='border-style: solid; border-width: 0px; width: 130px; margin: 5px; clear: right; float: left'>";
 						echo "<input type='checkbox' checked name='teaching_mediums[]' value='" . $return_val_teaching_mediums[$i]['id'] . "'>";
 						echo "<label>" . $return_val_teaching_mediums[$i]['teaching_medium_name'] . "</label>";
 						echo "</div>";
 					}
 					else
 					{
-						echo "<div style='border-style: solid; border-width: 0px; width: 280px; margin: 5px; clear: right; float: left'>";
+						echo "<div style='border-style: solid; border-width: 0px; width: 130px; margin: 5px; clear: right; float: left'>";
 						echo "<input type='checkbox' name='teaching_mediums[]' value='" . $return_val_teaching_mediums[$i]['id'] . "'>";
 						echo "<label>" . $return_val_teaching_mediums[$i]['teaching_medium_name'] . "</label>";
 						echo "</div>";
@@ -511,7 +546,7 @@
 				?>
 			</div>
 		</div>
-		<br/>
+		<br/>		
 	</fieldset>
 	<br/>
 	<div>
@@ -519,7 +554,10 @@
 			<input type="submit" value="Update" name="submit_update_teaching_details" id="submit_update_teaching_details">
 		</span>
 		<span style="margin-left: 10px;">
-			<a href="tutor_experience_details.php">Skip</a>
+			<a href="tutor_personal_details.php">Previous</a>
+		</span>
+		<span style="margin-left: 10px;">
+			<a href="tutor_experience_details.php">Next</a>
 		</span>
 	</div>
 	<div>

@@ -146,13 +146,29 @@
 	
 	function  update_tutor_personal_details($name, $email, $mobile,
 				$address_line1, $address_line2, $city_id, $tutor_email, 
-				$gender_id, $dob, $profile_filename, $id_proof_type_id, 
-				$id_proof_front_filename,$id_proof_back_filename)
+				$gender_id, $dob, $id_proof_type_id)
 	{
 		$return_val = updateTutorPersonalDetails($name, $email, $mobile,
 				$address_line1, $address_line2, $city_id, $tutor_email, 
-				$gender_id, $dob, $profile_filename, $id_proof_type_id, 
-				$id_proof_front_filename, $id_proof_back_filename);
+				$gender_id, $dob, $id_proof_type_id);
+		return $return_val;
+	}
+	
+	function update_tutor_profile_image($profile_image_filename, $tutor_email)
+	{
+		$return_val = updateTutorProfileImage($profile_image_filename, $tutor_email);
+		return $return_val;
+	}
+	
+	function update_tutor_address_proof_front_side($address_proof_front_filename, $tutor_email)
+	{
+		$return_val = updateTutorAddressProofFrontSide($address_proof_front_filename, $tutor_email);
+		return $return_val;
+	}
+	
+	function update_tutor_address_proof_back_side($address_proof_back_filename, $tutor_email)
+	{
+		$return_val = updateTutorAddressProofFrontSide($address_proof_back_filename, $tutor_email);
 		return $return_val;
 	}
 	
@@ -294,46 +310,37 @@
 		return $return_val;
 	}
 	
-	function isAuthenticated($cookeName)
+	function is_authenticated()
 	{
-		if(isset($_COOKIE[$cookeName])) 
-		{
-			if($_COOKIE[$cookeName] == 1)
-			{
-				return 1;								
-			}
-			return 0;
-		}
-	}
-	
-	function get_cookie_value($cookie_name)
-	{
-		if(isset($_COOKIE[$cookie_name])) 
-		{
-			return $_COOKIE[$cookie_name];
-		}
-		return 0;
-	}
-	
-	function isGoogleAuthenticated($cookeName)
-	{
-		if(isset($_COOKIE[$cookeName])) 
+		if(isset($_COOKIE['svjk_session_id'])
+			and isset($_COOKIE['svjk_email'])
+			and isset($_COOKIE['svjk_phone'])) 
 		{
 			return 1;
 		}
 		return 0;
 	}
 	
-	function array_element_exists($arr, $ele)
+	function get_cookie_value($cookie_name)
 	{
-		if (in_array($ele, $arr)) 
-		{ 
-		  return 1; 
-		} 
-		else
-		{ 
-		  return 0; 
-		} 
+		if(isset($_COOKIE[$cookie_name])) 
+		{	
+			return $_COOKIE[$cookie_name];
+		}
+		return 0;
+	}
+	
+	function clear_all_cookies()
+	{
+		if (isset($_SERVER['HTTP_COOKIE'])) {
+		$cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+		foreach($cookies as $cookie) {
+        $parts = explode('=', $cookie);
+        $name = trim($parts[0]);
+        setcookie($name, '', time()-1000);
+        setcookie($name, '', time()-1000, '/');
+    }
+}
 	}
 	
 ?>

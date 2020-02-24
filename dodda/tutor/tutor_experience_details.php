@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>   
+<head>  
+	<meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 	body
 	{
@@ -50,7 +51,7 @@
 		border-style: solid;
 		border-width: 1px;
 		border-color: #E8E8E8;
-		width: 270px;
+		width: 200px;
 		padding: 10px;
 		border-radius: 5px;
 	}
@@ -190,18 +191,18 @@
 			$tutor_designation = $return_val_experience_details[0]["tutor_designation"];
 			$tutor_current_salary = $return_val_experience_details[0]["tutor_salary"];
 			
-			$return_val_message = "Tutor experience details update successfully!";
+			$return_val_message = "Tutor experience details updated successfully!";
 		}
 	}	
 ?>
 <body>
 <div>
-	<div style="width: 340px; margin: 0 auto; border-style: solid; border-width: 0px; width: 300px;">
+	<div style="width: 340px; margin: 0 auto; border-style: solid; border-width: 0px; width: 235px;">
 	<form id="frmProfileUpdate2" name="frmProfileUpdate2" method="post">
 	<div id="error_msg"></div>
 	<div id="msg"><?php echo $return_val_message ?></div>
 	<fieldset id="fs_info">
-		<legend>Experience Details</legend>
+		<legend style="font-weight: bold;">Experience Details</legend>
 		<div style="height: 50px; border-style: solid; border-width: 0px; width: 160px;">
 			<label>Select Experience:</label>
 			<label class="mandatory-label">*</label>
@@ -225,10 +226,10 @@
 				?>				
 			</select>
 		</div>
-		<div style="height: 50px; border-style: solid; border-width: 0px; width: 270px;">
+		<div style="height: 50px; border-style: solid; border-width: 0px; width: 200px;">
 			<label>Company/Organization Name:</label>
 			<label class="mandatory-label">*</label>			
-			<input type="text" name="company" id="company" maxlength="40" class="text-box" style="width: 250px;"
+			<input type="text" name="company" id="company" maxlength="40" class="text-box" style="width: 180px;"
 				value="<?php echo $tutor_institution_name ?>" autocomplete="off">
 		</div>
 		<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px;">
@@ -251,7 +252,10 @@
 				id="submit_update_experience_details">
 		</span>
 		<span style="margin-left: 10px;">
-			<a href="tutor_other_details.php">Skip</a>
+			<a href="tutor_teaching_details.php">Previous</a>
+		</span>
+		<span style="margin-left: 10px;">
+			<a href="tutor_other_details.php">Next</a>
 		</span>
 	</div>
 	</form>	

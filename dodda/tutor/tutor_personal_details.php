@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>    
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 	body
 	{
 		font-family: verdana;
 		font-size: 12px;
 		margin: 15px;
+		height: 1000px;
 	}	
 	
 	.mandatory-label
@@ -34,6 +36,8 @@
 		border-width: 1px;
 		border-color: #dbd9d9;
 		padding: 2px;
+		font-family: verdana;
+		font-size: 12px;
 	}
 	
 	
@@ -44,7 +48,6 @@
 		padding: 5px;		
 		border-width: 1px;
 		border-color: gray;
-		
 	}
 	
 	
@@ -53,10 +56,9 @@
 		border-style: solid;
 		border-width: 1px;
 		border-color: #E8E8E8;
-		width: 520px;
-		height: 500px;
+		width: 250px;			
 		padding: 10px;
-		border-radius: 5px;
+		border-radius: 5px;		
 	}	
 	
 	#error_msg, .error_msg
@@ -64,11 +66,11 @@
 		color: Red;
 	}
 	
-	.msg
+	.msg, #msg
 	{
 		color: Black;
-		font-weight: bold;
-		margin-left: 200px;		
+		font-weight: bold;		
+		margin-bottom: 8px;
 	}
     </style>
 	
@@ -177,19 +179,19 @@
 			
 			if(name.val().trim() == null || name.val().trim() == "")
 			{
-				msg+="*Please enter name<br/>";				
+				msg+="*Please enter Name<br/>";				
 				return_val=false;
 			}
 			
 			if(address_line1.val().trim() == null || address_line1.val().trim() == "")
 			{
-				msg+="*Please enter address line 1<br/>";				
+				msg+="*Please enter Address Line 1<br/>";				
 				return_val=false;
 			}			
 			
 			if(address_line2.val().trim() == null || address_line2.val().trim() == "")
 			{
-				msg+="*Please enter address line 2<br/>";				
+				msg+="*Please enter Address Line 2<br/>";				
 				return_val=false;
 			}			
 					
@@ -229,7 +231,7 @@
 				return_val=false;
 			}
 			
-			if(hdn_id_proof_front_filname == "" && id_proof_front="")
+			if(id_proof_front="")
 			{
 				msg+="*Please select ID Proof Front<br/>";				
 				return_val=false;
@@ -285,6 +287,8 @@
 		$login_name = $svjk_phone;
 	}
 	
+	$return_val_message = "";
+	
 	$return_val_tutor_info = get_tutor_info($login_name, $svjk_login_type);
 	//print_r($return_val_tutor_info);
 	
@@ -330,6 +334,8 @@
 			move_uploaded_file($_FILES['photo_upload']['tmp_name'], 
 				$upload_profile_image_fullpath);
 			$profile_image_filename = $tutor_profile_image_filename;
+			
+			update_tutor_profile_image($profile_image_filename, $tutor_email);
 		}	
 
 		//Upload id proof front side
@@ -340,6 +346,8 @@
 			move_uploaded_file($_FILES['id_proof_upload1']['tmp_name'], 
 				$id_proof_image_fullpath1);
 			$id_proof_front_filename = $id_proof_image_filename1;
+			
+			update_tutor_address_proof_front_side($id_proof_front_filename, $tutor_email);
 		}	
 		
 		//Upload id proof back side
@@ -350,6 +358,8 @@
 			move_uploaded_file($_FILES['id_proof_upload2']['tmp_name'], 
 				$id_proof_image_fullpath2);
 			$id_proof_back_filename = $id_proof_image_filename2;
+			
+			update_tutor_address_proof_back_side($id_proof_back_filename, $tutor_email);
 		}
 		
 		
@@ -359,8 +369,7 @@
 		{
 			$return_val_udpate1 = update_tutor_personal_details($name, $email, $mobile,
 				$address_line1, $address_line2, $city_id, $tutor_email, $gender_id, $dob,
-				$profile_image_filename, $id_proof_type_id, $id_proof_front_filename, 
-				$id_proof_back_filename);
+				$id_proof_type_id);
 				
 			$return_val_tutor_info = get_tutor_info($login_name, $svjk_login_type);
 			if(count($return_val_tutor_info) > 0)
@@ -378,10 +387,11 @@
 				$tutor_id_proof_type_id = $return_val_tutor_info[0]["id_proof_type_id"];
 				$id_proof_type_filename = $return_val_tutor_info[0]["address_proof_front"];
 				$tutor_profile_image = $return_val_tutor_info[0]["tutor_profile_image"];
-			}
+				$address_proof_front = $return_val_tutor_info[0]["address_proof_front"];
+				$address_proof_back = $return_val_tutor_info[0]["address_proof_back"];
+			}	
 			
-			echo "<div class='msg'>Tutor personal/contact details updated successfully</div><br/>";	
-			
+			$return_val_message = "Tutor personal/contact details updated successfully!";
 		}
 		
 	}	
@@ -389,27 +399,29 @@
 ?>
 <body>
 <div>
-	<div style="margin: 0 auto; border-style: solid; border-width: 0px; width: 550px;">
+	<div style="margin: 0 auto; border-style: solid; border-width: 0px; width: 280px;">
 		<form id="frmProfileUpdate" name="frmProfileUpdate" method="post" enctype="multipart/form-data">
 		<div id="error_msg"></div>
-		<div id="msg"></div>
+		<div id="msg">
+			<?php echo $return_val_message ?>
+		</div>
 		<fieldset id="fs_personal_info">
-		<legend>Personal/Contact Details</legend>		
+		<legend style="font-weight: bold;">Personal and Contact Details</legend>		
 		<div>
-			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px; clear: right; float: left;">
+			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px;">
 				<label>Name:</label>
 				<label class="mandatory-label">*</label>
 				<input type="text" name="name" id="name" maxlength="40" class="text-box" style="width: 150px;"
 						value="<?php echo $tutor_name ?>">		
 			</div>
-			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px; float: left;">                                                   
+			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px;">                                                   
 				<label>Email:</label>
 				<label class="mandatory-label">*</label>  			
 				<input type="email" name="email" id="email" class="text-box" 
 					style="width: 150px; background-color: #f5f5f5;"
 					maxlength="35" value="<?php echo $tutor_email ?>" readonly>                                
 			</div>
-			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px; float: left;">                                                   
+			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px;">                                                   
 				<label>Phone:</label>
 				<label class="mandatory-label">*</label>  
 				<br/>                            
@@ -419,7 +431,7 @@
 			</div>
 		</div>		
 		<div>
-			<div style="height: 50px; border-style: solid; border-width: 0px; width: 490px; float: left;">                                                   
+			<div style="height: 50px; border-style: solid; border-width: 0px; width: 250px;">                                                   
 				<label>Address Line 1:</label>                                
 				<label class="mandatory-label">*</label>
 				<div>
@@ -427,7 +439,7 @@
 						maxlength="30" value="<?php echo $address_line1 ?>" autocomplete="off">                             
 				</div>
 			</div>		
-			<div style="height: 50px; border-style: solid; border-width: 0px; width: 490px; float: left;">                                                   
+			<div style="height: 50px; border-style: solid; border-width: 0px; width: 250px;">                                                   
 				<label>Address Line 2:</label>                                
 				<label class="mandatory-label">*</label>
 				<div>
@@ -437,7 +449,7 @@
 			</div>
 		</div>
 		<div>
-			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px; clear: right; float: left;">
+			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px;">
 				<label>Country:</label>                                
 				<label class="mandatory-label">*</label>                                
 				<select id="country" name="country" type="text">
@@ -458,8 +470,8 @@
 					}
 				?>
 				</select>		
-			</div>
-			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px; float: left;">                                                   
+			</div>			
+			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px;">                                                   
 				<label>State</label>                                
 				<label class="mandatory-label">*</label>  
 				<select id="state" name="state" type="text">
@@ -480,8 +492,8 @@
 					}
 				?>
 				</select>	                                
-			</div>
-			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px; float: left;">                                                   
+			</div>			
+			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px;">                                                   
 				<label style="width: 50px;" maxlength="30">City:</label>                                
 				<label class="mandatory-label">*</label>
 				<select id="city" name="city" type="text">
@@ -502,10 +514,10 @@
 					}
 				?>
 				</select>                                
-			</div>
-		</div>
+			</div>			
+		</div>		
 		<div>
-			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px; clear: right; float: left;">
+			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px;">
 				<label>Gender:</label>                                
 				<label class="mandatory-label">*</label> 
 				 <select id="gender" name="gender" type="text" >
@@ -527,7 +539,7 @@
 					?>
 				</select> 
 			</div>
-			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px; float: left;">                                                   
+			<div style="height: 50px; border-style: solid; border-width: 0px; width: 170px;">                                                   
 				<label>DOB:</label>                                
 				<label class="mandatory-label">*</label>  
 				<input id="dob" name="dob" type="date" class="text-box" style="width: 145px;"
@@ -539,18 +551,16 @@
 		</div>
 			
 		<div>
-			<div style="height: 100px; border-style: solid; border-width: 0px; width: 100px; float: left;"> 
-				<div>
-					<img style="height: 100px; width: 90px;" src="<?php echo 'tutor_upload_images/'. $tutor_profile_image ?>" />                               
-				</div>
-			</div>
-			<div style="height: 50px; border-style: solid; border-width: 0px; width: 200px; float: left;"> 
-				<label>Upload Photo:</label>                                
-				<label class="mandatory-label">*</label>  
+			<div style="border-style: solid; border-width: 1px; 
+				border-color: #E8E8E8; border-radius: 2px; width: 100px;"> 
+				<img width="70" height="80" src="<?php echo 'tutor_upload_images/'. $tutor_profile_image ?>" />
+			</div>			
+			<div style="height: 50px; border-style: solid; border-width: 0px; width: 200px;"> 
+				<label>Upload Photo:</label>                                				  
 				<div>
 					<input id="photo_upload" name="photo_upload" type="file" style="width: 150px;">                               
 				</div>
-			</div>		
+			</div>			
 		</div>
 		
 		<div style="height: 50px; border-style: solid; border-width: 0px; width: 155px;">
@@ -588,6 +598,7 @@
 				<input id="id_proof_upload2" name="id_proof_upload2" type="file" style="width: 150px;">                               
 			</div>	
 		</div>
+		
 		</fieldset>
 		<br/>
 		<div>
@@ -596,7 +607,7 @@
 					id="submit_update_personal_details">
 			</span>
 			<span style="margin-left: 10px;">
-				<a href="tutor_teaching_details.php">Skip</a>
+				<a href="tutor_teaching_details.php">Next</a>
 			</span>
 		</div>
 		</form>

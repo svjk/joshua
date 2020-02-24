@@ -360,7 +360,8 @@
 					"tutor_designation"=>$row['tutor_designation'],
 					"tutor_salary"=>$row['tutor_salary'],
 					"tutor_profile_image"=>$row['tutor_profile_image'],
-					"address_proof_front"=>$row['address_proof_front']
+					"address_proof_front"=>$row['address_proof_front'],
+					"address_proof_back"=>$row['address_proof_back']
 					);
 		}
 		$result->close();
@@ -698,8 +699,7 @@
 	
 	function updateTutorPersonalDetails($name, $email, $mobile,
 				$address_line1, $address_line2, $city_id, $tutor_email, 
-				$gender_id, $dob, $profile_filename, $id_proof_type_id, $id_proof_front_filename, 
-				$id_proof_back_filename)
+				$gender_id, $dob, $id_proof_type_id)
 	{
 		$hn = 'localhost';
 		$db = 'svjk';
@@ -709,28 +709,69 @@
 		$conn = new mysqli($hn, $un, $pw, $db);
 		if ($conn->connect_error) die($conn->connect_error);
 		
-		if(trim($profile_filename)!="" and trim($id_proof_front_filename)!=""
-			and trim($id_proof_back_filename)!="")
-		{
-			$query = "UPDATE tutors SET tutor_name='$name', tutor_email='$email',
-					tutor_phone='$mobile', address_line1='$address_line1',
-					 address_line2='$address_line2', city_id='$city_id',
-					 gender_id='$gender_id', tutor_dob='$dob',
-					 tutor_profile_image = '$profile_filename',
-					 id_proof_type_id='$id_proof_type_id',
-					 address_proof_front='$id_proof_front_filename',
-					 address_proof_back='$id_proof_back_filename'
-					 WHERE tutor_email='$tutor_email'";
-		}
-		else
-		{
-			$query = "UPDATE tutors SET tutor_name='$name', tutor_email='$email',
+		$query = "UPDATE tutors SET tutor_name='$name', tutor_email='$email',
 					tutor_phone='$mobile', address_line1='$address_line1',
 					 address_line2='$address_line2', city_id='$city_id',
 					 gender_id='$gender_id', tutor_dob='$dob',					 
-					 id_proof_type_id='$id_proof_type_id'					 					 
+					 id_proof_type_id='$id_proof_type_id'					 
 					 WHERE tutor_email='$tutor_email'";
-		}
+		
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		return "Tutor profile updated successfully";		
+	}
+	
+	function updateTutorProfileImage($profile_image_filename, $tutor_email)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "UPDATE tutors SET tutor_profile_image='$profile_image_filename'					 
+					 WHERE tutor_email='$tutor_email'";
+		
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		return "Tutor profile updated successfully";		
+	}
+	
+	function updateTutorAddressProofFrontSide($address_proof_front_filename, $tutor_email)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "UPDATE tutors SET address_proof_front='$address_proof_front_filename'					 
+					 WHERE tutor_email='$tutor_email'";
+		
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		return "Tutor profile updated successfully";		
+	}
+	
+	function updateTutorAddressProofBackSide($address_proof_back_filename, $tutor_email)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "UPDATE tutors SET address_proof_back='$address_proof_back_filename'					 
+					 WHERE tutor_email='$tutor_email'";
 		
 		$result = $conn->query($query);
 		if (!$result) die($conn->error);

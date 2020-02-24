@@ -123,7 +123,7 @@
 		<legend>Login</legend>
 			<?php
 				if (isset($_POST['submit_login']))
-				{	
+				{
 					$userType = trim($_POST['userType']);					
 					$loginName = trim($_POST['loginName']);					
 					$password = trim($_POST['password']);
@@ -157,7 +157,6 @@
 									setcookie('svjk_user_type', "tutor", time() + (86400 * 30), "/");	
 									setcookie('svjk_login_type', $login_type, time() + (86400 * 30), "/");	
 										
-									setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");						
 									header("Location: tutor/tutor_personal_details.php");
 								}
 							}						
@@ -190,24 +189,24 @@
 			?>
 			<div id="error_msg"></div>
 			<div id="msg"></div>
-			<label>User Type</label>
+			<label>User Type:</label>
 			<label class="mandatory">*</label>
 			<br/>
 			<select id="userType" name="userType">
 				<option value="0">--Select--</option>
-				<option value="3">Tutor</option>
-				<option value="4">Student</option>
+				<option value="3" selected>Tutor</option>
+				<option value='4'>Student</option>
 			</select>
 			<br/>
 			<br/>
-			<label>Email/Mobile No.</label>
+			<label>Email/Mobile No.:</label>
 			<label class="mandatory">*</label>
 			<br/>
 			<input type="text" name="loginName" id="loginName" maxlength="40" 
 					value="<?php echo isset($_POST['loginName']) ? $_POST['loginName'] : "" ?>" autocomplete="off" />							
 			<br/>
 			<br/>
-			<label>Password</label>
+			<label>Password:</label>
 			<label class="mandatory">*</label>
 			<br/>
 			<input type="password" name="password" id="password" maxlength="15"
