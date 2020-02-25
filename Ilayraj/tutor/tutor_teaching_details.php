@@ -156,6 +156,18 @@
 				return_val=false;
 			}
 			
+			var d1 = new Date(2020, 01, 01, 10, 
+				job_timings_from.val().split(':')[0], job_timings_from.val().split(':')[1]);
+				
+			var d2 = new Date(2020, 01, 01, 10, 
+				job_timings_to.val().split(':')[0], job_timings_to.val().split(':')[1]);
+				
+			if(d2 <= d1)
+			{
+				msg+="*Job Timings To should be more than Job Timings From<br/>";				
+				return_val=false;
+			}
+			
 			msg+="<br/>";
 			error_msg.html(msg);
 			window.scrollTo(0, 0);
@@ -176,26 +188,13 @@
 
 <?php
 	/* Assign master values */
-	$return_val_qual = get_qualifications();	
-	//print_r($return_val_qual);
-	
-	$return_val_boards = get_boards();	
-	//print_r($return_val_boards);
-	
-	$return_val_classes = get_classes();	
-	//print_r($return_val_classes);
-	
-	$return_val_subjects = get_subjects();	
-	//print_r($return_val_subjects);
-	
-	$return_val_teaching_modes = get_teaching_modes();	
-	//print_r($return_val_teaching_modes);
-	
-	$return_val_teaching_mediums = get_teaching_mediums();	
-	//print_r($return_val_teaching_mediums);
-	
-	$return_val_job_types = get_job_types();
-	//print_r($return_val_job_types);
+	$return_val_qual = get_qualifications();
+	$return_val_boards = get_boards();
+	$return_val_classes = get_classes();
+	$return_val_subjects = get_subjects();
+	$return_val_teaching_modes = get_teaching_modes();
+	$return_val_teaching_mediums = get_teaching_mediums();
+	$return_val_job_types = get_job_types();	
 	
 	/* Assign tutor values */
 	$svjk_session_id = get_cookie_value('svjk_session_id');
@@ -375,13 +374,13 @@
 		
 		<div style="height: 55px; border-style: solid; border-width: 0px; width: 300px;">
 			<div>
-				<label>Select Job Timings:</label>
+				<label>Select Job Timings(24-Hours time):</label>
 				<label class="mandatory-label">*</label>	
 			</div>			
 			<div class="div_box1" style="height: 30px; padding: 5px;">				
 				<div style="clear: right; float: left;">
 					<label>From</label>					
-					<input type="time" name="job_timings_from" id="job_timings_from" 
+					<input type="time" name="job_timings_from" id="job_timings_from"
 						class="text-box" style="width: 80px;" min="08:00" max="20:00"
 						maxlength="35" autocomplete="off" value="<?php echo $job_timings_from ?>" />
 				</div>

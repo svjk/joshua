@@ -310,6 +310,30 @@
 		return $return_val;
 	}
 	
+	function get_tutor_locations($tutor_email)
+	{
+		$return_val = getTutorLocations($tutor_email);
+		return $return_val;
+	}
+	
+	function get_tutor_state_by_city_id($tutor_email)
+	{
+		$return_val = getTutorStateByCityID($tutor_email);
+		return $return_val;
+	}
+	
+	function get_tutor_country_by_state_id($tutor_email)
+	{
+		$return_val = getTutorCountryByStateID($tutor_email);
+		return $return_val;
+	}
+	
+	function insert_tutors_to_db($params)
+	{
+		$return_val = insertTutorsToDB($params);
+		return $return_val;
+	}
+	
 	function is_authenticated()
 	{
 		if(isset($_COOKIE['svjk_session_id'])

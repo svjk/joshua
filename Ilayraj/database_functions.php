@@ -1448,5 +1448,50 @@
 		return $res;			
 	}
 	
-	
+	function insertTutorsToDB($params)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+			
+		$query = "";
+		$query = "BEGIN;";
+		
+		for($i=0; $i<count($params); $i++)
+		{
+			$tutor_name = $params[$i][1];
+			$tutor_phone = $params[$i][2];
+			$tutor_email = $params[$i][3];
+			$tutor_gender_id = $params[$i][4];
+			$tutor_dob = $params[$i][5];
+			$address_line1 = $params[$i][6];
+			$address_line2 = $params[$i][7];
+			$tutor_city_id = $params[$i][8];
+			$tutor_institution_name = $params[$i][9];
+			$tutor_designation = $params[$i][10];
+			$tutor_salary = $params[$i][11];
+			$tutor_job_timings = $params[$i][12];
+			
+			$query = $query . " INSERT INTO tutors(tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob,
+							address_line1, address_line2, city_id, institution_name, tutor_designation,
+						tutor_salary, job_timings)
+						VALUES('$tutor_name', '$tutor_phone', '$tutor_email', '$tutor_gender_id', 
+						'$tutor_dob', '$address_line1', '$address_line2', '$tutor_city_id', 
+						'$tutor_institution_name', '$tutor_designation', '$tutor_salary', 
+						'$tutor_job_timings');";
+		}
+		
+		$query = $query . " COMMIT;";
+		
+		$result = $conn->multi_query($query);
+		//print_r($conn->affected_rows);	
+		if (!$result) die($conn->error);
+		
+		return $result;
+	}
+
 ?>

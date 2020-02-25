@@ -8,7 +8,7 @@
 		font-family: verdana;
 		font-size: 12px;
 		margin: 15px;
-		height: 1000px;
+		height: 1200px;
 	}	
 	
 	.mandatory-label
@@ -82,7 +82,10 @@
 		
 		$('#country').change(function() {			
 			var selectCountryID = $("#country option:selected").val();
-			$('#state').empty();			
+			
+			$('#state').empty();	
+			$('#state').append("<option value='0'>--Select--</option>");
+			
 			$('#city').empty();
 			$('#city').append("<option value='0'>--Select--</option>");
 			
@@ -258,14 +261,8 @@
 ?>    
 
 <?php
-	$return_val_countries = get_countries();	
 	
-	$return_val_states = get_states_country_id("4");	
-	
-	$return_val_cities = get_cities_by_state_id("1");	
-	
-	$return_val_genders = get_genders();	
-	
+	$return_val_genders = get_genders();
 	$return_val_id_proof_types = get_id_proof_types();	
 	
 	$svjk_session_id = get_cookie_value('svjk_session_id');
@@ -303,6 +300,11 @@
 		$tutor_id_proof_type_id = $return_val_tutor_info[0]["id_proof_type_id"];
 		$id_proof_type_filename = $return_val_tutor_info[0]["address_proof_front"];
 		$tutor_profile_image = $return_val_tutor_info[0]["tutor_profile_image"];
+		
+		$return_val_countries = get_countries();		
+		$return_val_states = get_states_country_id($tutor_country_id);
+		$return_val_cities = get_cities_by_state_id($tutor_state_id);
+		
 	}
 	
 	if(isset($_POST["submit_update_personal_details"]))
@@ -385,6 +387,10 @@
 				$tutor_profile_image = $return_val_tutor_info[0]["tutor_profile_image"];
 				$address_proof_front = $return_val_tutor_info[0]["address_proof_front"];
 				$address_proof_back = $return_val_tutor_info[0]["address_proof_back"];
+				
+				$return_val_countries = get_countries();		
+				$return_val_states = get_states_country_id($tutor_country_id);
+				$return_val_cities = get_cities_by_state_id($tutor_state_id);
 			}	
 			
 			$return_val_message = "Tutor personal/contact details updated successfully!";
@@ -485,7 +491,7 @@
 							echo "<option value='" . $return_val_states[$i]['id'] . "'>" 
 									. $return_val_states[$i]['state_name'] . "</option>";
 						}
-					}
+					}					
 				?>
 				</select>	                                
 			</div>			
@@ -494,7 +500,7 @@
 				<label class="mandatory-label">*</label>
 				<select id="city" name="city" type="text">
 				<option value="0">--Select--</option>
-				<?php
+				<?php					
 					for($i=0; $i<count($return_val_cities); $i++)
 					{
 						if($return_val_cities[$i]['id'] == $tutor_city_id)
@@ -507,7 +513,7 @@
 							echo "<option value='" . $return_val_cities[$i]['id'] . "'>" 
 									. $return_val_cities[$i]['city_name'] . "</option>";
 						}
-					}
+					}					
 				?>
 				</select>                                
 			</div>			
@@ -548,8 +554,8 @@
 			
 		<div>
 			<div style="border-style: solid; border-width: 1px; 
-				border-color: #E8E8E8; border-radius: 2px; width: 100px;"> 
-				<img width="70" height="80" src="<?php echo 'tutor_upload_images/'. $tutor_profile_image ?>" />
+				border-color: #E8E8E8; border-radius: 2px; width: 110px;"> 
+				<img width="70" height="100" src="<?php echo 'tutor_upload_images/'. $tutor_profile_image ?>" />
 			</div>			
 			<div style="height: 50px; border-style: solid; border-width: 0px; width: 200px;"> 
 				<label>Upload Photo:</label>                                				  

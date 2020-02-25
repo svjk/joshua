@@ -2,7 +2,7 @@
 include 'db_config.php';
 
 // ******* Select Class Category ********
-$selectClassCategory = "SELECT * FROM classnames";
+$selectClassCategory = "SELECT * FROM classes";
 $fetchCategory = mysqli_query($db_connect, $selectClassCategory);
 $classCategoryArray = array();
 while ($row = mysqli_fetch_array($fetchCategory)) {
@@ -31,7 +31,7 @@ while ($row = mysqli_fetch_array($tutorSelectedSubject)) {
 // *******	End Tutor Selected Subjects List *************
 
 // *******	Select Teaching Modes ********
-$selectTeachingModes = "SELECT * FROM teaching_mode";
+$selectTeachingModes = "SELECT * FROM teaching_modes";
 $fetchTeachingModes = mysqli_query($db_connect, $selectTeachingModes);
 $teachingModeArray = array();
 while ($row = mysqli_fetch_array($fetchTeachingModes)) {
@@ -55,7 +55,7 @@ while ($row = mysqli_fetch_array($selectJobTypes)) {
 // ******* End Job Types **********
 
 // ****** Select ID Proofs Types ***
-$selectAddressProofTypes = mysqli_query($db_connect, "SELECT * FROM address_proofs");
+$selectAddressProofTypes = mysqli_query($db_connect, "SELECT * FROM id_proof_types");
 $addressProofArray = array();
 while ($row = mysqli_fetch_array($selectAddressProofTypes)) {
 	$addressProofArray[] = $row;
@@ -106,7 +106,7 @@ if (isset($_POST['basicSearchBtn'])) {
 	else if ($uType == 3) {
 		$searchStudents = "
 		SELECT st.Name AS searchedname, st.ParentName, sb.Subject, gr.gender_name, br.Boards, st.student_location AS searchedlocation 
-		FROM student AS st, subjects AS sb, gender AS gr, boards AS br
+		FROM student AS st, subjects AS sb, genders AS gr, boards AS br
 		WHERE st.Subject=sb.ID AND st.gender_id=gr.gender_id AND st.board_id=br.ID AND st.student_location='$basicSearchLoc' AND st.Subject='$subjectID' ";
 		
 		$fetchStudents = mysqli_query($db_connect, $searchStudents);
@@ -142,8 +142,8 @@ if (isset($_POST['mediumSearchBtn'])) {
 
 
 $selectAllTutors = "
-SELECT tut.tutor_id, tut.tutor_name, tut.tutor_phone, tut.tutor_email, gr.gender_name, tut.tutor_dob, tut.tutor_location, tut.tutor_profile_image, tut.tutor_age, qf.qualification_name, tut.boards_id, tut.classnames_id, sb.Subject, tut.teaching_mode_id, tut.teaching_medium_id, tut.job_type_id, tut.permanent_address, tut.address_proof_id, tut.proof_id_number, tut.address_proof_front, tut.address_proof_back, exp.experience_name, tut.institution_name, tut.tutor_designation, tut.tutor_salary, tut.languages_id, tut.question1_answer, tut.question2_answer, tut.question3_answer, tut.tutor_lat, tut.tutor_lng, tut.city_id, tut.tutor_desired_city, tut.tutor_svjk_score, tut.tutor_rating, tut.passport_status, tut.tutor_specialization, tut.teaching_certification, tut.criminal_cases_complaints, tut.tutor_created_datetime, tut.tutor_updated_datetime
-		FROM tutors AS tut, qualifications AS qf, subjects AS sb, gender AS gr, experience AS exp, tutor_selected_boards AS sbrd, tutor_selected_class AS scls, tutor_selected_subjects AS ssub, tutor_selected_teaching_mode AS stmode, tutor_selected_teaching_medium AS stmedium
+SELECT tut.tutor_id, tut.tutor_name, tut.tutor_phone, tut.tutor_email, gr.gender_name, tut.tutor_dob, tut.tutor_location, tut.tutor_profile_image, tut.tutor_age, qf.qualification_name, tut.boards_id, tut.classnames_id, sb.Subject, tut.teaching_mode_id, tut.teaching_medium_id, tut.job_type_id, tut.permanent_address, tut.id_proof_type_id, tut.proof_id_number, tut.address_proof_front, tut.address_proof_back, exp.experience_name, tut.institution_name, tut.tutor_designation, tut.tutor_salary, tut.languages_id, tut.question1_answer, tut.question2_answer, tut.question3_answer, tut.tutor_lat, tut.tutor_lng, tut.city_id, tut.tutor_desired_city, tut.tutor_svjk_score, tut.tutor_rating, tut.passport_status, tut.tutor_specialization, tut.teaching_certification, tut.criminal_cases_complaints, tut.tutor_created_datetime, tut.tutor_updated_datetime
+		FROM tutors AS tut, qualifications AS qf, subjects AS sb, genders AS gr, experience AS exp, tutor_selected_boards AS sbrd, tutor_selected_class AS scls, tutor_selected_subjects AS ssub, tutor_selected_teaching_mode AS stmode, tutor_selected_teaching_medium AS stmedium
 		WHERE tut.qualification_id=qf.qualification_id AND sb.ID=ssub.subject_id AND tut.gender_id=gr.gender_id AND tut.experience_id=exp.experience_id AND tut.tutor_id=sbrd.tutor_id AND tut.tutor_id=scls.tutor_id AND tut.tutor_id=ssub.tutor_id AND tut.tutor_id=stmode.tutor_id AND tut.tutor_id=stmedium.tutor_id GROUP BY tut.tutor_id";
 $fetchAllTutors = mysqli_query($db_connect, $selectAllTutors);
 $allTutorsArray = array();
@@ -151,7 +151,7 @@ while ($row = mysqli_fetch_array($fetchAllTutors)) {
 	$allTutorsArray[] = $row;
 }
 
-$selectGender = mysqli_query($db_connect, "SELECT * FROM gender");
+$selectGender = mysqli_query($db_connect, "SELECT * FROM genders");
 $genderArray = array();
 while ($row = mysqli_fetch_array($selectGender)) {
 	$genderArray[] = $row;

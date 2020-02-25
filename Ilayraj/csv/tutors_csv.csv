@@ -1,0 +1,11 @@
+sl_no,tutor_name,tutor_phone,tutor_email,gender_id,tutor_dob,address_line1,address_line2,city_id,institution_name,tutor_designation,tutor_salary,job_timings
+1,Dodda,7896543210,chawan1@gmail.com,1,13-12-1985,Hennur,Hennur Cross,1,EV Educational Society,Senior Teacher,15000,08:00 TO 10:00
+2,Prabhakar S,7896543211,chawan2@gmail.com,1,13-12-1985,Hennur,Hennur Cross,1,EV Educational Society,Senior Teacher,15000,08:00 TO 10:00
+3,Ilayraj SMK,7896543212,chawan3@gmail.com,1,13-12-1985,Hennur,Hennur Cross,1,EV Educational Society,Senior Teacher,15000,08:00 TO 10:00
+4,Kumar SM,7896543214,chawan4@gmail.com,1,13-12-1985,Hennur,Hennur Cross,1,EV Educational Society,Senior Teacher,15000,08:00 TO 10:00
+5,Shankar SM,7896543215,chawan5@gmail.com,1,13-12-1985,Hennur,Hennur Cross,1,EV Educational Society,Senior Teacher,15000,08:00 TO 10:00
+6,Mohanraj K,7896543216,chawan6@gmail.com,1,13-12-1985,Hennur,Hennur Cross,1,EV Educational Society,Senior Teacher,15000,08:00 TO 10:00
+7,Soundari M,7896543217,chawan7@gmail.com,1,13-12-1985,Hennur,Hennur Cross,1,EV Educational Society,Senior Teacher,15000,08:00 TO 10:00
+8,Latha SM,7896543218,chawan8@gmail.com,1,13-12-1985,Hennur,Hennur Cross,1,EV Educational Society,Senior Teacher,15000,08:00 TO 10:00
+9,John S,7896543211,chawan9@gmail.com,1,13-12-1985,Hennur,Hennur Cross,1,EV Educational Society,Senior Teacher,15000,08:00 TO 10:00
+10,Rajan J,7896543233,chawan10@gmail.com,1,13-12-1985,Hennur,Hennur Cross,1,EV Educational Society,Senior Teacher,15000,08:00 TO 10:00

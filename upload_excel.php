@@ -17,6 +17,7 @@
 	
 	$allowedType = array('csv');
 	if(!in_array($fileExtention,$allowedType))
+	{
 	
 	
 	
