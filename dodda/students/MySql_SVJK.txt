@@ -1,0 +1,97 @@
+Master Tables
+=============
+
+SELECT * FROM `student` WHERE 1
+
+SELECT * FROM `tutors` WHERE 1
+
+SELECT * FROM `subjects` WHERE 1
+
+SELECT * FROM `address_proofs` WHERE 1
+
+SELECT * FROM `gender` WHERE 1
+
+SELECT * FROM `qualifications` WHERE 1
+
+SELECT * FROM `boards` WHERE 1
+
+SELECT * FROM `classnames` WHERE 1
+
+SELECT * FROM `job_types` WHERE 1
+
+SELECT * FROM `classstatus` WHERE 1
+
+SELECT * FROM `languages` WHERE 1
+
+SELECT * FROM `location` WHERE 1
+
+SELECT * FROM `teaching_mediums` WHERE 1
+
+SELECT * FROM `teaching_mode` WHERE 1
+
+SELECT * FROM `usertype` WHERE 1
+
+SELECT * FROM `users` WHERE 1
+
+SELECT * FROM `classtimeslots` WHERE 1
+
+SELECT * FROM `class_studying` WHERE 1
+
+SELECT * FROM `experience` WHERE 1
+
+SELECT * FROM `svjk_staff` WHERE 1
+
+SELECT * FROM `zones` WHERE 1
+
+SELECT * FROM `usertype` WHERE 1
+
+SELECT * FROM `useraboutme` WHERE 1
+
+SELECT * FROM `area_list` WHERE 1 --Empty table
+
+SELECT * FROM `state_list` WHERE 1 --Empty table
+
+SELECT * FROM `city_list` WHERE 1 --Empty table
+
+SELECT * FROM `country_list` WHERE 1 --Empty table
+
+
+Bridge Tables
+=============
+SELECT * FROM `tutor_selected_boards` WHERE 1
+
+SELECT * FROM `classestaught` WHERE 1
+
+SELECT * FROM `classes` WHERE 1
+
+SELECT * FROM `blockdate` WHERE 1
+
+SELECT * FROM `boardstaught` WHERE 1
+
+SELECT * FROM `classsubjectstaught` WHERE 1
+
+SELECT * FROM `classvideos` WHERE 1
+
+SELECT * FROM `creditsperclass` WHERE 1
+
+SELECT * FROM `tutor_performance` WHERE 1 --Empty table
+
+SELECT * FROM `tutor_selected_boards` WHERE 1
+
+SELECT * FROM `tutor_selected_class` WHERE 1
+
+SELECT * FROM `tutor_selected_languages_known` WHERE 1
+
+SELECT * FROM `tutor_selected_languages_known` WHERE 1
+
+SELECT * FROM `tutor_selected_teaching_medium` WHERE 1
+
+SELECT * FROM `tutor_selected_teaching_mode` WHERE 1
+
+
+
+ALTER TABLE tutor
+ADD pwd varchar(20);
+
+ALTER TABLE student
+ADD pwd varchar(20);

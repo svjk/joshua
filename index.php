@@ -7,6 +7,7 @@
   <style>
     .form-controls{
       display:block;
+      //COMMENT FROM ELAYARAJA
       width:100%;
       height:39px;
       padding:6px 12px;
