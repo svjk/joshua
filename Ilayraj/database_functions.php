@@ -1546,8 +1546,42 @@
 		$conn->close();
 		
 		if(count($res)>0)
+		{	
+			return $res[0]["Return_Val"];
+		}
+		return 0;
+	}
+	
+	function getTotalTutorsCount()
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "SELECT COUNT(1) AS Return_Val FROM tutors";
+				
+		$result = $conn->query($query);
+		if (!$result) die($conn->error);
+		
+		$rows = $result->num_rows;				 
+		
+		$res = array();
+		for($i=0; $i<$rows; ++$i)
 		{
+			$result->data_seek($i);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
 			
+			$res[] = array("Return_Val"=>$row['Return_Val']);
+		}
+		$result->close();
+		$conn->close();
+		
+		if(count($res)>0)
+		{	
 			return $res[0]["Return_Val"];
 		}
 		return 0;

@@ -144,8 +144,6 @@
 						
 						if($return_val == 1)
 						{
-							$cookie_name = "AUTH_SVJK";
-							$cookie_value = "1";
 							if($return_val == 1)
 							{
 								$return_val = get_tutor_info($loginName, $login_type);								

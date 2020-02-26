@@ -202,6 +202,9 @@
 	<form id="frmProfileUpdate2" name="frmProfileUpdate2" method="post">
 	<div id="error_msg"></div>
 	<div id="msg"><?php echo $return_val_message ?></div>
+	<?php
+		require_once '../dropdown_menu.php';
+	?>
 	<fieldset id="fs_info">
 		<legend style="font-weight: bold;">Experience Details</legend>
 		<div style="height: 50px; border-style: solid; border-width: 0px; width: 160px;">

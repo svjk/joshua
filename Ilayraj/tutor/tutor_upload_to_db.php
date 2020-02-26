@@ -88,8 +88,9 @@
 		font-weight: bold;
 		margin-bottom: 10px;
 	}
-	
     </style>
+	
+	<script src="../js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <?php
@@ -108,7 +109,7 @@
 	if(isset($_POST["upload_file_to_db"]))
 	{	
 		$target_dir = "tutor_csvs/";
-		$file_fullpath = $target_dir . basename("tutors_csv.csv");
+		$file_fullpath = $target_dir . basename($_POST["upload_file"]);
 
 		$myfile = fopen($file_fullpath, "r") 
 			or die("Unable to open file!");
@@ -138,10 +139,11 @@
 				
 		$return_val_records_count = insert_tutors_to_db($arr_tutor);
 		
+		$total_records_in_db = get_total_tutors_count();		
 		$total_records = count($arr_tutor);
 		$insert_count = $return_val_records_count[0]['records_insert_count'];
 		$skip_count = $return_val_records_count[0]['records_skip_count'];
-	}
+	}	
 ?>
 
 <div>
@@ -152,34 +154,43 @@
 				<?php
 					if(isset($_POST["upload_file_to_db"]))
 					{
+						echo "Total records in database table: $total_records_in_db<br/>";
 						echo "Total records in the file: $total_records<br/>";
 						echo "Total records inserted: $insert_count<br/>";
 						echo "Total records skiped: $skip_count";
 					}
 				?>
 			</div>
+			<?php
+				require_once '../dropdown_menu.php';
+			?>
 			<fieldset id="fs_info">
 				<legend style="font-weight: bold;">Add Tutors To Database</legend>
 				<div>
 				<label>Select CSV file to upload to database:</label>
 				<label class="mandatory-label">*</label>				
-				<div class="div_box1" id="div_languages_known" 
+				<div class="div_box1"
 					style="height: 30px; width: 260px; border-style: solid; border-width: 1px; padding: 5px;">
-					<select id="files" name="files" type="text">
+					<select id="upload_file" name="upload_file" type="text">
 						<option value="0">--Select--</option>
 						<?php
-							$dir = "C:\\xampp\\htdocs\\joshua\\Ilayraj\\tutor\\tutor_csvs\\";
+							$dir = "tutor_csvs/";
 							
 							if (is_dir($dir))
 							{
 							  if ($dh = opendir($dir))
 							  {
+								$i = 0;
 								while (($file = readdir($dh)) !== false)
 								{
-								  if(trim($file)!='.' or trim($file)!='..')
+								  if($i==0 OR $i==1)
 								  {
-									echo "<option value='" . $file . "'>" . $file . "</option>";
 								  }
+								  else
+								  {
+									  echo "<option value='" . $file . "'>" . $file . "</option>";
+								  }
+								  $i++;
 								}
 								closedir($dh);
 							  }

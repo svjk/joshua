@@ -320,6 +320,9 @@
 	<div id="msg">
 		<?php echo $return_val_message ?>
 	</div>
+	<?php
+		require_once '../dropdown_menu.php';
+	?>
 	<fieldset id="fs_info">
 		<legend style="font-weight: bold;">Teaching Details</legend>
 		<div style="height: 50px; border-style: solid; border-width: 0px; width: 160px;">

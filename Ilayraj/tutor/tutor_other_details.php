@@ -228,6 +228,9 @@
 	<form id="frmProfileUpdate2" name="frmProfileUpdate2" method="post">
 	<div id="error_msg"></div>
 	<div id="msg"><?php echo $return_val_message ?></div>
+	<?php
+		require_once '../dropdown_menu.php';
+	?>
 	<fieldset id="fs_info">
 		<legend style="font-weight: bold;">Other Details</legend>
 		<div>

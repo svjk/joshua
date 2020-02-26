@@ -334,15 +334,10 @@
 		return $return_val;
 	}
 	
-	function is_authenticated()
+	function get_total_tutors_count()
 	{
-		if(isset($_COOKIE['svjk_session_id'])
-			and isset($_COOKIE['svjk_email'])
-			and isset($_COOKIE['svjk_phone'])) 
-		{
-			return 1;
-		}
-		return 0;
+		$return_val = getTotalTutorsCount();
+		return $return_val;
 	}
 	
 	function get_cookie_value($cookie_name)
@@ -356,18 +351,11 @@
 	
 	function clear_all_cookies()
 	{
-		if (isset($_SERVER['HTTP_COOKIE'])) 
-		{
-			$cookies = explode(';', $_SERVER['HTTP_COOKIE']);
-			
-			foreach($cookies as $cookie) 
-			{
-				$parts = explode('=', $cookie);
-				$name = trim($parts[0]);
-				setcookie($name, '', time()-1000);
-				setcookie($name, '', time()-1000, '/');
-			}
-		}	
+		setcookie('svjk_session_id', '', time() - 36000, "/");
+		setcookie('svjk_email', '', time() - 36000, "/");
+		setcookie('svjk_phone', '', time() - 36000, "/");	
+		setcookie('svjk_user_type', '', time() - 36000, "/");	
+		setcookie('svjk_login_type','', time() - 36000, "/");	
 	}
 	
 ?>

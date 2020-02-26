@@ -257,7 +257,7 @@
 ?>
 
 <?php
-	require_once 'check_auth_tutor.php';
+	//require_once 'check_auth_tutor.php';
 ?>    
 
 <?php
@@ -407,6 +407,9 @@
 		<div id="msg">
 			<?php echo $return_val_message ?>
 		</div>
+		<?php
+			require_once '../dropdown_menu.php';
+		?>
 		<fieldset id="fs_personal_info">
 		<legend style="font-weight: bold;">Personal and Contact Details</legend>		
 		<div>
