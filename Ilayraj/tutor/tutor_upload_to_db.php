@@ -101,10 +101,18 @@
 ?>
 
 <?php
+	
+	$insert_count = 0;
+	$skip_count = 0;
+	
 	if(isset($_POST["upload_file_to_db"]))
 	{	
-		$myfile = fopen("C:\\xampp\\htdocs\\joshua\\Ilayraj\\tutor\\tutor_csvs\\tutors_csv.csv", "r") 
+		$target_dir = "tutor_csvs/";
+		$file_fullpath = $target_dir . basename("tutors_csv.csv");
+
+		$myfile = fopen($file_fullpath, "r") 
 			or die("Unable to open file!");
+			
 		$i=0;
 		$arr_tutors = array();
 		
@@ -122,17 +130,17 @@
 		}
 		fclose($myfile);
 		
-		$arr_tutor = array();
-		
+		$arr_tutor = array();		
 		for($i=0; $i<count($arr_tutors); $i++)
 		{
 			$arr_tutor[] = explode(",", $arr_tutors[$i]);
 		}
 				
-		$return_val_add_tutor = insert_tutors_to_db($arr_tutor);
+		$return_val_records_count = insert_tutors_to_db($arr_tutor);
 		
-		//echo $return_val_add_tutor;
-		
+		$total_records = count($arr_tutor);
+		$insert_count = $return_val_records_count[0]['records_insert_count'];
+		$skip_count = $return_val_records_count[0]['records_skip_count'];
 	}
 ?>
 
@@ -140,7 +148,16 @@
 	<div style="width: 340px; margin: 0 auto; border-style: solid; border-width: 0px; width: 292px;">
 		<form id="form_add_to_db" name="form_add_to_db" method="post">
 			<div id="error_msg"></div>
-			<div id="msg"><?php echo "" ?></div>
+			<div id="msg">
+				<?php
+					if(isset($_POST["upload_file_to_db"]))
+					{
+						echo "Total records in the file: $total_records<br/>";
+						echo "Total records inserted: $insert_count<br/>";
+						echo "Total records skiped: $skip_count";
+					}
+				?>
+			</div>
 			<fieldset id="fs_info">
 				<legend style="font-weight: bold;">Add Tutors To Database</legend>
 				<div>

@@ -1457,41 +1457,100 @@
 		
 		$conn = new mysqli($hn, $un, $pw, $db);
 		if ($conn->connect_error) die($conn->connect_error);
-			
-		$query = "";
-		$query = "BEGIN;";
+		
+		$records_insert_count = 0;
+		$records_skip_count = 0;
 		
 		for($i=0; $i<count($params); $i++)
 		{
-			$tutor_name = $params[$i][1];
-			$tutor_phone = $params[$i][2];
-			$tutor_email = $params[$i][3];
-			$tutor_gender_id = $params[$i][4];
-			$tutor_dob = $params[$i][5];
-			$address_line1 = $params[$i][6];
-			$address_line2 = $params[$i][7];
-			$tutor_city_id = $params[$i][8];
-			$tutor_institution_name = $params[$i][9];
-			$tutor_designation = $params[$i][10];
-			$tutor_salary = $params[$i][11];
-			$tutor_job_timings = $params[$i][12];
+			$tutor_name = trim($params[$i][1]);
+			$tutor_phone = trim($params[$i][2]);
+			$tutor_email = trim($params[$i][3]);
+			$tutor_gender_id = trim($params[$i][4]);
+			$tutor_dob = trim($params[$i][5]);
+			$address_line1 = trim($params[$i][6]);
+			$address_line2 = trim($params[$i][7]);
+			$tutor_city_id = trim($params[$i][8]);
+			$tutor_institution_name = trim($params[$i][9]);
+			$tutor_designation = trim($params[$i][10]);
+			$tutor_salary = trim($params[$i][11]);
+			$tutor_job_timings = trim($params[$i][12]);
 			
-			$query = $query . " INSERT INTO tutors(tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob,
-							address_line1, address_line2, city_id, institution_name, tutor_designation,
+			if($tutor_email == "")
+			{
+				$tutor_email = uniqid() . '@svjnanakendra.com';
+			}
+			
+			if($tutor_phone == "")
+			{
+				$tutor_phone = microtime(true);
+				$tutor_phone = str_replace(".", "", $tutor_phone);	
+				$tutor_phone = substr($tutor_phone, 4);
+			}
+			
+			if(myTutorExists($tutor_email, $tutor_phone)==false)
+			{
+				$query = "INSERT INTO tutors(tutor_name, tutor_phone, tutor_email, gender_id, tutor_dob,
+						address_line1, address_line2, city_id, institution_name, tutor_designation,
 						tutor_salary, job_timings)
 						VALUES('$tutor_name', '$tutor_phone', '$tutor_email', '$tutor_gender_id', 
 						'$tutor_dob', '$address_line1', '$address_line2', '$tutor_city_id', 
 						'$tutor_institution_name', '$tutor_designation', '$tutor_salary', 
 						'$tutor_job_timings');";
+				
+				$result = $conn->query($query);		
+				if (!$result) die($conn->error);
+				
+				$records_insert_count = $records_insert_count + 1;
+			}
+			else
+			{
+				$records_skip_count = $records_skip_count + 1;
+			}
 		}
 		
-		$query = $query . " COMMIT;";
+		$records_count=array();
+		$records_count[] = array("records_insert_count"=>$records_insert_count,
+								"records_skip_count"=>$records_skip_count);
 		
-		$result = $conn->multi_query($query);
-		//print_r($conn->affected_rows);	
+		return $records_count;
+	}
+	
+	function myTutorExists($email, $phone)
+	{
+		$hn = 'localhost';
+		$db = 'svjk';
+		$un = 'root';
+		$pw = '';
+		
+		$conn = new mysqli($hn, $un, $pw, $db);
+		if ($conn->connect_error) die($conn->connect_error);
+		
+		$query = "SELECT EXISTS(SELECT 1 FROM tutors WHERE tutor_email='$email' 
+					OR tutor_phone='$phone') AS Return_Val";
+				
+		$result = $conn->query($query);
 		if (!$result) die($conn->error);
 		
-		return $result;
+		$rows = $result->num_rows;				 
+		
+		$res = array();
+		for($i=0; $i<$rows; ++$i)
+		{
+			$result->data_seek($i);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
+			
+			$res[] = array("Return_Val"=>$row['Return_Val']);
+		}
+		$result->close();
+		$conn->close();
+		
+		if(count($res)>0)
+		{
+			
+			return $res[0]["Return_Val"];
+		}
+		return 0;
 	}
 
 ?>
